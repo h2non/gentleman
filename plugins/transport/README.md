@@ -1,4 +1,4 @@
-# gentleman/transport [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/github/tag/h2non/gentleman.svg)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman?status.svg)](https://godoc.org/github.com/h2non/gentleman) [![API](https://img.shields.io/badge/api-beta-green.svg?style=flat)](https://godoc.org/github.com/h2non/gentleman)
+# gentleman/transport [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/github/tag/h2non/gentleman.svg)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman/plugins/transport?status.svg)](https://godoc.org/github.com/h2non/gentleman/plugins/transport) [![API](https://img.shields.io/badge/api-beta-green.svg?style=flat)](https://godoc.org/github.com/h2non/gentleman/plugins/transport)
 
 gentleman's plugin to easily define the HTTP transport to be used by `http.Client`.
 
@@ -10,7 +10,7 @@ go get -u gopkg.in/h2non/gentleman.v0/plugins/transport
 
 ## API
 
-See [godoc](https://godoc.org/github.com/h2non/gentleman) reference.
+See [godoc](https://godoc.org/github.com/h2non/gentleman/plugins/transport) reference.
 
 ## Example
 

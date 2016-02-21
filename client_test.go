@@ -79,7 +79,7 @@ func TestClientRequestMiddleware(t *testing.T) {
 		t.Error(err)
 	}
 	if res.StatusCode != 200 {
-		t.Errorf("Invalid status code: %s", res.StatusCode)
+		t.Errorf("Invalid status code: %d", res.StatusCode)
 	}
 	if res.Header.Get("Server") != "go" {
 		t.Error("Invalid server header")

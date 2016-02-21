@@ -34,18 +34,18 @@ go get -u gopkg.in/h2non/gentleman.v0
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/url">url</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman">
+      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/url">
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
     <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
     <td><img src="https://travis-ci.org/h2non/gentleman.png" /></td>
-    <td>Easily declare URL, base URL and path in HTTP requests</td>
+    <td>Easily declare URL, base URL and path values in HTTP requests</td>
   </tr>
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/auth">auth</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman">
+      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/auth">
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
@@ -54,9 +54,20 @@ go get -u gopkg.in/h2non/gentleman.v0
     <td>Declare authorization headers in your requests</td>
   </tr>
   <tr>
+    <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/body">body</a></td>
+    <td>
+      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/body">
+        <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
+      </a>
+    </td>
+    <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
+    <td><img src="https://travis-ci.org/h2non/gentleman.png" /></td> 
+    <td>Easily define bodies based on JSON, XML, strings, buffers or streams</td>
+  </tr>
+  <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/bodytype">bodytype</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman">
+      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/bodytype">
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
@@ -67,7 +78,7 @@ go get -u gopkg.in/h2non/gentleman.v0
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/cookies">cookies</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman">
+      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/cookies">
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
@@ -78,7 +89,7 @@ go get -u gopkg.in/h2non/gentleman.v0
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/compression">compression</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman">
+      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/compression">
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
@@ -87,20 +98,42 @@ go get -u gopkg.in/h2non/gentleman.v0
     <td>Helpers to define enable/disable HTTP compression</td>
   </tr>
   <tr>
-    <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/proxy">proxy</a></td>
+    <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/headers">headers</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman">
+      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/headers">
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
     <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
     <td><img src="https://travis-ci.org/h2non/gentleman.png" /></td> 
-    <td>Configure the HTTP proxy to be used by your clients</td>
+    <td>Manage HTTP headers easily</td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/proxy">proxy</a></td>
+    <td>
+      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/proxy">
+        <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
+      </a>
+    </td>
+    <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
+    <td><img src="https://travis-ci.org/h2non/gentleman.png" /></td> 
+    <td>Configure HTTP proxy servers</td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/query">query</a></td>
+    <td>
+      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/query">
+        <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
+      </a>
+    </td>
+    <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
+    <td><img src="https://travis-ci.org/h2non/gentleman.png" /></td> 
+    <td>Easily manage query params</td>
   </tr>
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/redirect">redirect</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman">
+      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/redirect">
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
@@ -111,7 +144,7 @@ go get -u gopkg.in/h2non/gentleman.v0
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/timeout">timeout</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman">
+      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/timeout">
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
@@ -122,7 +155,7 @@ go get -u gopkg.in/h2non/gentleman.v0
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/transport">transport</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman">
+      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/transport">
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
@@ -133,7 +166,7 @@ go get -u gopkg.in/h2non/gentleman.v0
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/tls">tls</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman">
+      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/tls">
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>

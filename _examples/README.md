@@ -2,10 +2,10 @@
 
 Usage:
 ```bash
-go run examples/<example>/<example>.go
+go run _examples/<example>/<example>.go
 ```
 
 Example:
 ```bash
-go run examples/timeout/timeout.go
+go run _examples/timeout/timeout.go
 ```

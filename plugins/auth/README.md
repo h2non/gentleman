@@ -1,4 +1,4 @@
-# gentleman/auth [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/github/tag/h2non/gentleman.svg)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman?status.svg)](https://godoc.org/github.com/h2non/gentleman) [![API](https://img.shields.io/badge/api-stable-green.svg?style=flat)](https://godoc.org/github.com/h2non/gentleman)
+# gentleman/auth [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/github/tag/h2non/gentleman.svg)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman?status.svg)](https://godoc.org/github.com/h2non/gentleman/plugins/auth) [![API](https://img.shields.io/badge/api-stable-green.svg?style=flat)](https://godoc.org/github.com/h2non/gentleman/plugins/auth)
 
 gentleman's plugin to easily define HTTP authorization headers based on multiple schemas.
 
@@ -10,7 +10,7 @@ go get -u gopkg.in/h2non/gentleman.v0/plugins/auth
 
 ## API
 
-See [godoc](https://godoc.org/github.com/h2non/gentleman) reference.
+See [godoc](https://godoc.org/github.com/h2non/gentleman/plugins/auth) reference.
 
 ## Example
 

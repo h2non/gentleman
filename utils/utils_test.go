@@ -16,7 +16,7 @@ func TestReplyWithStatus(t *testing.T) {
 	res = &http.Response{}
 	ReplyWithStatus(res, 400)
 	if res.StatusCode != 400 || res.Status != "400 Bad Request" {
-		t.Fatalf("Invalid response status: %d", res.Status)
+		t.Fatalf("Invalid response status: %d", res.StatusCode)
 	}
 }
 

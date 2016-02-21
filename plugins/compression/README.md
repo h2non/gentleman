@@ -1,4 +1,4 @@
-# gentleman/compression [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/github/tag/h2non/gentleman.svg)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman?status.svg)](https://godoc.org/github.com/h2non/gentleman) [![API](https://img.shields.io/badge/api-beta-green.svg?style=flat)](https://godoc.org/github.com/h2non/gentleman)
+# gentleman/compression [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/github/tag/h2non/gentleman.svg)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman/plugins/compression?status.svg)](https://godoc.org/github.com/h2non/gentleman/plugins/compression) [![API](https://img.shields.io/badge/api-beta-green.svg?style=flat)](https://godoc.org/github.com/h2non/gentleman/plugins/compression)
 
 gentleman's plugin to disable and customize data compression in HTTP requests/responses.
 
@@ -10,7 +10,7 @@ go get -u gopkg.in/h2non/gentleman.v0/plugins/compression
 
 ## API
 
-See [godoc](https://godoc.org/github.com/h2non/gentleman) reference.
+See [godoc](https://godoc.org/github.com/h2non/gentleman/plugins/compression) reference.
 
 ## Example
 
