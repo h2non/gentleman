@@ -18,7 +18,7 @@ go get -u gopkg.in/h2non/gentleman.v0
 - Strong extensibility capatabilities.
 - Multiplexer based on composition.
 - Easy to configure and use.
-- Built-in HTTP convenient helpers and abstractions.
+- Convenient helpers and abstractions.
 - Dependency free.
 
 ## Plugins
