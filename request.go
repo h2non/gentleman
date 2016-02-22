@@ -187,8 +187,8 @@ func (r *Request) Clone() *Request {
 	return req
 }
 
-// NewDefaultTransport returns a new http.Transport with the same default values
-// as http.DefaultTransport
+// NewDefaultTransport returns a new http.Transport with default values
+// based on the given net.Dialer.
 func NewDefaultTransport(dialer *net.Dialer) *http.Transport {
 	transport := &http.Transport{
 		Proxy:               http.ProxyFromEnvironment,

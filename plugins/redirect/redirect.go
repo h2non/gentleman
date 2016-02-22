@@ -2,8 +2,8 @@ package redirect
 
 import (
 	"errors"
-	"gopkg.in/h2non/gentleman.v0/context"
-	"gopkg.in/h2non/gentleman.v0/plugin"
+	c "gopkg.in/h2non/gentleman.v0/context"
+	p "gopkg.in/h2non/gentleman.v0/plugin"
 	"net/http"
 	"strings"
 )
@@ -44,8 +44,8 @@ type Options struct {
 
 // Config defines in the request http.Client the redirect
 // policy based on the given options.
-func Config(opts Options) plugin.Plugin {
-	return plugin.NewRequestPlugin(func(ctx *context.Context, h context.Handler) {
+func Config(opts Options) p.Plugin {
+	return p.NewRequestPlugin(func(ctx *c.Context, h c.Handler) {
 		ctx.Client.CheckRedirect = func(req *http.Request, pool []*http.Request) error {
 			return redirectPolicy(opts, req, pool)
 		}
@@ -54,8 +54,8 @@ func Config(opts Options) plugin.Plugin {
 }
 
 // Limit defines in the maximum number of redirects that http.Client should follow.
-func Limit(limit int) plugin.Plugin {
-	return plugin.NewRequestPlugin(func(ctx *context.Context, h context.Handler) {
+func Limit(limit int) p.Plugin {
+	return p.NewRequestPlugin(func(ctx *c.Context, h c.Handler) {
 		ctx.Client.CheckRedirect = func(req *http.Request, pool []*http.Request) error {
 			return redirectPolicy(Options{Limit: limit}, req, pool)
 		}

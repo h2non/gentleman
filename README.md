@@ -1,6 +1,6 @@
-# gentleman [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/github/tag/h2non/gentleman.svg)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman?status.svg)](https://godoc.org/github.com/h2non/gentleman) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman)](https://goreportcard.com/report/github.com/h2non/gentleman)
+# gentleman [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/github/tag/h2non/gentleman.svg)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman?status.svg)](https://godoc.org/github.com/h2non/gentleman) [![Coverage Status](https://coveralls.io/repos/github/h2non/gentleman/badge.svg?branch=master)](https://coveralls.io/github/h2non/gentleman?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman)](https://goreportcard.com/report/github.com/h2non/gentleman)
 
-Plugin-driven library to create rich, versatile and composable HTTP clients in [Go](http://golang.org).
+Plugin-driven, middleware-oriented library to easily create rich, versatile and composable HTTP clients in [Go](http://golang.org).
 
 **Note**: work in progress, interface contract may change at this time.
 
@@ -14,13 +14,14 @@ go get -u gopkg.in/h2non/gentleman.v0
 
 ## Goals
 
-- Plugin driven, middleware based.
+- Plugin driven.
 - Simple and expressive API.
-- Idiomatic built on top of Go `net/http` package.
-- Strong extensibility capatabilities.
-- Multiplexer based on composition.
+- Idiomatic built on top of `net/http` package.
+- Strong extensibility capabilities.
+- Control-flow capable middleware layer to manage full HTTP live cycle.
+- Built-in multiplexer with easy composition features.
 - Easy to configure and use.
-- Convenient helpers and abstractions.
+- Convenient helpers and abstractions over HTTP primitives in Go.
 - Dependency free.
 
 ## Plugins
@@ -95,7 +96,7 @@ go get -u gopkg.in/h2non/gentleman.v0
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
+    <td><img src="https://img.shields.io/badge/api-beta-green.svg?style=flat" /></td>
     <td><img src="https://travis-ci.org/h2non/gentleman.png" /></td> 
     <td>Helpers to define enable/disable HTTP compression</td>
   </tr>
@@ -109,6 +110,17 @@ go get -u gopkg.in/h2non/gentleman.v0
     <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
     <td><img src="https://travis-ci.org/h2non/gentleman.png" /></td> 
     <td>Manage HTTP headers easily</td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/multipart">multipart</a></td>
+    <td>
+      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/multipart">
+        <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
+      </a>
+    </td>
+    <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
+    <td><img src="https://travis-ci.org/h2non/gentleman.png" /></td> 
+    <td>Create multipart forms easily. Supports files and custom fields</td>
   </tr>
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/proxy">proxy</a></td>
@@ -188,41 +200,17 @@ go get -u gopkg.in/h2non/gentleman.v0
 
 See [godoc reference](https://godoc.org/github.com/h2non/gentleman) for detailed API documentation.
 
+#### Subpackages
+
+- [plugin](https://godoc.org/github.com/h2non/gentlemantree/master/plugin) - [reference](https://godoc.org/github.com/h2non/ - gentleman) - Plugin layer for gentleman.
+- [mux](https://godoc.org/github.com/h2non/gentleman/tree/master/mux) - [reference](https://godoc.org/github.com/h2non/mux) - HTTP client multiplexer with built-in matchers.
+- [middleware](https://godoc.org/github.com/h2non/gentleman/tree/master/middleware) - [reference](https://godoc.org/github.com/h2non/middleware) - Middleware layer used by gentleman.
+- [context](https://godoc.org/github.com/h2non/gentleman/tree/master/context) - [reference](https://godoc.org/github.com/h2non/context) - HTTP context implementation for gentleman's middleware.
+- [utils](https://godoc.org/github.com/h2non/gentleman/tree/master/utils) - [reference](https://godoc.org/github.com/h2non/utils) - HTTP utilities used internally.
+
 ## Examples
 
 See [examples](https://github.com/h2non/gentleman/blob/master/_examples) directory for featured use case examples.
-
-<!--
-```go
-import (
-  "fmt"
-  "net/http"
-  "gopkg.in/h2non/gentleman.v0"
-  "gopkg.in/h2non/gentleman.v0/plugins"
-)
-
-client := gentleman.New()
-
-client.UseRequest(plugins.Cookies())
-client.UseRequest(plugins.Timeout(3000))
-client.UseRequest(plugins.Authenticate("foo:s3cr3t"))
-client.UseRequest(plugins.ContentType("application/json"))
-
-client.UseResponse(plugins.BodyParser())
-client.UseResponse(plugins.ErrorHandler())
-client.UseResponse(plugins.Retry(3)))
-
-// Custom middleware
-client.UseResponse(func (ctx *gentleman.Context, h gentleman.Handler) {
-  // ...
-})
-
-res, ctx, err := client.Get("/hello")
-if res.StatusCode != 200 {
-  fmt.Printf("Error: %s", res.StatusCode)
-}
-```
--->
 
 ## License 
 

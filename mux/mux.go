@@ -6,19 +6,9 @@ import (
 	"gopkg.in/h2non/gentleman.v0/plugin"
 )
 
-// Matcher represent the function interface implemented by matchers
-type Matcher func(ctx *c.Context) bool
-
-// Method return a new multiplexer who matches an incoming HTTP request by the given method.
-func Method(name string) *Mux {
-	return Match(func(ctx *c.Context) bool {
-		return ctx.GetString("$phase") == "request" && ctx.Request.Method == name
-	})
-}
-
 // Mux is a HTTP request/response/error multiplexer who implements both
 // middleware and plugin interfaces.
-// It has been designed for easy plugin based composition based on HTTP matchers.
+// It has been designed for easy plugin composition based on HTTP matchers/filters.
 type Mux struct {
 	*plugin.Layer
 
