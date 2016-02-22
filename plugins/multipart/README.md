@@ -27,8 +27,9 @@ func main() {
   // Create a new client
   cli := gentleman.New()
 
-  // Remove a header
-  cli.Use(headers.Del("User-Agent"))
+  // Create a text based form fields
+  fields := map[string]string{"foo": "bar", "bar": "baz"}
+  cli.Use(multipart.Fields(fields))
 
   // Perform the request
   res, err := cli.Request().Method("POST").URL("http://httpbin.org/post").End()
