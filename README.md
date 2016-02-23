@@ -42,7 +42,7 @@ go get -u gopkg.in/h2non/gentleman.v0
       </a>
     </td>
     <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
-    <td><a href="https://travis-ci.org/h2non/gentleman.png"><img src="https://travis-ci.org/h2non/gentleman.png" /</a></td>
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /</a></td>
     <td>Easily declare URL, base URL and path values in HTTP requests</td>
   </tr>
   <tr>
@@ -53,7 +53,7 @@ go get -u gopkg.in/h2non/gentleman.v0
       </a>
     </td>
     <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
-    <td><a href="https://travis-ci.org/h2non/gentleman.png"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Declare authorization headers in your requests</td>
   </tr>
   <tr>
@@ -64,7 +64,7 @@ go get -u gopkg.in/h2non/gentleman.v0
       </a>
     </td>
     <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
-    <td><a href="https://travis-ci.org/h2non/gentleman.png"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Easily define bodies based on JSON, XML, strings, buffers or streams</td>
   </tr>
   <tr>
@@ -75,7 +75,7 @@ go get -u gopkg.in/h2non/gentleman.v0
       </a>
     </td>
     <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
-    <td><a href="https://travis-ci.org/h2non/gentleman.png"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Define body MIME type by alias</td>
   </tr>
   <tr>
@@ -86,7 +86,7 @@ go get -u gopkg.in/h2non/gentleman.v0
       </a>
     </td>
     <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
-    <td><a href="https://travis-ci.org/h2non/gentleman.png"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Declare and store HTTP cookies easily</td>
   </tr>
   <tr>
@@ -97,7 +97,7 @@ go get -u gopkg.in/h2non/gentleman.v0
       </a>
     </td>
     <td><img src="https://img.shields.io/badge/api-beta-green.svg?style=flat" /></td>
-    <td><a href="https://travis-ci.org/h2non/gentleman.png"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Helpers to define enable/disable HTTP compression</td>
   </tr>
   <tr>
@@ -108,7 +108,7 @@ go get -u gopkg.in/h2non/gentleman.v0
       </a>
     </td>
     <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
-    <td><a href="https://travis-ci.org/h2non/gentleman.png"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Manage HTTP headers easily</td>
   </tr>
   <tr>
@@ -119,7 +119,7 @@ go get -u gopkg.in/h2non/gentleman.v0
       </a>
     </td>
     <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
-    <td><a href="https://travis-ci.org/h2non/gentleman.png"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Create multipart forms easily. Supports files and custom fields</td>
   </tr>
   <tr>
@@ -130,7 +130,7 @@ go get -u gopkg.in/h2non/gentleman.v0
       </a>
     </td>
     <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
-    <td><a href="https://travis-ci.org/h2non/gentleman.png"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Configure HTTP proxy servers</td>
   </tr>
   <tr>
@@ -141,7 +141,7 @@ go get -u gopkg.in/h2non/gentleman.v0
       </a>
     </td>
     <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
-    <td><a href="https://travis-ci.org/h2non/gentleman.png"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Easily manage query params</td>
   </tr>
   <tr>
@@ -152,7 +152,7 @@ go get -u gopkg.in/h2non/gentleman.v0
       </a>
     </td>
     <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
-    <td><a href="https://travis-ci.org/h2non/gentleman.png"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Easily configure a custom redirect policy</td>
   </tr>
   <tr>
@@ -163,7 +163,7 @@ go get -u gopkg.in/h2non/gentleman.v0
       </a>
     </td>
     <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
-    <td><a href="https://travis-ci.org/h2non/gentleman.png"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Easily configure the HTTP timeouts (request, dial, TLS...)</td>
   </tr>
   <tr>
@@ -174,7 +174,7 @@ go get -u gopkg.in/h2non/gentleman.v0
       </a>
     </td>
     <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
-    <td><a href="https://travis-ci.org/h2non/gentleman.png"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Define a custom HTTP transport easily</td>
   </tr>
   <tr>
@@ -185,7 +185,7 @@ go get -u gopkg.in/h2non/gentleman.v0
       </a>
     </td>
     <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
-    <td><a href="https://travis-ci.org/h2non/gentleman.png"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Configure the TLS options used by the HTTP transport</td>
   </tr>
 </table>
