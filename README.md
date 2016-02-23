@@ -120,7 +120,7 @@ go get -u gopkg.in/h2non/gentleman.v0
     </td>
     <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
-    <td>Create multipart forms easily. Supports files and custom fields</td>
+    <td>Create multipart forms easily. Supports files and text fields</td>
   </tr>
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/proxy">proxy</a></td>

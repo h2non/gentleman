@@ -6,15 +6,6 @@ import (
 	"gopkg.in/h2non/gentleman.v0/plugin"
 )
 
-// NewContext is a convenient alias to context.New factory.
-var NewContext = context.New
-
-// NewHandler is a convenient alias to context.NewHandler factory.
-var NewHandler = context.NewHandler
-
-// NewMiddleware is a convenient alias to middleware.New factory.
-var NewMiddleware = middleware.New
-
 // Client represents a high-level HTTP client entity.
 type Client struct {
 	// Client entity can inherit behavior from a parent Client.

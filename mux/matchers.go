@@ -2,7 +2,9 @@ package mux
 
 import (
 	c "gopkg.in/h2non/gentleman.v0/context"
+	types "gopkg.in/h2non/gentleman.v0/plugins/bodytype"
 	"regexp"
+	"strings"
 )
 
 // Matcher represent the function interface implemented by matchers
@@ -99,6 +101,20 @@ func ResponseHeader(key, pattern string) *Mux {
 		}
 		matched, _ := regexp.MatchString(pattern, ctx.Response.Header.Get(key))
 		return matched
+	})
+}
+
+// Type returns a new multiplexer who matches an HTTP response
+// Content-Type header field based on the given type string.
+func Type(kind string) *Mux {
+	return Match(func(ctx *c.Context) bool {
+		if ctx.GetString("$phase") != "response" {
+			return false
+		}
+		if value, ok := types.Types[kind]; ok {
+			kind = value
+		}
+		return strings.Contains(ctx.Response.Header.Get("Content-Type"), kind)
 	})
 }
 
