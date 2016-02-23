@@ -2,7 +2,6 @@ package multipart
 
 import (
 	"bytes"
-	"fmt"
 	"github.com/nbio/st"
 	"gopkg.in/h2non/gentleman.v0/context"
 	"io/ioutil"
@@ -61,14 +60,13 @@ func TestData(t *testing.T) {
 	reader := bytes.NewReader([]byte("hello world"))
 	fields := map[string]string{"foo": "data=bar", "bar": "data=baz"}
 	data := FormData{
-		Files: []FormFile{FormFile{Name: "foo", Reader: reader}},
+		Files: []FormFile{{Name: "foo", Reader: reader}},
 		Data:  fields,
 	}
 
 	Data(data).Request(ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	body, _ := ioutil.ReadAll(ctx.Request.Body)
-	fmt.Printf(">> %s", body)
 	st.Expect(t, match(body, `Content-Disposition: form-data; name="foo"`), true)
 	st.Expect(t, match(body, `Content-Disposition: form-data; name="bar"`), true)
 	st.Expect(t, match(body, "data=bar"), true)
