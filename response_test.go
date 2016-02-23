@@ -56,7 +56,7 @@ func TestResponseBuildStatusCodes(t *testing.T) {
 		ctx.Response.StatusCode = test.code
 		res, _ := buildResponse(ctx)
 		if res.StatusCode != test.code {
-			t.Errorf("Invalid status code: %s", res.StatusCode)
+			t.Errorf("Invalid status code: %d", res.StatusCode)
 		}
 		if res.Ok != test.ok {
 			t.Error("Invalid Ok field")
