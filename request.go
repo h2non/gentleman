@@ -1,7 +1,6 @@
 package gentleman
 
 import (
-	"bytes"
 	"errors"
 	"gopkg.in/h2non/gentleman.v0/context"
 	"gopkg.in/h2non/gentleman.v0/middleware"
@@ -10,10 +9,8 @@ import (
 	"gopkg.in/h2non/gentleman.v0/plugins/url"
 	"gopkg.in/h2non/gentleman.v0/utils"
 	"io"
-	"io/ioutil"
 	"net"
 	"net/http"
-	"strings"
 	"time"
 )
 

@@ -15,7 +15,8 @@ var NewHandler = context.NewHandler
 // NewMiddleware is a convenient alias to middleware.New factory.
 var NewMiddleware = middleware.New
 
-// Client represents a high-level HTTP client entity.
+// Client represents a high-level HTTP client entity capable
+// with a built-in middleware and context.
 type Client struct {
 	// Client entity can inherit behavior from a parent Client.
 	Parent *Client
@@ -103,7 +104,7 @@ func (c *Client) Set(key, value string) *Client {
 
 // Method defines a the default HTTP method used by outgoing client requests.
 func (c *Client) Method(name string) *Client {
-	c.Context.Use(func(ctx *context.Context, h context.Handler) {
+	c.Middleware.UseRequest(func(ctx *context.Context, h context.Handler) {
 		ctx.Request.Method = name
 		h.Next(ctx)
 	})
