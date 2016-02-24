@@ -28,7 +28,7 @@ func TestRequest(t *testing.T) {
 		h.Next(ctx)
 	})
 
-	res, err := req.End()
+	res, err := req.Send()
 	if err != nil {
 		t.Errorf("Request error: %s", err)
 	}
@@ -62,7 +62,7 @@ func TestMiddlewareErrorInjectionAndInterception(t *testing.T) {
 		h.Next(ctx)
 	})
 
-	res, err := req.End()
+	res, err := req.Send()
 	if err != nil {
 		t.Errorf("Request error: %s", err)
 	}
@@ -94,7 +94,7 @@ func TestRequestMux(t *testing.T) {
 		h.Next(ctx)
 	})
 
-	res, err := req.End()
+	res, err := req.Send()
 	st.Expect(t, err, nil)
 	st.Expect(t, res.StatusCode, 200)
 	st.Expect(t, res.RawRequest.Header.Get("mux"), "true")

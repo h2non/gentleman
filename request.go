@@ -120,49 +120,31 @@ func (r *Request) Method(method string) *Request {
 	return r
 }
 
-// Body defines the HTTP request body data based on a io.Reader stream
-func (r *Request) Body(body io.Reader) *Request {
-	rc, ok := body.(io.ReadCloser)
-	if !ok && body != nil {
-		rc = ioutil.NopCloser(body)
-	}
-
-	req := r.Context.Request
-	if body != nil {
-		switch v := body.(type) {
-		case *bytes.Buffer:
-			req.ContentLength = int64(v.Len())
-		case *bytes.Reader:
-			req.ContentLength = int64(v.Len())
-		case *strings.Reader:
-			req.ContentLength = int64(v.Len())
-		}
-	}
-
-	r.Context.Request.Body = rc
-	return r
-}
-
-// URL parses and defines the URL to be used by the HTTP client
+// URL parses and defines the URL to be used in the HTTP request.
 func (r *Request) URL(uri string) *Request {
 	r.Use(url.URL(uri))
 	return r
 }
 
-// SetHeader sets a new header field by name and value
-func (r *Request) SetHeader(name, value string) *Request {
+// Path defines the request URL path to be used in the HTTP request.
+func (r *Request) Path(uri string) *Request {
+	r.Use(url.URL(uri))
+	return r
+}
+
+// Set sets a new header field by name and value.
+func (r *Request) Set(name, value string) *Request {
 	r.Context.Request.Header.Set(name, value)
 	return r
 }
 
-// UnsetHeader a header field by name
-func (r *Request) UnsetHeader(name string) *Request {
-	r.Context.Request.Header.Del(name)
+// Body defines the HTTP request body data based on a io.Reader stream.
+func (r *Request) Body(body io.Reader) *Request {
 	return r
 }
 
-// End is an alias to Do()
-func (r *Request) End() (*Response, error) {
+// Send is an alias to Do(), which executes the current request.
+func (r *Request) Send() (*Response, error) {
 	return r.Do()
 }
 

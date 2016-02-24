@@ -10,15 +10,8 @@ import (
 // Matcher represent the function interface implemented by matchers
 type Matcher func(ctx *c.Context) bool
 
-// Method returns a new multiplexer who matches an HTTP request based on the given method.
-func Method(name string) *Mux {
-	return Match(func(ctx *c.Context) bool {
-		return ctx.GetString("$phase") == "request" && ctx.Request.Method == name
-	})
-}
-
-// Methods returns a new multiplexer who matches an HTTP request based on the given methods.
-func Methods(methods []string) *Mux {
+// Method returns a new multiplexer who matches an HTTP request based on the given method/s.
+func Method(methods ...string) *Mux {
 	return Match(func(ctx *c.Context) bool {
 		if ctx.GetString("$phase") != "request" {
 			return false
@@ -119,10 +112,18 @@ func Type(kind string) *Mux {
 }
 
 // Status returns a new multiplexer who matches an HTTP response
-// status code based on the given status.
-func Status(code int) *Mux {
+// status code based on the given status codes.
+func Status(codes ...int) *Mux {
 	return Match(func(ctx *c.Context) bool {
-		return ctx.GetString("$phase") == "response" && ctx.Response.StatusCode == code
+		if ctx.GetString("$phase") != "response" {
+			return false
+		}
+		for _, code := range codes {
+			if ctx.Response.StatusCode == code {
+				return true
+			}
+		}
+		return false
 	})
 }
 
@@ -131,5 +132,21 @@ func Status(code int) *Mux {
 func StatusRange(start, end int) *Mux {
 	return Match(func(ctx *c.Context) bool {
 		return ctx.GetString("$phase") == "response" && ctx.Response.StatusCode >= start && ctx.Response.StatusCode <= end
+	})
+}
+
+// Error returns a new multiplexer who matches errors originated
+// in the client or in the server.
+func Error() *Mux {
+	return Match(func(ctx *c.Context) bool {
+		return (ctx.GetString("$phase") == "error" && ctx.Error != nil) ||
+			(ctx.GetString("$phase") == "response" && ctx.Response.StatusCode >= 500)
+	})
+}
+
+// ServerError returns a new multiplexer who matches response errors by the server.
+func ServerError() *Mux {
+	return Match(func(ctx *c.Context) bool {
+		return ctx.GetString("$phase") == "response" && ctx.Response.StatusCode >= 500
 	})
 }

@@ -10,6 +10,7 @@ import (
 // middleware and plugin interfaces.
 // It has been designed for easy plugin composition based on HTTP matchers/filters.
 type Mux struct {
+	// Mux also implements a plugin capable interface.
 	*plugin.Layer
 
 	// Matchers stores a list of matcher functions.
@@ -31,9 +32,9 @@ func New() *Mux {
 }
 
 // Match creates a new multiplexer based on a given matcher function.
-func Match(matcher Matcher) *Mux {
+func Match(matchers ...Matcher) *Mux {
 	mx := New()
-	mx.AddMatcher(matcher)
+	mx.AddMatcher(matchers...)
 	return mx
 }
 
@@ -49,8 +50,8 @@ func (m *Mux) Match(ctx *c.Context) bool {
 }
 
 // AddMatcher adds a new matcher function in the current multiplexer matchers stack.
-func (m *Mux) AddMatcher(matcher Matcher) *Mux {
-	m.Matchers = append(m.Matchers, matcher)
+func (m *Mux) AddMatcher(matchers ...Matcher) *Mux {
+	m.Matchers = append(m.Matchers, matchers...)
 	return m
 }
 

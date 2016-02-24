@@ -85,30 +85,60 @@ func (c *Client) Head() *Request {
 	return req
 }
 
+// URL defines the URL for client requests.
+// Useful to define at client level the base URL and path.
+func (c *Client) URL(uri string) *Client {
+	return c
+}
+
+// BasePath defines the URL base path for client requests.
+func (c *Client) BasePath(base string) *Client {
+	return c
+}
+
+// Set defines a new HTTP header field by key and value in the outgoing client requests.
+func (c *Client) Set(key, value string) *Client {
+	return c
+}
+
+// Method defines a the default HTTP method used by outgoing client requests.
+func (c *Client) Method(name string) *Client {
+	c.Context.Use(func(ctx *context.Context, h context.Handler) {
+		ctx.Request.Method = name
+		h.Next(ctx)
+	})
+	return c
+}
+
 // Use attaches a new plugin to the middleware stack.
-func (c *Client) Use(p plugin.Plugin) {
+func (c *Client) Use(p plugin.Plugin) *Client {
 	c.Middleware.Use(p)
+	return c
 }
 
 // UseRequest attaches a new middleware function for request phase.
-func (c *Client) UseRequest(fn context.HandlerFunc) {
+func (c *Client) UseRequest(fn context.HandlerFunc) *Client {
 	c.Middleware.UseRequest(fn)
+	return c
 }
 
 // UseResponse attaches a new middleware function for response phase.
-func (c *Client) UseResponse(fn context.HandlerFunc) {
+func (c *Client) UseResponse(fn context.HandlerFunc) *Client {
 	c.Middleware.UseResponse(fn)
+	return c
 }
 
 // UseError attaches a new middleware function for error phase.
-func (c *Client) UseError(fn context.HandlerFunc) {
+func (c *Client) UseError(fn context.HandlerFunc) *Client {
 	c.Middleware.UseError(fn)
+	return c
 }
 
 // UseParent uses another Client as parent
 // inheriting it's middleware stack and configuration.
-func (c *Client) UseParent(parent *Client) {
+func (c *Client) UseParent(parent *Client) *Client {
 	c.Parent = parent
 	c.Context.UseParent(parent.Context)
 	c.Middleware.UseParent(parent.Middleware)
+	return c
 }

@@ -2,7 +2,7 @@
 
 Plugin-driven, middleware-oriented library to easily create rich, versatile and composable HTTP clients in [Go](http://golang.org).
 
-**Note**: work in progress, interface contract may change at this time.
+**Note**: work in progress, interface contract may vary at this time.
 
 <img src="http://s10.postimg.org/5e31ox1ft/gentleman.png" align="center" height="320" />
 
@@ -11,6 +11,9 @@ Plugin-driven, middleware-oriented library to easily create rich, versatile and 
 ```bash
 go get -u gopkg.in/h2non/gentleman.v0
 ```
+
+Note: I strongly recommend you to use `gopkg.in` when depending on third-party packages to prevent unexpected breaks of the interface contract in upcoming major versions of the package. 
+In minor versions the contract will be strictly maintained.
 
 ## Goals
 
@@ -202,15 +205,15 @@ See [godoc reference](https://godoc.org/github.com/h2non/gentleman) for detailed
 
 #### Subpackages
 
-- [plugin](https://godoc.org/github.com/h2non/gentlemantree/master/plugin) - [reference](https://godoc.org/github.com/h2non/ - gentleman) - Plugin layer for gentleman.
-- [mux](https://godoc.org/github.com/h2non/gentleman/tree/master/mux) - [reference](https://godoc.org/github.com/h2non/mux) - HTTP client multiplexer with built-in matchers.
-- [middleware](https://godoc.org/github.com/h2non/gentleman/tree/master/middleware) - [reference](https://godoc.org/github.com/h2non/middleware) - Middleware layer used by gentleman.
-- [context](https://godoc.org/github.com/h2non/gentleman/tree/master/context) - [reference](https://godoc.org/github.com/h2non/context) - HTTP context implementation for gentleman's middleware.
-- [utils](https://godoc.org/github.com/h2non/gentleman/tree/master/utils) - [reference](https://godoc.org/github.com/h2non/utils) - HTTP utilities used internally.
+- [plugin](https://github.com/h2non/gentleman/tree/master/plugin) - [reference](https://godoc.org/github.com/h2non/gentleman/plugin) - Plugin layer for gentleman.
+- [mux](https://github.com/h2non/gentleman/tree/master/mux) - [reference](https://godoc.org/github.com/h2non/gentleman/mux) - HTTP client multiplexer with built-in matchers.
+- [middleware](https://github.com/h2non/gentleman/tree/master/middleware) - [reference](https://godoc.org/github.com/h2non/gentleman/middleware) - Middleware layer used by gentleman.
+- [context](https://github.com/h2non/gentleman/tree/master/context) - [reference](https://godoc.org/github.com/h2non/gentleman/context) - HTTP context implementation for gentleman's middleware.
+- [utils](https://github.com/h2non/gentleman/tree/master/utils) - [reference](https://godoc.org/github.com/h2non/gentleman/utils) - HTTP utilities internally used.
 
 ## Examples
 
-See [examples](https://github.com/h2non/gentleman/blob/master/_examples) directory for featured use case examples.
+See [examples](https://github.com/h2non/gentleman/blob/master/_examples) directory for featured examples.
 
 ## License 
 
