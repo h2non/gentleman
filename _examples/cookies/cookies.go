@@ -17,7 +17,7 @@ func main() {
 	cli.Use(cookies.Jar())
 
 	// Perform the request
-	res, err := cli.Request().URL("http://httpbin.org/cookies").End()
+	res, err := cli.Request().URL("http://httpbin.org/cookies").Send()
 	if err != nil {
 		fmt.Printf("Request error: %s\n", err)
 		return

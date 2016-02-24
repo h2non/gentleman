@@ -1,4 +1,4 @@
-# gentleman/url [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/github/tag/h2non/gentleman.svg)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman/plugins/url?status.svg)](https://godoc.org/github.com/h2non/gentleman/plugins/url) [![API](https://img.shields.io/badge/api-beta-green.svg?style=flat)](https://godoc.org/github.com/h2non/gentleman/plugins/url) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman/plugins/url)](https://goreportcard.com/report/github.com/h2non/gentleman/plugins/url)
+# gentleman/url [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GoDoc](https://godoc.org/github.com/h2non/gentleman/plugins/url?status.svg)](https://godoc.org/github.com/h2non/gentleman/plugins/url) [![API](https://img.shields.io/badge/api-beta-green.svg?style=flat)](https://godoc.org/github.com/h2non/gentleman/plugins/url) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman/plugins/url)](https://goreportcard.com/report/github.com/h2non/gentleman/plugins/url)
 
 gentleman's plugin to define and manage URL values in HTTP requests.
 
@@ -39,7 +39,7 @@ func main() {
   cli.Use(url.Param("resource", "headers"))
 
   // Perform the request
-  res, err := cli.Request().End()
+  res, err := cli.Request().Send()
   if err != nil {
     fmt.Printf("Request error: %s\n", err)
     return

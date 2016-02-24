@@ -12,8 +12,7 @@ Plugin-driven, middleware-oriented library to easily create rich, versatile and 
 go get -u gopkg.in/h2non/gentleman.v0
 ```
 
-Note: I strongly recommend you to use `gopkg.in` when depending on third-party packages to prevent unexpected breaks of the interface contract in upcoming major versions of the package. 
-In minor versions the contract will be strictly maintained.
+Note: I strongly recommend you to use `gopkg.in` when depending on third-party packages to prevent unexpected breaks of the interface contract in upcoming major versions of the package.
 
 ## Goals
 

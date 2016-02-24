@@ -18,7 +18,7 @@ func main() {
 	}).Use(url.URL("http://httpbin.org/headers")))
 
 	// Perform the request
-	res, err := cli.Request().End()
+	res, err := cli.Request().Send()
 	if err != nil {
 		fmt.Printf("Request error: %s\n", err)
 		return

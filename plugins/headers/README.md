@@ -1,4 +1,4 @@
-# gentleman/headers [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/github/tag/h2non/gentleman.svg)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman/plugins/headers?status.svg)](https://godoc.org/github.com/h2non/gentleman/plugins/headers) [![API](https://img.shields.io/badge/api-beta-green.svg?style=flat)](https://godoc.org/github.com/h2non/gentleman/plugins/headers) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman)](https://goreportcard.com/report/github.com/h2non/gentleman)
+# gentleman/headers [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GoDoc](https://godoc.org/github.com/h2non/gentleman/plugins/headers?status.svg)](https://godoc.org/github.com/h2non/gentleman/plugins/headers) [![API](https://img.shields.io/badge/api-beta-green.svg?style=flat)](https://godoc.org/github.com/h2non/gentleman/plugins/headers) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman)](https://goreportcard.com/report/github.com/h2non/gentleman)
 
 gentleman's plugin to easily manage HTTP headers.
 
@@ -34,7 +34,7 @@ func main() {
   cli.Use(headers.Del("User-Agent"))
 
   // Perform the request
-  res, err := cli.Request().URL("http://httpbin.org/headers").End()
+  res, err := cli.Request().URL("http://httpbin.org/headers").Send()
   if err != nil {
     fmt.Printf("Request error: %s\n", err)
     return

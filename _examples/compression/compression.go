@@ -14,7 +14,7 @@ func main() {
 	cli.Use(compression.Disable())
 
 	// Perform the request
-	res, err := cli.Request().URL("http://httpbin.org/gzip").End()
+	res, err := cli.Request().URL("http://httpbin.org/gzip").Send()
 	if err != nil {
 		fmt.Printf("Request error: %s\n", err)
 		return

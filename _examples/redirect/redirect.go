@@ -14,7 +14,7 @@ func main() {
 	cli.Use(redirect.Limit(20))
 
 	// Perform the request
-	res, err := cli.Request().URL("http://httpbin.org/headers").End()
+	res, err := cli.Request().URL("http://httpbin.org/headers").Send()
 	if err != nil {
 		fmt.Printf("Request error: %s\n", err)
 		return

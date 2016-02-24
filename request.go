@@ -44,7 +44,9 @@ var (
 	DefaultTransport = NewDefaultTransport(DefaultDialer)
 )
 
-// Request represents an basic HTTP structure entity
+// Request HTTP entity for gentleman.
+// Provides middleware capabilities, built-in context
+// and convenient methods to easily setup request params.
 type Request struct {
 	// Stores if the request was already dispatched
 	dispatched bool

@@ -17,7 +17,7 @@ func main() {
 	cli.Use(headers.Del("User-Agent"))
 
 	// Perform the request
-	res, err := cli.Request().URL("http://httpbin.org/headers").End()
+	res, err := cli.Request().URL("http://httpbin.org/headers").Send()
 	if err != nil {
 		fmt.Printf("Request error: %s\n", err)
 		return

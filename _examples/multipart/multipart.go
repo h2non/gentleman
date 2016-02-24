@@ -15,7 +15,7 @@ func main() {
 	cli.Use(multipart.Fields(fields))
 
 	// Perform the request
-	res, err := cli.Request().Method("POST").URL("http://httpbin.org/post").End()
+	res, err := cli.Request().Method("POST").URL("http://httpbin.org/post").Send()
 	if err != nil {
 		fmt.Printf("Request error: %s\n", err)
 		return

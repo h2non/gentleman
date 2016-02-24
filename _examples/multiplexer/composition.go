@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"gopkg.in/h2non/gentleman.v0"
-	"gopkg.in/h2non/gentleman.v0/plugins/query"
+	"gopkg.in/h2non/gentleman.v0/mux"
 	"gopkg.in/h2non/gentleman.v0/plugins/url"
 )
 
@@ -11,15 +11,17 @@ func main() {
 	// Create a new client
 	cli := gentleman.New()
 
-	// Define the base URL to use
-	cli.Use(url.BaseURL("http://httpbin.org"))
-	cli.Use(url.Path("/get"))
+	// Define the server url (must be first)
+	cli.Use(url.URL("http://httpbin.org"))
 
-	// Define a custom query param
-	cli.Use(query.Set("foo", "bar"))
+	// Create a new multiplexer based on multiple matchers
+	mx := mux.If(mux.Method("GET"), mux.Host("httpbin.org"))
 
-	// Remove a query param
-	cli.Use(query.Del("bar"))
+	// Attach a custom plugin on the multiplexer that will be executed if the matchers passes
+	mx.Use(url.Path("/headers"))
+
+	// Attach the multiplexer on the main client
+	cli.Use(mx)
 
 	// Perform the request
 	res, err := cli.Request().Send()

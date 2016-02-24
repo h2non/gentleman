@@ -49,7 +49,7 @@ func (m *Mux) Match(ctx *c.Context) bool {
 	return true
 }
 
-// AddMatcher adds a new matcher function in the current multiplexer matchers stack.
+// AddMatcher adds a new matcher function in the current mumultiplexer matchers stack.
 func (m *Mux) AddMatcher(matchers ...Matcher) *Mux {
 	m.Matchers = append(m.Matchers, matchers...)
 	return m

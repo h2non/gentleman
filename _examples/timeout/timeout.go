@@ -18,7 +18,7 @@ func main() {
 	cli.Use(timeout.Dial(5*time.Second, 30*time.Second))
 
 	// Perform the request
-	res, err := cli.Request().URL("http://httpbin.org/headers").End()
+	res, err := cli.Request().URL("http://httpbin.org/headers").Send()
 	if err != nil {
 		fmt.Printf("Request error: %s\n", err)
 		return

@@ -1,4 +1,4 @@
-# gentleman/cookies [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/github/tag/h2non/gentleman.svg)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman/plugins/cookies?status.svg)](https://godoc.org/github.com/h2non/gentleman/plugins/cookies) [![API](https://img.shields.io/badge/api-beta-green.svg?style=flat)](https://godoc.org/github.com/h2non/gentleman/plugins/cookies) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman)](https://goreportcard.com/report/github.com/h2non/gentleman)
+# gentleman/cookies [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GoDoc](https://godoc.org/github.com/h2non/gentleman/plugins/cookies?status.svg)](https://godoc.org/github.com/h2non/gentleman/plugins/cookies) [![API](https://img.shields.io/badge/api-beta-green.svg?style=flat)](https://godoc.org/github.com/h2non/gentleman/plugins/cookies) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman)](https://goreportcard.com/report/github.com/h2non/gentleman)
 
 gentleman's plugin to easily deal and manage cookies HTTP clients.
 
@@ -34,7 +34,7 @@ func main() {
   cli.Use(cookies.Jar())
 
   // Perform the request
-  res, err := cli.Request().URL("http://httpbin.org/cookies").End()
+  res, err := cli.Request().URL("http://httpbin.org/cookies").Send()
   if err != nil {
     fmt.Printf("Request error: %s\n", err)
     return
