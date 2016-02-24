@@ -1,7 +1,6 @@
-# gentleman/mux [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/github/tag/h2non/gentleman.svg)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman/mux?status.svg)](https://godoc.org/github.com/h2non/gentleman/mux) [![API](https://img.shields.io/badge/api-stable-green.svg?style=flat)](https://godoc.org/github.com/h2non/gentleman/mux)
+# gentleman/mux [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GoDoc](https://godoc.org/github.com/h2non/gentleman/mux?status.svg)](https://godoc.org/github.com/h2non/gentleman/mux) [![API](https://img.shields.io/badge/status-stable-green.svg?style=flat)](https://godoc.org/github.com/h2non/gentleman/mux) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman/mux)](https://goreportcard.com/report/github.com/h2non/gentleman/mux)
 
-A versatile HTTP client multiplexer with built-in matchers 
-and features for easy plugin composition.
+`mux` package implements a versatile HTTP client multiplexer with built-in matchers for easy plugin composition.
 
 ## Installation
 
