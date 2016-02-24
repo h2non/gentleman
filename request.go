@@ -6,6 +6,9 @@ import (
 	"gopkg.in/h2non/gentleman.v0/middleware"
 	"gopkg.in/h2non/gentleman.v0/mux"
 	"gopkg.in/h2non/gentleman.v0/plugin"
+	"gopkg.in/h2non/gentleman.v0/plugins/body"
+	"gopkg.in/h2non/gentleman.v0/plugins/bodytype"
+	"gopkg.in/h2non/gentleman.v0/plugins/multipart"
 	"gopkg.in/h2non/gentleman.v0/plugins/url"
 	"gopkg.in/h2non/gentleman.v0/utils"
 	"io"
@@ -126,8 +129,26 @@ func (r *Request) URL(uri string) *Request {
 }
 
 // Path defines the request URL path to be used in the HTTP request.
-func (r *Request) Path(uri string) *Request {
-	r.Use(url.URL(uri))
+func (r *Request) Path(path string) *Request {
+	r.Use(url.Path(path))
+	return r
+}
+
+// AddPath defines the request URL path to be used in the HTTP request.
+func (r *Request) AddPath(path string) *Request {
+	r.Use(url.AddPath(path))
+	return r
+}
+
+// Param replaces a path param based on the given param name and value.
+func (r *Request) Param(name, value string) *Request {
+	r.Use(url.Param(name, value))
+	return r
+}
+
+// Params replaces path params based on the given params key-value map.
+func (r *Request) Params(params map[string]string) *Request {
+	r.Use(url.Params(params))
 	return r
 }
 
@@ -137,12 +158,64 @@ func (r *Request) Set(name, value string) *Request {
 	return r
 }
 
-// Body defines the HTTP request body data based on a io.Reader stream.
-func (r *Request) Body(body io.Reader) *Request {
+// Type defines the Content-Type header field based on the given type name alias or value.
+// You can use the following content type aliases: json, xml, form, html, text and urlencoded.
+func (r *Request) Type(name string) *Request {
+	r.Use(bodytype.Set(name))
 	return r
 }
 
-// Send is an alias to Do(), which executes the current request.
+// Body defines the request body based on a io.Reader stream.
+func (r *Request) Body(reader io.Reader) *Request {
+	r.Use(body.Reader(reader))
+	return r
+}
+
+// BodyString defines the request body based on the given string.
+// If using this method, you should define the proper Content-Type header
+// representing the real content MIME type.
+func (r *Request) BodyString(data string) *Request {
+	r.Use(body.String(data))
+	return r
+}
+
+// JSON serializes and defines as request body based on the given input.
+// The proper Content-Type header will be transparently added for you.
+func (r *Request) JSON(data interface{}) *Request {
+	r.Use(body.JSON(data))
+	return r
+}
+
+// XML serializes and defines the request body based on the given input.
+// The proper Content-Type header will be transparently added for you.
+func (r *Request) XML(data interface{}) *Request {
+	r.Use(body.XML(data))
+	return r
+}
+
+// Form serializes and defines the request body as multipart/form-data
+// based on the given form data.
+func (r *Request) Form(data multipart.FormData) *Request {
+	r.Use(multipart.Data(data))
+	return r
+}
+
+// File serializes and defines the request body as multipart/form-data
+// containing one file field.
+func (r *Request) File(name string, reader io.Reader) *Request {
+	r.Use(multipart.File(name, reader))
+	return r
+}
+
+// Files serializes and defines the request body as multipart/form-data
+// containing the given file fields.
+func (r *Request) Files(files []multipart.FormFile) *Request {
+	r.Use(multipart.Files(files))
+	return r
+}
+
+// Send is an alias to Do(), which executes the current request
+// and returns the response.
 func (r *Request) Send() (*Response, error) {
 	return r.Do()
 }

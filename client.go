@@ -4,6 +4,8 @@ import (
 	"gopkg.in/h2non/gentleman.v0/context"
 	"gopkg.in/h2non/gentleman.v0/middleware"
 	"gopkg.in/h2non/gentleman.v0/plugin"
+	"gopkg.in/h2non/gentleman.v0/plugins/headers"
+	"gopkg.in/h2non/gentleman.v0/plugins/url"
 )
 
 // NewContext is a convenient alias to context.New factory.
@@ -86,28 +88,44 @@ func (c *Client) Head() *Request {
 	return req
 }
 
-// URL defines the URL for client requests.
-// Useful to define at client level the base URL and path.
-func (c *Client) URL(uri string) *Client {
-	return c
-}
-
-// BasePath defines the URL base path for client requests.
-func (c *Client) BasePath(base string) *Client {
-	return c
-}
-
-// Set defines a new HTTP header field by key and value in the outgoing client requests.
-func (c *Client) Set(key, value string) *Client {
-	return c
-}
-
 // Method defines a the default HTTP method used by outgoing client requests.
 func (c *Client) Method(name string) *Client {
 	c.Middleware.UseRequest(func(ctx *context.Context, h context.Handler) {
 		ctx.Request.Method = name
 		h.Next(ctx)
 	})
+	return c
+}
+
+// URL defines the URL for client requests.
+// Useful to define at client level the base URL and base path used by child requests.
+func (c *Client) URL(uri string) *Client {
+	c.Use(url.URL(uri))
+	return c
+}
+
+// BaseURL defines the URL schema and host for client requests.
+// Useful to define at client level the base URL used by client child requests.
+func (c *Client) BaseURL(uri string) *Client {
+	c.Use(url.URL(uri))
+	return c
+}
+
+// Path defines the URL base path for client requests.
+func (c *Client) Path(path string) *Client {
+	c.Use(url.Path(path))
+	return c
+}
+
+// Param replaces a path param based on the given param name and value.
+func (c *Client) Param(name, value string) *Client {
+	c.Use(url.Param(name, value))
+	return c
+}
+
+// Set sets a new HTTP header field by key and value in the outgoing client requests.
+func (c *Client) Set(key, value string) *Client {
+	c.Use(headers.Set(key, value))
 	return c
 }
 

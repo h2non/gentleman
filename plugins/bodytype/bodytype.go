@@ -17,8 +17,8 @@ var Types = map[string]string{
 	"form-data":  "application/x-www-form-urlencoded",
 }
 
-// Type defines an authorization basic header in the outgoing request
-func Type(name string) p.Plugin {
+// Set defines an authorization basic header in the outgoing request
+func Set(name string) p.Plugin {
 	return p.NewRequestPlugin(func(ctx *c.Context, h c.Handler) {
 		defineType(name, ctx.Request)
 		h.Next(ctx)

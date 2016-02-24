@@ -6,14 +6,6 @@ Plugin-driven, middleware-oriented library to easily create rich, versatile and 
 
 <img src="http://s10.postimg.org/5e31ox1ft/gentleman.png" align="center" height="320" />
 
-## Installation
-
-```bash
-go get -u gopkg.in/h2non/gentleman.v0
-```
-
-Note: I strongly recommend you to use `gopkg.in` when depending on third-party packages to prevent unexpected breaks of the interface contract in upcoming major versions of the package.
-
 ## Goals
 
 - Plugin driven.
@@ -23,8 +15,16 @@ Note: I strongly recommend you to use `gopkg.in` when depending on third-party p
 - Control-flow capable middleware layer to manage full HTTP live cycle.
 - Built-in multiplexer with easy composition features.
 - Easy to configure and use.
-- Convenient helpers and abstractions over HTTP primitives in Go.
+- Convenient helpers and abstractions over Go's HTTP primitives.
 - Dependency free.
+
+## Installation
+
+```bash
+go get -u gopkg.in/h2non/gentleman.v0
+```
+
+Note: I strongly recommend you to use `gopkg.in` when depending on third-party packages to prevent unexpected breaks of the interface contract in upcoming major versions of the package.
 
 ## Plugins
 
@@ -43,7 +43,7 @@ Note: I strongly recommend you to use `gopkg.in` when depending on third-party p
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
+    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /</a></td>
     <td>Easily declare URL, base URL and path values in HTTP requests</td>
   </tr>
@@ -54,7 +54,7 @@ Note: I strongly recommend you to use `gopkg.in` when depending on third-party p
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
+    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Declare authorization headers in your requests</td>
   </tr>
@@ -65,7 +65,7 @@ Note: I strongly recommend you to use `gopkg.in` when depending on third-party p
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
+    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Easily define bodies based on JSON, XML, strings, buffers or streams</td>
   </tr>
@@ -76,7 +76,7 @@ Note: I strongly recommend you to use `gopkg.in` when depending on third-party p
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
+    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Define body MIME type by alias</td>
   </tr>
@@ -87,7 +87,7 @@ Note: I strongly recommend you to use `gopkg.in` when depending on third-party p
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
+    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Declare and store HTTP cookies easily</td>
   </tr>
@@ -98,7 +98,7 @@ Note: I strongly recommend you to use `gopkg.in` when depending on third-party p
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/api-beta-green.svg?style=flat" /></td>
+    <td><img src="https://img.shields.io/badge/status-beta-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Helpers to define enable/disable HTTP compression</td>
   </tr>
@@ -109,7 +109,7 @@ Note: I strongly recommend you to use `gopkg.in` when depending on third-party p
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
+    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Manage HTTP headers easily</td>
   </tr>
@@ -120,7 +120,7 @@ Note: I strongly recommend you to use `gopkg.in` when depending on third-party p
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
+    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Create multipart forms easily. Supports files and text fields</td>
   </tr>
@@ -131,7 +131,7 @@ Note: I strongly recommend you to use `gopkg.in` when depending on third-party p
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
+    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Configure HTTP proxy servers</td>
   </tr>
@@ -142,7 +142,7 @@ Note: I strongly recommend you to use `gopkg.in` when depending on third-party p
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
+    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Easily manage query params</td>
   </tr>
@@ -153,7 +153,7 @@ Note: I strongly recommend you to use `gopkg.in` when depending on third-party p
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
+    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Easily configure a custom redirect policy</td>
   </tr>
@@ -164,7 +164,7 @@ Note: I strongly recommend you to use `gopkg.in` when depending on third-party p
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
+    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Easily configure the HTTP timeouts (request, dial, TLS...)</td>
   </tr>
@@ -175,7 +175,7 @@ Note: I strongly recommend you to use `gopkg.in` when depending on third-party p
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
+    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Define a custom HTTP transport easily</td>
   </tr>
@@ -186,7 +186,7 @@ Note: I strongly recommend you to use `gopkg.in` when depending on third-party p
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/api-stable-green.svg?style=flat" /></td>
+    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Configure the TLS options used by the HTTP transport</td>
   </tr>
