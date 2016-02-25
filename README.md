@@ -12,8 +12,8 @@ Take a look to the [examples](#examples) to get started.
 - Simple, expressive, fluent API.
 - Idiomatic built on top of `net/http` package.
 - Middleware layer that supports the whole HTTP life cycle.
-- Built-in multiplexer with easy composition features.
-- Strong extensibility capabilities via plugins.
+- Multiplexer for easy composition capabilities.
+- Strong extensibility via plugins.
 - Easy to configure and use.
 - Convenient helpers and abstractions over Go's HTTP primitives.
 - Built-in JSON, XML and multipart bodies serialization and parsing.
