@@ -188,7 +188,7 @@ func TestRequestTimeout(t *testing.T) {
 	req := NewRequest().URL(ts.URL)
 
 	req.UseRequest(func(ctx *context.Context, h context.Handler) {
-		ctx.Client.Timeout = 50 * time.Millisecond
+		ctx.Client.Timeout = 100 * time.Millisecond
 		h.Next(ctx)
 	})
 
