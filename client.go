@@ -158,7 +158,7 @@ func (c *Client) AddCookie(cookie *http.Cookie) *Client {
 	return c
 }
 
-// AddCookie sets a new cookie field by key and value.
+// SetCookies sets a new cookie field by key and value.
 // without overwriting any existent header.
 func (c *Client) SetCookies(data map[string]string) *Client {
 	c.Use(cookies.SetMap(data))
@@ -196,7 +196,7 @@ func (c *Client) UseError(fn context.HandlerFunc) *Client {
 }
 
 // UseParent uses another Client as parent
-// inheriting it's middleware stack and configuration.
+// inheriting its middleware stack and configuration.
 func (c *Client) UseParent(parent *Client) *Client {
 	c.Parent = parent
 	c.Context.UseParent(parent.Context)

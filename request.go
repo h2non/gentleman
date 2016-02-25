@@ -169,7 +169,7 @@ func (r *Request) AddQuery(name, value string) *Request {
 	return r
 }
 
-// QueryParams sets URL query params based on the given map.
+// SetQueryParams sets URL query params based on the given map.
 func (r *Request) SetQueryParams(params map[string]string) *Request {
 	r.Use(query.SetMap(params))
 	return r
