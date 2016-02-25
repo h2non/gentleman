@@ -16,7 +16,7 @@ Take a look to the [examples](#examples) to get started.
 - Strong extensibility capabilities via plugins.
 - Easy to configure and use.
 - Convenient helpers and abstractions over Go's HTTP primitives.
-- Support for JSON, XML and multipart bodies serialization and parsing.
+- Built-in JSON, XML and multipart bodies serialization and parsing.
 - Dependency free.
 
 ## Installation
