@@ -210,11 +210,26 @@ func TestResponseReaderBuffer(t *testing.T) {
 	ctx := NewContext()
 	utils.WriteBodyString(ctx.Response, "foo bar")
 	res, err := buildResponse(ctx)
+	res.RawResponse.ContentLength = 7
 
 	body := res.Bytes()
 	st.Expect(t, err, nil)
 	st.Expect(t, string(body), "foo bar")
 	st.Expect(t, res.buffer.String(), "foo bar")
+
+	res.ClearInternalBuffer()
+	st.Expect(t, string(res.Bytes()), "")
+}
+
+func TestResponseReaderEmtpyBuffer(t *testing.T) {
+	ctx := NewContext()
+	res, err := buildResponse(ctx)
+	res.RawResponse.ContentLength = 0
+
+	body := res.Bytes()
+	st.Expect(t, err, nil)
+	st.Expect(t, string(body), "")
+	st.Expect(t, res.buffer.String(), "")
 
 	res.ClearInternalBuffer()
 	st.Expect(t, string(res.Bytes()), "")
