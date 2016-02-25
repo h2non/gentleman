@@ -193,10 +193,11 @@ func eval(phase string, next c.HandlerCtx, done c.HandlerCtx) c.HandlerCtx {
 			return
 		}
 
-		if ctx.Error != nil || ctx.Stopped {
+		if ctx.Error != nil || (ctx.Stopped && phase != "stop") {
 			done(ctx)
 			return
 		}
+
 		next(ctx)
 	}
 }

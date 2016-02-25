@@ -99,6 +99,7 @@ func (p *Layer) Exec(phase string, ctx *context.Context, h context.Handler) {
 		h.Next(ctx)
 		return
 	}
+
 	fn := p.Handlers[phase]
 	if fn == nil {
 		fn = p.DefaultHandler
@@ -107,6 +108,7 @@ func (p *Layer) Exec(phase string, ctx *context.Context, h context.Handler) {
 		h.Next(ctx)
 		return
 	}
+
 	fn(ctx, h)
 }
 

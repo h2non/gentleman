@@ -88,12 +88,7 @@ func (d *Dispatcher) runBefore(phase string, ctx *c.Context) (*c.Context, bool) 
 	}
 
 	// Verify if the should stop
-	ctx, stop = d.stopped(ctx)
-	if stop {
-		return ctx, true
-	}
-
-	return ctx, false
+	return d.stop(ctx)
 }
 
 func (d *Dispatcher) runAfter(phase string, ctx *c.Context) (*c.Context, bool) {
@@ -104,12 +99,7 @@ func (d *Dispatcher) runAfter(phase string, ctx *c.Context) (*c.Context, bool) {
 	}
 
 	// Verify if the should stop
-	ctx, stop = d.stopped(ctx)
-	if stop {
-		return ctx, true
-	}
-
-	return ctx, false
+	return d.stop(ctx)
 }
 
 func (d *Dispatcher) intercepted(ctx *c.Context) (*c.Context, bool) {
@@ -118,18 +108,24 @@ func (d *Dispatcher) intercepted(ctx *c.Context) (*c.Context, bool) {
 		return ctx, false
 	}
 
-	// Then trigger the response middleware
+	// Trigger the intercept middleware
+	ctx, stop := d.run("intercept", ctx)
+	if stop {
+		return ctx, true
+	}
+
+	// Finally trigger the response middleware
 	ctx, _ = d.run("response", ctx)
 	return ctx, true
 }
 
-func (d *Dispatcher) stopped(ctx *c.Context) (*c.Context, bool) {
+func (d *Dispatcher) stop(ctx *c.Context) (*c.Context, bool) {
 	if !ctx.Stopped {
 		return ctx, false
 	}
 
 	mw := d.req.Middleware
-	ctx = mw.Run("stopped", ctx)
+	ctx = mw.Run("stop", ctx)
 	if ctx.Error != nil {
 		ctx = mw.Run("error", ctx)
 		if ctx.Error != nil {

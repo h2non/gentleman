@@ -8,7 +8,7 @@ import (
 func TestPluginLayer(t *testing.T) {
 	phase := ""
 	fn := func(c *context.Context, h context.Handler) {
-		phase = c.GetString("phase")
+		phase = c.GetString("$phase")
 		h.Next(c)
 	}
 
@@ -23,19 +23,19 @@ func TestPluginLayer(t *testing.T) {
 		return context.NewHandler(func(c *context.Context) { calls++ })
 	}
 
-	ctx.Set("phase", "request")
+	ctx.Set("$phase", "request")
 	plugin.Exec("request", ctx, createHandler())
 	if phase != "request" {
 		t.Errorf("Invalid phase: %s", phase)
 	}
 
-	ctx.Set("phase", "response")
+	ctx.Set("$phase", "response")
 	plugin.Exec("response", ctx, createHandler())
 	if phase != "response" {
 		t.Errorf("Invalid phase: %s", phase)
 	}
 
-	ctx.Set("phase", "error")
+	ctx.Set("$phase", "error")
 	plugin.Exec("error", ctx, createHandler())
 	if phase != "error" {
 		t.Errorf("Invalid phase: %s", phase)

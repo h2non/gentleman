@@ -1,6 +1,7 @@
 package gentleman
 
 import (
+	"errors"
 	"fmt"
 	"github.com/nbio/st"
 	"gopkg.in/h2non/gentleman.v0/context"
@@ -53,7 +54,6 @@ func TestDispatcherInterceptor(t *testing.T) {
 		ctx.Response.StatusCode = 200
 		h.Next(ctx)
 	})
-
 	req.UseResponse(func(ctx *context.Context, h context.Handler) {
 		ctx.Response.StatusCode = 204
 		h.Next(ctx)
@@ -74,4 +74,35 @@ func TestDispatcherResponseError(t *testing.T) {
 	ctx := NewDispatcher(req).Dispatch()
 	st.Reject(t, ctx.Error, nil)
 	st.Expect(t, ctx.Response.StatusCode, 503)
+}
+
+func TestDispatcherStopped(t *testing.T) {
+	req := NewRequest().URL("http://127.0.0.1:9123")
+	req.UseRequest(func(ctx *context.Context, h context.Handler) {
+		ctx.Response.StatusCode = 503
+		h.Stop(ctx)
+	})
+
+	ctx := NewDispatcher(req).Dispatch()
+	st.Expect(t, ctx.Stopped, true)
+	st.Expect(t, ctx.Error, nil)
+	st.Expect(t, ctx.Response.StatusCode, 503)
+}
+
+func TestDispatcherStoppedMiddleware(t *testing.T) {
+	req := NewRequest().URL("http://127.0.0.1:9123")
+
+	req.UseRequest(func(ctx *context.Context, h context.Handler) {
+		ctx.Set("foo", "bar")
+		h.Stop(ctx)
+	})
+	req.UseHandler("stop", func(ctx *context.Context, h context.Handler) {
+		h.Error(ctx, errors.New("stop"))
+	})
+
+	ctx := NewDispatcher(req).Dispatch()
+	st.Expect(t, ctx.Stopped, true)
+	st.Reject(t, ctx.Error, nil)
+	st.Expect(t, ctx.Error.Error(), "stop")
+	st.Expect(t, ctx.GetString("foo"), "bar")
 }
