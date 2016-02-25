@@ -4,8 +4,10 @@ import (
 	"gopkg.in/h2non/gentleman.v0/context"
 	"gopkg.in/h2non/gentleman.v0/middleware"
 	"gopkg.in/h2non/gentleman.v0/plugin"
+	"gopkg.in/h2non/gentleman.v0/plugins/cookies"
 	"gopkg.in/h2non/gentleman.v0/plugins/headers"
 	"gopkg.in/h2non/gentleman.v0/plugins/url"
+	"net/http"
 )
 
 // NewContext is a convenient alias to context.New factory.
@@ -123,9 +125,49 @@ func (c *Client) Param(name, value string) *Client {
 	return c
 }
 
-// Set sets a new HTTP header field by key and value in the outgoing client requests.
-func (c *Client) Set(key, value string) *Client {
+// Params replaces path params based on the given params key-value map.
+func (c *Client) Params(params map[string]string) *Client {
+	c.Use(url.Params(params))
+	return c
+}
+
+// SetHeader sets a new header field by name and value.
+// If another header exists with the same key, it will be overwritten.
+func (c *Client) SetHeader(key, value string) *Client {
 	c.Use(headers.Set(key, value))
+	return c
+}
+
+// AddHeader adds a new header field by name and value
+// without overwriting any existent header.
+func (c *Client) AddHeader(name, value string) *Client {
+	c.Use(headers.Add(name, value))
+	return c
+}
+
+// SetHeaders adds new header fields based on the given map.
+func (c *Client) SetHeaders(fields map[string]string) *Client {
+	c.Use(headers.SetMap(fields))
+	return c
+}
+
+// AddCookie sets a new cookie field bsaed on the given *http.Cookie struct
+// without overwriting any existent header.
+func (c *Client) AddCookie(cookie *http.Cookie) *Client {
+	c.Use(cookies.Add(cookie))
+	return c
+}
+
+// AddCookie sets a new cookie field by key and value.
+// without overwriting any existent header.
+func (c *Client) SetCookies(data map[string]string) *Client {
+	c.Use(cookies.SetMap(data))
+	return c
+}
+
+// CookieJar creates a cookie jar to store HTTP cookies when they are sent down.
+func (c *Client) CookieJar() *Client {
+	c.Use(cookies.Jar())
 	return c
 }
 

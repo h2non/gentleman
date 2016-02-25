@@ -8,7 +8,10 @@ import (
 	"gopkg.in/h2non/gentleman.v0/plugin"
 	"gopkg.in/h2non/gentleman.v0/plugins/body"
 	"gopkg.in/h2non/gentleman.v0/plugins/bodytype"
+	"gopkg.in/h2non/gentleman.v0/plugins/cookies"
+	"gopkg.in/h2non/gentleman.v0/plugins/headers"
 	"gopkg.in/h2non/gentleman.v0/plugins/multipart"
+	"gopkg.in/h2non/gentleman.v0/plugins/query"
 	"gopkg.in/h2non/gentleman.v0/plugins/url"
 	"gopkg.in/h2non/gentleman.v0/utils"
 	"io"
@@ -152,9 +155,63 @@ func (r *Request) Params(params map[string]string) *Request {
 	return r
 }
 
-// Set sets a new header field by name and value.
-func (r *Request) Set(name, value string) *Request {
-	r.Context.Request.Header.Set(name, value)
+// SetQuery sets a new URL query param field.
+// If another query param exists with the same key, it will be overwritten.
+func (r *Request) SetQuery(name, value string) *Request {
+	r.Use(query.Set(name, value))
+	return r
+}
+
+// AddQuery adds a new URL query param field
+// without overwriting any existent query field.
+func (r *Request) AddQuery(name, value string) *Request {
+	r.Use(query.Set(name, value))
+	return r
+}
+
+// QueryParams sets URL query params based on the given map.
+func (r *Request) SetQueryParams(params map[string]string) *Request {
+	r.Use(query.SetMap(params))
+	return r
+}
+
+// SetHeader sets a new header field by name and value.
+// If another header exists with the same key, it will be overwritten.
+func (r *Request) SetHeader(name, value string) *Request {
+	r.Use(headers.Set(name, value))
+	return r
+}
+
+// SetHeaders adds new header fields based on the given map.
+func (r *Request) SetHeaders(fields map[string]string) *Request {
+	r.Use(headers.SetMap(fields))
+	return r
+}
+
+// SetCookie sets a new cookie field by key and value.
+// If another cookie exists with the same key, it will be overwritten.
+func (r *Request) SetCookie(key, value string) *Request {
+	r.Use(cookies.Set(key, value))
+	return r
+}
+
+// AddCookie sets a new cookie field bsaed on the given *http.Cookie struct
+// without overwriting any existent header.
+func (r *Request) AddCookie(cookie *http.Cookie) *Request {
+	r.Use(cookies.Add(cookie))
+	return r
+}
+
+// SetCookies sets a new cookie field by key and value.
+// without overwriting any existent header.
+func (r *Request) SetCookies(data map[string]string) *Request {
+	r.Use(cookies.SetMap(data))
+	return r
+}
+
+// CookieJar creates a cookie jar to store HTTP cookies when they are sent down.
+func (r *Request) CookieJar() *Request {
+	r.Use(cookies.Jar())
 	return r
 }
 
@@ -220,7 +277,7 @@ func (r *Request) Send() (*Response, error) {
 	return r.Do()
 }
 
-// Do performs the HTTP request and returns the HTTP response
+// Do performs the HTTP request and returns the HTTP response.
 func (r *Request) Do() (*Response, error) {
 	if r.dispatched {
 		return nil, errors.New("gentleman: Request was already dispatched")
@@ -232,7 +289,7 @@ func (r *Request) Do() (*Response, error) {
 	return buildResponse(ctx)
 }
 
-// Clone creates a new side-effects free Request based on the current one
+// Clone creates a new side-effects free Request based on the current one.
 func (r *Request) Clone() *Request {
 	req := NewRequest()
 	req.Client = r.Client

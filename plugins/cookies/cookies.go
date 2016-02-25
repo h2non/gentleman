@@ -46,7 +46,7 @@ func SetMap(cookies map[string]string) p.Plugin {
 	})
 }
 
-// Jar will create a cookie jar to store HTTP cookies when they are sent down
+// Jar creates a cookie jar to store HTTP cookies when they are sent down.
 func Jar() p.Plugin {
 	return p.NewRequestPlugin(func(ctx *c.Context, h c.Handler) {
 		jar, _ := cookiejar.New(&cookiejar.Options{PublicSuffixList: publicsuffix.List})

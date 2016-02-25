@@ -1,6 +1,6 @@
 package gentleman
 
-// Code originally based on grequests: https://github.com/levigross/grequests
+// Originally based on grequests: https://github.com/levigross/grequests
 // Apache License Version 2.0
 
 import (
@@ -30,8 +30,11 @@ type Response struct {
 	// StatusCode is the HTTP Status Code returned by the HTTP Response. Taken from resp.StatusCode.
 	StatusCode int
 
-	// Header is a net/http/Header structure.
+	// Header stores the response headers as http.Header interface.
 	Header http.Header
+
+	// Cookies stores the parsed response cookies.
+	Cookies []*http.Cookie
 
 	// Expose the native Go http.Response object for convenience.
 	RawResponse *http.Response
@@ -61,6 +64,7 @@ func buildResponse(ctx *context.Context) (*Response, error) {
 		RawRequest:  ctx.Request,
 		StatusCode:  resp.StatusCode,
 		Header:      resp.Header,
+		Cookies:     resp.Cookies(),
 		buffer:      bytes.NewBuffer([]byte{}),
 	}
 	EnsureResponseFinalized(res)
