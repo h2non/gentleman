@@ -39,6 +39,11 @@ func (d *Dispatcher) Dispatch() *context.Context {
 		return ctx
 	}
 
+	// If manually stopped
+	if ctx.Stopped {
+		return ctx
+	}
+
 	// Perform the request via ctx.Client
 	res, err := ctx.Client.Do(ctx.Request)
 	ctx.Error = err

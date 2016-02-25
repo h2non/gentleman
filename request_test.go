@@ -12,6 +12,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
@@ -179,6 +180,10 @@ func TestRequestInterceptor(t *testing.T) {
 }
 
 func TestRequestTimeout(t *testing.T) {
+	if runtime.Version() != "go1.6" {
+		return
+	}
+
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		time.Sleep(1000 * time.Millisecond)
 		fmt.Fprintln(w, "Hello, world")
@@ -195,6 +200,28 @@ func TestRequestTimeout(t *testing.T) {
 	res, err := req.Send()
 	st.Reject(t, err, nil)
 	st.Expect(t, strings.Contains(err.Error(), "net/http: request canceled"), true)
+	st.Expect(t, res.StatusCode, 0)
+}
+
+func TestRequestCancel(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "Hello, world")
+	}))
+	defer ts.Close()
+
+	req := NewRequest().URL(ts.URL)
+
+	req.UseRequest(func(ctx *context.Context, h context.Handler) {
+		if tra, ok := ctx.Client.Transport.(*http.Transport); !ok {
+			t.Fatal("transport does not implement CancelRequest(*http.Request)")
+		} else {
+			tra.CancelRequest(ctx.Request)
+		}
+		h.Stop(ctx)
+	})
+
+	res, err := req.Do()
+	st.Expect(t, err, nil)
 	st.Expect(t, res.StatusCode, 0)
 }
 
@@ -419,76 +446,3 @@ func TestRequestFiles(t *testing.T) {
 	st.Expect(t, strings.Contains(string(body), "content1"), true)
 	st.Expect(t, strings.Contains(string(body), "content2"), true)
 }
-
-/*
-func TestCancelRequest(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "Hello, world")
-	}))
-	defer ts.Close()
-
-	client := New()
-
-	client.UseRequest(func(r *http.Request, c *http.Client, s *http.Response, handler middleware.Handler) {
-		time.Sleep(500 * time.Millisecond)
-		if tra, ok := c.Transport.(*http.Transport); !ok {
-			t.Fatal("transport does not implement CancelRequest(*http.Request)")
-		} else {
-			tra.CancelRequest(r)
-		}
-		handler.Stop(r, c, s)
-	})
-
-	req := client.Get(ts.URL)
-	res, err := req.Do()
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	//debug("> %#v => %#v", res, err)
-	if res.StatusCode != 0 {
-		t.Fatal("Invalid status code")
-	}
-}
-
-func TestRetryOnFailure(t *testing.T) {
-	failed := false
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if !failed {
-			failed = true
-			w.WriteHeader(500)
-			fmt.Fprintln(w, "Error")
-		} else {
-			fmt.Fprintln(w, "Hello, world")
-		}
-	}))
-	defer ts.Close()
-
-	client := New()
-
-	client.UseResponse(func(r *http.Request, c *http.Client, s *http.Response, handler middleware.Handler) {
-		if s.StatusCode == 200 {
-			handler.Next(r, c, s)
-			return
-		}
-
-		res, err := c.Do(r)
-		if err != nil {
-			handler.Error(err)
-			return
-		}
-
-		handler.Next(r, c, res)
-	})
-
-	req := client.Get(ts.URL)
-	res, err := req.Do()
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if res.StatusCode != 200 {
-		t.Fatal("Invalid response status")
-	}
-}
-*/
