@@ -45,6 +45,15 @@ func TestCookieSetMap(t *testing.T) {
 	st.Expect(t, ctx.Request.Header.Get("Cookie"), "foo=bar")
 }
 
+func TestCookieAddMultiple(t *testing.T) {
+	ctx := context.New()
+	fn := newHandler()
+	cookies := []*http.Cookie{{Name: "foo", Value: "bar"}}
+	AddMultiple(cookies).Request(ctx, fn.fn)
+	st.Expect(t, fn.called, true)
+	st.Expect(t, ctx.Request.Header.Get("Cookie"), "foo=bar")
+}
+
 func TestCookieJar(t *testing.T) {
 	ctx := context.New()
 	fn := newHandler()

@@ -125,19 +125,25 @@ func (r *Request) Method(method string) *Request {
 	return r
 }
 
-// URL parses and defines the URL to be used in the HTTP request.
+// URL parses and defines the URL to be used in the outgoing request.
 func (r *Request) URL(uri string) *Request {
 	r.Use(url.URL(uri))
 	return r
 }
 
-// Path defines the request URL path to be used in the HTTP request.
+// BaseURL parses the given URL and uses the URL schema and host in the outgoing request.
+func (r *Request) BaseURL(uri string) *Request {
+	r.Use(url.BaseURL(uri))
+	return r
+}
+
+// Path defines the request URL path to be used in the outgoing request.
 func (r *Request) Path(path string) *Request {
 	r.Use(url.Path(path))
 	return r
 }
 
-// AddPath defines the request URL path to be used in the HTTP request.
+// AddPath defines the request URL path to be used in the outgoing request.
 func (r *Request) AddPath(path string) *Request {
 	r.Use(url.AddPath(path))
 	return r
@@ -188,24 +194,17 @@ func (r *Request) SetHeaders(fields map[string]string) *Request {
 	return r
 }
 
-// SetCookie sets a new cookie field by key and value.
-// If another cookie exists with the same key, it will be overwritten.
-func (r *Request) SetCookie(key, value string) *Request {
-	r.Use(cookies.Set(key, value))
-	return r
-}
-
-// AddCookie sets a new cookie field bsaed on the given *http.Cookie struct
-// without overwriting any existent header.
+// AddCookie sets a new cookie field bsaed on the given http.Cookie struct
+// without overwriting any existent cookie.
 func (r *Request) AddCookie(cookie *http.Cookie) *Request {
 	r.Use(cookies.Add(cookie))
 	return r
 }
 
-// SetCookies sets a new cookie field by key and value.
-// without overwriting any existent header.
-func (r *Request) SetCookies(data map[string]string) *Request {
-	r.Use(cookies.SetMap(data))
+// AddCookies sets a new cookie field based on a list of http.Cookie
+// without overwriting any existent cookie.
+func (r *Request) AddCookies(data []*http.Cookie) *Request {
+	r.Use(cookies.AddMultiple(data))
 	return r
 }
 

@@ -109,7 +109,7 @@ func (c *Client) URL(uri string) *Client {
 // BaseURL defines the URL schema and host for client requests.
 // Useful to define at client level the base URL used by client child requests.
 func (c *Client) BaseURL(uri string) *Client {
-	c.Use(url.URL(uri))
+	c.Use(url.BaseURL(uri))
 	return c
 }
 
@@ -151,17 +151,17 @@ func (c *Client) SetHeaders(fields map[string]string) *Client {
 	return c
 }
 
-// AddCookie sets a new cookie field bsaed on the given *http.Cookie struct
-// without overwriting any existent header.
+// AddCookie sets a new cookie field bsaed on the given http.Cookie struct
+// without overwriting any existent cookie.
 func (c *Client) AddCookie(cookie *http.Cookie) *Client {
 	c.Use(cookies.Add(cookie))
 	return c
 }
 
-// SetCookies sets a new cookie field by key and value.
-// without overwriting any existent header.
-func (c *Client) SetCookies(data map[string]string) *Client {
-	c.Use(cookies.SetMap(data))
+// AddCookies sets a new cookie field based on a list of http.Cookie
+// without overwriting any existent cookie.
+func (c *Client) AddCookies(data []*http.Cookie) *Client {
+	c.Use(cookies.AddMultiple(data))
 	return c
 }
 

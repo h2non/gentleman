@@ -46,6 +46,16 @@ func SetMap(cookies map[string]string) p.Plugin {
 	})
 }
 
+// AddMultiple adds a list of cookies.
+func AddMultiple(cookies []*http.Cookie) p.Plugin {
+	return p.NewRequestPlugin(func(ctx *c.Context, h c.Handler) {
+		for _, cookie := range cookies {
+			ctx.Request.AddCookie(cookie)
+		}
+		h.Next(ctx)
+	})
+}
+
 // Jar creates a cookie jar to store HTTP cookies when they are sent down.
 func Jar() p.Plugin {
 	return p.NewRequestPlugin(func(ctx *c.Context, h c.Handler) {
