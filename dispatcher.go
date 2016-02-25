@@ -40,12 +40,16 @@ func (d *Dispatcher) Dispatch() *context.Context {
 	}
 
 	// Perform the request via ctx.Client
-	ctx.Response, ctx.Error = ctx.Client.Do(ctx.Request)
-	if ctx.Error != nil {
+	res, err := ctx.Client.Do(ctx.Request)
+	ctx.Error = err
+	if err != nil {
 		ctx = d.req.Middleware.Run("error", ctx)
 		if ctx.Error != nil {
 			return ctx
 		}
+	}
+	if res != nil {
+		ctx.Response = res
 	}
 
 	// Run the response middleware

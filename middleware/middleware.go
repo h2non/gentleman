@@ -64,7 +64,7 @@ func (s *Layer) Use(plugin plugin.Plugin) Middleware {
 	return s
 }
 
-// Use registers a new plugin to the middleware stack.
+// UsePhase registers a phase specific plugin handler in the middleware stack.
 func (s *Layer) UsePhase(phase string, fn c.HandlerFunc) Middleware {
 	s.stack = append(s.stack, plugin.NewPhasePlugin(phase, fn))
 	return s
@@ -140,6 +140,7 @@ func filter(stack []plugin.Plugin) []plugin.Plugin {
 	return buf
 }
 
+// Note: this implementation may change in the future
 func trigger(phase string, stack []plugin.Plugin, ctx *c.Context) *c.Context {
 	var wg sync.WaitGroup
 	wg.Add(1)

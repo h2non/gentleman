@@ -9,7 +9,7 @@ Plugin-driven, middleware-oriented library to easily create rich, versatile and 
 ## Goals
 
 - Plugin driven.
-- Simple and expressive API.
+- Simple, expressive, fluent API.
 - Idiomatic built on top of `net/http` package.
 - Middleware layer that supports the whole HTTP life cycle.
 - Built-in multiplexer with easy composition features.

@@ -72,7 +72,6 @@ func NewRequest() *Request {
 	ctx := context.New()
 	ctx.Client.Transport = DefaultTransport
 	ctx.Request.Header.Set("User-Agent", UserAgent)
-
 	return &Request{
 		Context:    ctx,
 		Middleware: middleware.New(),
@@ -147,7 +146,7 @@ func (r *Request) SetQuery(name, value string) *Request {
 // AddQuery adds a new URL query param field
 // without overwriting any existent query field.
 func (r *Request) AddQuery(name, value string) *Request {
-	r.Use(query.Set(name, value))
+	r.Use(query.Add(name, value))
 	return r
 }
 
@@ -161,6 +160,13 @@ func (r *Request) SetQueryParams(params map[string]string) *Request {
 // If another header exists with the same key, it will be overwritten.
 func (r *Request) SetHeader(name, value string) *Request {
 	r.Use(headers.Set(name, value))
+	return r
+}
+
+// AddHeader adds a new header field by name and value
+// without overwriting any existent header.
+func (r *Request) AddHeader(name, value string) *Request {
+	r.Use(headers.Add(name, value))
 	return r
 }
 

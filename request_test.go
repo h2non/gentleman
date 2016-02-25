@@ -1,15 +1,20 @@
 package gentleman
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"github.com/nbio/st"
 	"gopkg.in/h2non/gentleman.v0/context"
+	"gopkg.in/h2non/gentleman.v0/plugins/multipart"
 	"gopkg.in/h2non/gentleman.v0/utils"
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"strings"
 	"testing"
+	"time"
 )
 
 func TestRequest(t *testing.T) {
@@ -98,6 +103,23 @@ func TestRequestResponseMiddleware(t *testing.T) {
 	st.Expect(t, res.Header.Get("Server"), "go")
 }
 
+func TestRequestOverwriteTargetURL(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "Hello, world")
+	}))
+	defer ts.Close()
+
+	req := NewRequest().URL("http://invalid")
+	req.UseRequest(func(ctx *context.Context, h context.Handler) {
+		ctx.Request.URL, _ = url.Parse(ts.URL)
+		h.Next(ctx)
+	})
+
+	res, err := req.Do()
+	st.Expect(t, err, nil)
+	st.Expect(t, res.StatusCode, 200)
+}
+
 func TestRequestMux(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Hello, world")
@@ -156,11 +178,246 @@ func TestRequestInterceptor(t *testing.T) {
 	st.Expect(t, res.String(), "Hello, gentleman")
 }
 
+func TestRequestTimeout(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		time.Sleep(200 * time.Millisecond)
+		fmt.Fprintln(w, "Hello, world")
+	}))
+	defer ts.Close()
+
+	req := NewRequest().URL(ts.URL)
+
+	req.UseRequest(func(ctx *context.Context, h context.Handler) {
+		ctx.Client.Timeout = 50 * time.Millisecond
+		h.Next(ctx)
+	})
+
+	res, err := req.Send()
+	st.Reject(t, err, nil)
+	st.Expect(t, strings.Contains(err.Error(), "net/http: request canceled"), true)
+	st.Expect(t, res.StatusCode, 0)
+}
+
+// Test API methods
+
 func TestRequestMethod(t *testing.T) {
 	req := NewRequest()
 	req.Method("POST")
 	req.Middleware.Run("request", req.Context)
 	st.Expect(t, req.Context.Request.Method, "POST")
+}
+
+func TestRequestURL(t *testing.T) {
+	url := "http://foo.com"
+	req := NewRequest()
+	req.URL(url)
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, req.Context.Request.URL.String(), url)
+}
+
+func TestRequestBaseURL(t *testing.T) {
+	url := "http://foo.com/bar/baz"
+	req := NewRequest()
+	req.BaseURL(url)
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, req.Context.Request.URL.String(), "http://foo.com")
+}
+
+func TestRequestPath(t *testing.T) {
+	url := "http://foo.com/bar/baz"
+	path := "/foo/baz"
+	req := NewRequest()
+	req.URL(url)
+	req.Path(path)
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, req.Context.Request.URL.String(), "http://foo.com/foo/baz")
+}
+
+func TestRequestPathParam(t *testing.T) {
+	url := "http://foo.com/bar/baz"
+	path := "/:foo/bar/:baz"
+	req := NewRequest()
+	req.URL(url)
+	req.Path(path)
+	req.Param("foo", "baz")
+	req.Param("baz", "foo")
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, req.Context.Request.URL.String(), "http://foo.com/baz/bar/foo")
+}
+
+func TestRequestPathParams(t *testing.T) {
+	url := "http://foo.com/bar/baz"
+	path := "/:foo/bar/:baz"
+	req := NewRequest()
+	req.URL(url)
+	req.Path(path)
+	req.Params(map[string]string{"foo": "baz", "baz": "foo"})
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, req.Context.Request.URL.String(), "http://foo.com/baz/bar/foo")
+}
+
+func TestRequestSetQuery(t *testing.T) {
+	req := NewRequest()
+	req.SetQuery("foo", "bar")
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, req.Context.Request.URL.RawQuery, "foo=bar")
+}
+
+func TestRequestAddQuery(t *testing.T) {
+	req := NewRequest()
+	req.AddQuery("foo", "bar")
+	req.AddQuery("foo", "bar")
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, req.Context.Request.URL.RawQuery, "foo=bar&foo=bar")
+}
+
+func TestRequestSetQueryParams(t *testing.T) {
+	req := NewRequest()
+	req.SetQueryParams(map[string]string{"foo": "bar"})
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, req.Context.Request.URL.RawQuery, "foo=bar")
+}
+
+func TestRequestSetHeader(t *testing.T) {
+	req := NewRequest()
+	req.SetHeader("foo", "bar")
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, req.Context.Request.Header.Get("foo"), "bar")
+}
+
+func TestRequestAddHeader(t *testing.T) {
+	req := NewRequest()
+	req.AddHeader("foo", "baz")
+	req.AddHeader("foo", "bar")
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, req.Context.Request.Header.Get("foo"), "baz")
+}
+
+func TestRequestSetHeaders(t *testing.T) {
+	req := NewRequest()
+	req.SetHeaders(map[string]string{"foo": "baz", "baz": "foo"})
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, req.Context.Request.Header.Get("foo"), "baz")
+	st.Expect(t, req.Context.Request.Header.Get("baz"), "foo")
+}
+
+func TestRequestAddCookie(t *testing.T) {
+	req := NewRequest()
+	cookie := &http.Cookie{Name: "foo", Value: "bar"}
+	req.AddCookie(cookie)
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, req.Context.Request.Header.Get("Cookie"), "foo=bar")
+}
+
+func TestRequestAddCookies(t *testing.T) {
+	req := NewRequest()
+	cookies := []*http.Cookie{{Name: "foo", Value: "bar"}}
+	req.AddCookies(cookies)
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, req.Context.Request.Header.Get("Cookie"), "foo=bar")
+}
+
+func TestRequestCookieJar(t *testing.T) {
+	req := NewRequest()
+	req.CookieJar()
+	req.Middleware.Run("request", req.Context)
+	st.Reject(t, req.Context.Client.Jar, nil)
+}
+
+func TestRequestType(t *testing.T) {
+	req := NewRequest()
+	req.Type("json")
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, req.Context.Request.Header.Get("Content-Type"), "application/json")
+}
+
+func TestRequestBody(t *testing.T) {
+	reader := bytes.NewReader([]byte("foo bar"))
+	req := NewRequest()
+	req.Body(reader)
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, int(req.Context.Request.ContentLength), 7)
+	st.Expect(t, req.Context.Request.Header.Get("Content-Type"), "")
+	body, _ := ioutil.ReadAll(req.Context.Request.Body)
+	st.Expect(t, string(body), "foo bar")
+}
+
+func TestRequestBodyString(t *testing.T) {
+	req := NewRequest()
+	req.BodyString("foo bar")
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, int(req.Context.Request.ContentLength), 7)
+	st.Expect(t, req.Context.Request.Header.Get("Content-Type"), "")
+	body, _ := ioutil.ReadAll(req.Context.Request.Body)
+	st.Expect(t, string(body), "foo bar")
+}
+
+func TestRequestJSON(t *testing.T) {
+	req := NewRequest()
+	req.JSON(map[string]string{"foo": "bar"})
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, int(req.Context.Request.ContentLength), 14)
+	st.Expect(t, req.Context.Request.Header.Get("Content-Type"), "application/json")
+	body, _ := ioutil.ReadAll(req.Context.Request.Body)
+	st.Expect(t, string(body)[:13], `{"foo":"bar"}`)
+}
+
+func TestRequestXML(t *testing.T) {
+	type xmlTest struct {
+		Name string `xml:"name>first"`
+	}
+	xml := xmlTest{Name: "foo"}
+
+	req := NewRequest()
+	req.XML(xml)
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, int(req.Context.Request.ContentLength), 50)
+	st.Expect(t, req.Context.Request.Header.Get("Content-Type"), "application/xml")
+	body, _ := ioutil.ReadAll(req.Context.Request.Body)
+	st.Expect(t, string(body), `<xmlTest><name><first>foo</first></name></xmlTest>`)
+}
+
+func TestRequestForm(t *testing.T) {
+	reader := bytes.NewReader([]byte("hello world"))
+	fields := map[string]string{"foo": "data=bar", "bar": "data=baz"}
+	data := multipart.FormData{
+		Files: []multipart.FormFile{{Name: "foo", Reader: reader}},
+		Data:  fields,
+	}
+
+	req := NewRequest()
+	req.Form(data)
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, strings.Contains(req.Context.Request.Header.Get("Content-Type"), "multipart/form-data"), true)
+	body, _ := ioutil.ReadAll(req.Context.Request.Body)
+	st.Expect(t, strings.Contains(string(body), "data=bar"), true)
+	st.Expect(t, strings.Contains(string(body), "data=baz"), true)
+}
+
+func TestRequestFile(t *testing.T) {
+	reader := bytes.NewReader([]byte("hello world"))
+	req := NewRequest()
+	req.File("foo", reader)
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, strings.Contains(req.Context.Request.Header.Get("Content-Type"), "multipart/form-data"), true)
+	body, _ := ioutil.ReadAll(req.Context.Request.Body)
+	st.Expect(t, strings.Contains(string(body), "hello world"), true)
+}
+
+func TestRequestFiles(t *testing.T) {
+	reader1 := bytes.NewReader([]byte("content1"))
+	reader2 := bytes.NewReader([]byte("content2"))
+	file1 := multipart.FormFile{"file1.txt", reader1}
+	file2 := multipart.FormFile{"file2.txt", reader2}
+
+	req := NewRequest()
+	req.Files([]multipart.FormFile{file1, file2})
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, strings.Contains(req.Context.Request.Header.Get("Content-Type"), "multipart/form-data"), true)
+
+	body, _ := ioutil.ReadAll(req.Context.Request.Body)
+	st.Expect(t, strings.Contains(string(body), "content1"), true)
+	st.Expect(t, strings.Contains(string(body), "content2"), true)
 }
 
 /*
@@ -191,55 +448,6 @@ func TestCancelRequest(t *testing.T) {
 	//debug("> %#v => %#v", res, err)
 	if res.StatusCode != 0 {
 		t.Fatal("Invalid status code")
-	}
-}
-
-func TestTimeoutRequest(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		time.Sleep(200 * time.Millisecond)
-		fmt.Fprintln(w, "Hello, world")
-	}))
-	defer ts.Close()
-
-	client := New()
-
-	client.UseRequest(func(r *http.Request, c *http.Client, s *http.Response, handler middleware.Handler) {
-		c.Timeout = 50 * time.Millisecond
-		handler.Next(r, c, s)
-	})
-
-	req := client.Get(ts.URL)
-	res, err := req.Do()
-	if err == nil {
-		t.Fatal(err)
-	}
-
-	if res != nil {
-		t.Fatal("Invalid response")
-	}
-}
-
-func TestOverwriteTargetURL(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "Hello, world")
-	}))
-	defer ts.Close()
-
-	client := New()
-
-	client.UseRequest(func(r *http.Request, c *http.Client, s *http.Response, handler middleware.Handler) {
-		r.URL, _ = url.Parse(ts.URL)
-		handler.Next(r, c, s)
-	})
-
-	req := client.Get("http://foo")
-	res, err := req.Do()
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if res.StatusCode != 200 {
-		t.Fatal("Invalid response status")
 	}
 }
 
