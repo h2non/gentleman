@@ -2,6 +2,7 @@ package gentleman
 
 import (
 	"fmt"
+	"github.com/nbio/st"
 	"gopkg.in/h2non/gentleman.v0/context"
 	"net/http"
 	"net/http/httptest"
@@ -23,12 +24,8 @@ func TestDispatcher(t *testing.T) {
 	})
 
 	ctx := NewDispatcher(req).Dispatch()
-	if ctx.Error != nil {
-		t.Errorf("Dispatcher error: %s", ctx.Error)
-	}
-	if ctx.Response.StatusCode != 200 {
-		t.Errorf("Invalid status code: %d", ctx.Response.StatusCode)
-	}
+	st.Expect(t, ctx.Error, nil)
+	st.Expect(t, ctx.Response.StatusCode, 200)
 }
 
 func TestDispatcherError(t *testing.T) {
@@ -46,7 +43,35 @@ func TestDispatcherError(t *testing.T) {
 	})
 
 	ctx := NewDispatcher(req).Dispatch()
-	if ctx.Error == nil || err == nil {
-		t.Error("Error cannot be empty")
-	}
+	st.Reject(t, err, nil)
+	st.Reject(t, ctx.Error, nil)
+}
+
+func TestDispatcherInterceptor(t *testing.T) {
+	req := NewRequest()
+	req.UseRequest(func(ctx *context.Context, h context.Handler) {
+		ctx.Response.StatusCode = 200
+		h.Next(ctx)
+	})
+
+	req.UseResponse(func(ctx *context.Context, h context.Handler) {
+		ctx.Response.StatusCode = 204
+		h.Next(ctx)
+	})
+
+	ctx := NewDispatcher(req).Dispatch()
+	st.Expect(t, ctx.Error, nil)
+	st.Expect(t, ctx.Response.StatusCode, 204)
+}
+
+func TestDispatcherResponseError(t *testing.T) {
+	req := NewRequest().URL("http://127.0.0.1:9123")
+	req.UseError(func(ctx *context.Context, h context.Handler) {
+		ctx.Response.StatusCode = 503
+		h.Next(ctx)
+	})
+
+	ctx := NewDispatcher(req).Dispatch()
+	st.Reject(t, ctx.Error, nil)
+	st.Expect(t, ctx.Response.StatusCode, 503)
 }
