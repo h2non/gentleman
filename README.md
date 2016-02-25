@@ -2,7 +2,7 @@
 
 Plugin-driven, middleware-oriented library to easily create rich, versatile and composable HTTP clients in [Go](http://golang.org).
 
-**Note**: work in progress, interface contract may vary at this time.
+Take a look to the [examples](#examples) to get started.
 
 <img src="http://s10.postimg.org/5e31ox1ft/gentleman.png" align="center" height="320" />
 
@@ -196,7 +196,29 @@ Note: I strongly recommend you to use `gopkg.in` when depending on third-party p
 
 ### Creating plugins
 
-`TODO`
+You can create your own plugins for a variety of purposes, such as server discovery, custom HTTP tranport, modify any request/response param, intercept traffic, authentication and so on.
+
+You can easily create custom plugins via [plugin](https://github.com/h2non/gentleman/tree/master/plugin) package.
+
+See [plugin example](https://github.com/h2non/gentleman/blob/master/_examples/plugin/plugin.go).
+
+## Middleware
+
+gentleman is completely based on a hierarchical middleware layer based on simple plugin interfaces.
+
+The middleware layer allows you to plug in intermediate custom logic in for any HTTP traffic handled by gentleman. It supports multiple phases, which represents the full request/response life cycle, giving you the ability to perform actions before and after an HTTP transaction is done.
+
+#### Middleware phases
+
+gentleman's dispatcher provides built-in support to the following middleware phases:
+
+- **request** - Executed before a request is sent over the network.
+- **response** - Executed when the client receives the response, even if it failed.
+- **error** - Executed in case that an error ocurrs, support both injected or native error.
+- **stop** - Executed in case that the request has been manually stopped via middleware (e.g: after interception).
+- **intercept** - Executed in case that the request has been intercepted before network dialing.
+- **before dial** - Executed before a request is sent over the network.
+- **after dial** - Executed after the request dialing is done and the response has been received.
 
 ## API
 
