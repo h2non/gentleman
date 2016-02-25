@@ -118,6 +118,24 @@ func TestClientErrorMiddleware(t *testing.T) {
 	st.Expect(t, res.StatusCode, 0)
 }
 
+func TestClientCustomPhaseMiddleware(t *testing.T) {
+	client := New()
+	client.UseRequest(func(c *context.Context, h context.Handler) {
+		c.Error = errors.New("foo error")
+		h.Next(c)
+	})
+	client.UsePhase("error", func(c *context.Context, h context.Handler) {
+		c.Error = errors.New("error: " + c.Error.Error())
+		h.Next(c)
+	})
+
+	req := client.Request()
+	res, err := req.Do()
+	st.Expect(t, err.Error(), "error: foo error")
+	st.Expect(t, res.Ok, false)
+	st.Expect(t, res.StatusCode, 0)
+}
+
 func TestClientMethod(t *testing.T) {
 	cli := New()
 	cli.Method("POST")

@@ -36,15 +36,35 @@ func TestRequest(t *testing.T) {
 	})
 
 	res, err := req.Send()
-	if err != nil {
-		t.Errorf("Request error: %s", err)
-	}
-	if res.RawRequest.URL == nil {
-		t.Error("Invalid context")
-	}
-	if res.StatusCode != 200 {
-		t.Errorf("Invalid response status: %d", res.StatusCode)
-	}
+	st.Expect(t, err, nil)
+	st.Reject(t, res.RawRequest.URL, nil)
+	st.Expect(t, res.StatusCode, 200)
+}
+
+func TestRequestAlreadyDispatched(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "Hello, world")
+	}))
+	defer ts.Close()
+
+	req := NewRequest()
+	req.UseRequest(func(ctx *context.Context, h context.Handler) {
+		h.Next(ctx)
+	})
+
+	req.UseRequest(func(ctx *context.Context, h context.Handler) {
+		u, _ := url.Parse(ts.URL)
+		ctx.Request.URL = u
+		h.Next(ctx)
+	})
+
+	res, err := req.Send()
+	st.Expect(t, err, nil)
+	st.Reject(t, res.RawRequest.URL, nil)
+	st.Expect(t, res.StatusCode, 200)
+
+	res, err = req.Send()
+	st.Reject(t, err, nil)
 }
 
 func TestMiddlewareErrorInjectionAndInterception(t *testing.T) {
@@ -70,15 +90,9 @@ func TestMiddlewareErrorInjectionAndInterception(t *testing.T) {
 	})
 
 	res, err := req.Send()
-	if err != nil {
-		t.Errorf("Request error: %s", err)
-	}
-	if res.RawRequest.URL == nil {
-		t.Error("Invalid context")
-	}
-	if res.StatusCode != 200 {
-		t.Errorf("Invalid response status: %d", res.StatusCode)
-	}
+	st.Expect(t, err, nil)
+	st.Reject(t, res.RawRequest.URL, nil)
+	st.Expect(t, res.StatusCode, 200)
 }
 
 func TestRequestResponseMiddleware(t *testing.T) {
@@ -94,6 +108,29 @@ func TestRequestResponseMiddleware(t *testing.T) {
 		h.Next(c)
 	})
 	req.UseResponse(func(c *context.Context, h context.Handler) {
+		c.Response.Header.Set("Server", c.Request.Header.Get("Client"))
+		h.Next(c)
+	})
+
+	res, err := req.Do()
+	st.Expect(t, err, nil)
+	st.Expect(t, res.StatusCode, 200)
+	st.Expect(t, res.Header.Get("Server"), "go")
+}
+
+func TestRequestCustomPhaseMiddleware(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "Hello, world")
+	}))
+	defer ts.Close()
+
+	req := NewRequest()
+	req.URL(ts.URL)
+	req.UsePhase("request", func(c *context.Context, h context.Handler) {
+		c.Request.Header.Set("Client", "go")
+		h.Next(c)
+	})
+	req.UsePhase("response", func(c *context.Context, h context.Handler) {
 		c.Response.Header.Set("Server", c.Request.Header.Get("Client"))
 		h.Next(c)
 	})
@@ -193,7 +230,7 @@ func TestRequestTimeout(t *testing.T) {
 	req := NewRequest().URL(ts.URL)
 
 	req.UseRequest(func(ctx *context.Context, h context.Handler) {
-		ctx.Client.Timeout = 100 * time.Millisecond
+		ctx.Client.Timeout = 50 * time.Millisecond
 		h.Next(ctx)
 	})
 
@@ -258,6 +295,16 @@ func TestRequestPath(t *testing.T) {
 	req.Path(path)
 	req.Middleware.Run("request", req.Context)
 	st.Expect(t, req.Context.Request.URL.String(), "http://foo.com/foo/baz")
+}
+
+func TestRequestAddPath(t *testing.T) {
+	url := "http://foo.com/bar/baz"
+	path := "/foo/baz"
+	req := NewRequest()
+	req.URL(url)
+	req.AddPath(path)
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, req.Context.Request.URL.String(), "http://foo.com/bar/baz/foo/baz")
 }
 
 func TestRequestPathParam(t *testing.T) {
@@ -445,4 +492,14 @@ func TestRequestFiles(t *testing.T) {
 	body, _ := ioutil.ReadAll(req.Context.Request.Body)
 	st.Expect(t, strings.Contains(string(body), "content1"), true)
 	st.Expect(t, strings.Contains(string(body), "content2"), true)
+}
+
+func TestRequestClone(t *testing.T) {
+	req1 := NewRequest()
+	req1.UseRequest(func(c *context.Context, h context.Handler) {})
+	req1.Context.Set("foo", "bar")
+	req2 := req1.Clone()
+	st.Expect(t, req1 != req2, true)
+	st.Expect(t, req2.Context.GetString("foo"), req1.Context.GetString("foo"))
+	st.Expect(t, len(req2.Middleware.GetStack()), 1)
 }
