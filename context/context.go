@@ -1,3 +1,5 @@
+// Package context implements a simple request-aware HTTP context
+// designed to share polymorfic data types across plugins in the middleware call chain.
 package context
 
 import (

@@ -1,3 +1,5 @@
+// Package utils provides a set of reusable HTTP client utilities used internally
+// in gentleman for required functionality and testing.
 package utils
 
 import (

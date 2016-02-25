@@ -1,6 +1,5 @@
-// Package middleware implements a HTTP client domain-specific middleware layer
-// used internally by gentleman packages.
-// It's able to execute plugin based on especific responses.
+// Package middleware implements an HTTP client domain-specific phase-oriented
+// middleware layer used internally by gentleman packages.
 package middleware
 
 import (

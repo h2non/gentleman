@@ -1,3 +1,12 @@
+// Package plugin implements a plugin layer for gentleman components.
+// Exports the required interface that must be implemented by plugins.
+//
+// Plugins are phase-oriented middleware function handlers encapsulated
+// in a simple interface that will be consumed by the middleware layer in
+// order to trigger the plugin handler.
+//
+// Plugin implementors can decide to build a plugin to handle a unique
+// middleware phase or instead handle multiple phases: request, response, error...
 package plugin
 
 import (

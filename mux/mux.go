@@ -1,3 +1,5 @@
+// Package mux implements an HTTP domain-specific traffic multiplexer
+// with built-in matchers and features for easy plugin composition and activable logic.
 package mux
 
 import (
