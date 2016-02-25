@@ -10,12 +10,21 @@ func main() {
 	// Create a new client
 	cli := gentleman.New()
 
-	// Attach the plugin at client level
+	// Define the Base URL
+	cli.URL("http://httpbin.org/post")
+
+	// Create a new request based on the current client
+	req := cli.Request()
+
+	// Method to be used
+	req.Method("POST")
+
+	// Define the JSON payload via body plugin
 	data := map[string]string{"foo": "bar"}
-	cli.Use(body.JSON(data))
+	req.Use(body.JSON(data))
 
 	// Perform the request
-	res, err := cli.Request().Method("POST").URL("http://httpbin.org/post").Send()
+	res, err := req.Send()
 	if err != nil {
 		fmt.Printf("Request error: %s\n", err)
 		return

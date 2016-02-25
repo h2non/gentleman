@@ -16,6 +16,7 @@ Take a look to the [examples](#examples) to get started.
 - Strong extensibility capabilities via plugins.
 - Easy to configure and use.
 - Convenient helpers and abstractions over Go's HTTP primitives.
+- Support for JSON, XML and multipart bodies serialization and parsing.
 - Dependency free.
 
 ## Installation
@@ -235,6 +236,92 @@ See [godoc reference](https://godoc.org/github.com/h2non/gentleman) for detailed
 ## Examples
 
 See [examples](https://github.com/h2non/gentleman/blob/master/_examples) directory for featured examples.
+
+#### Simple request
+
+```go
+package main
+
+import (
+  "fmt"
+  "gopkg.in/h2non/gentleman.v0"
+)
+
+func main() {
+  // Create a new client
+  cli := gentleman.New()
+
+  // Define base URL
+  cli.URL("http://httpbin.org")
+
+  // Create a new request based on the current client
+  req := cli.Request()
+
+  // Define the URL path at request level
+  req.Path("/headers")
+
+  // Set a new header field
+  req.SetHeader("Client", "gentleman")
+
+  // Perform the request
+  res, err := req.Send()
+  if err != nil {
+    fmt.Printf("Request error: %s\n", err)
+    return
+  }
+  if !res.Ok {
+    fmt.Printf("Invalid server response: %d\n", res.StatusCode)
+    return
+  }
+
+  // Reads the whole body and returns it as string
+  fmt.Printf("Body: %s", res.String())
+}
+```
+
+#### Send JSON body
+
+```go
+package main
+
+import (
+  "fmt"
+  "gopkg.in/h2non/gentleman.v0"
+  "gopkg.in/h2non/gentleman.v0/plugins/body"
+)
+
+func main() {
+  // Create a new client
+  cli := gentleman.New()
+  
+  // Define the Base URL
+  cli.URL("http://httpbin.org/post")
+
+  // Create a new request based on the current client
+  req := cli.Request()
+  
+  // Method to be used
+  req.Method("POST")
+
+  // Define the JSON payload via body plugin
+  data := map[string]string{"foo": "bar"}
+  req.Use(body.JSON(data))
+
+  // Perform the request
+  res, err := req.Send()
+  if err != nil {
+    fmt.Printf("Request error: %s\n", err)
+    return
+  }
+  if !res.Ok {
+    fmt.Printf("Invalid server response: %d\n", res.StatusCode)
+    return
+  }
+
+  fmt.Printf("Status: %d\n", res.StatusCode)
+  fmt.Printf("Body: %s", res.String())
+}
+```
 
 ## License 
 
