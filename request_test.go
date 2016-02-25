@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/nbio/st"
 	"gopkg.in/h2non/gentleman.v0/context"
+	"gopkg.in/h2non/gentleman.v0/utils"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -74,6 +75,29 @@ func TestMiddlewareErrorInjectionAndInterception(t *testing.T) {
 	}
 }
 
+func TestRequestResponseMiddleware(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "Hello, world")
+	}))
+	defer ts.Close()
+
+	req := NewRequest()
+	req.URL(ts.URL)
+	req.UseRequest(func(c *context.Context, h context.Handler) {
+		c.Request.Header.Set("Client", "go")
+		h.Next(c)
+	})
+	req.UseResponse(func(c *context.Context, h context.Handler) {
+		c.Response.Header.Set("Server", c.Request.Header.Get("Client"))
+		h.Next(c)
+	})
+
+	res, err := req.Do()
+	st.Expect(t, err, nil)
+	st.Expect(t, res.StatusCode, 200)
+	st.Expect(t, res.Header.Get("Server"), "go")
+}
+
 func TestRequestMux(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Hello, world")
@@ -100,52 +124,46 @@ func TestRequestMux(t *testing.T) {
 	st.Expect(t, res.RawRequest.Header.Get("mux"), "true")
 }
 
-/*
-func TestIncerceptRequest(t *testing.T) {
+func TestRequestInterceptor(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		t.Fatal("Server should not be reached!")
 		fmt.Fprintln(w, "Hello, world")
 	}))
 	defer ts.Close()
 
-	client := New()
+	req := NewRequest()
+	req.UseRequest(func(ctx *context.Context, h context.Handler) {
+		ctx.Request.Header.Set("Client", "gentleman")
 
-	handler := func(r *http.Request, c *http.Client, s *http.Response, handler middleware.Handler) {
-		r.Header.Set("Client", "pep")
+		ctx.Response.StatusCode = 201
+		ctx.Response.Status = "201 Created"
 
-		s.StatusCode = 201
-		s.Status = "201 Created"
+		ctx.Response.Header.Set("Server", "gentleman")
+		utils.WriteBodyString(ctx.Response, "Hello, gentleman")
 
-		s.Header.Set("Server", "pep")
-		WriteBodyString(s, "Hello, pep")
+		h.Stop(ctx)
+	})
+	req.UseRequest(func(ctx *context.Context, h context.Handler) {
+		t.Fatal("middleware should not be called")
+		h.Next(ctx)
+	})
 
-		handler.Stop(r, c, s)
-	}
-
-	client.UseRequest(handler)
-
-	req := client.NewRequest("GET", ts.URL, nil)
 	res, err := req.Do()
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if res.StatusCode != 201 {
-		t.Fatal("Invalid status code")
-	}
-
-	if res.Header.Get("Server") != "pep" {
-		t.Fatal("Invalid server header")
-	}
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	if string(body[:10]) != "Hello, pep" {
-		t.Fatal("Invalid body")
-	}
+	st.Expect(t, err, nil)
+	st.Expect(t, res.StatusCode, 201)
+	st.Expect(t, res.RawRequest.Header.Get("Client"), "gentleman")
+	st.Expect(t, res.RawResponse.Header.Get("Server"), "gentleman")
+	st.Expect(t, res.String(), "Hello, gentleman")
 }
 
+func TestRequestMethod(t *testing.T) {
+	req := NewRequest()
+	req.Method("POST")
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, req.Context.Request.Method, "POST")
+}
+
+/*
 func TestCancelRequest(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Hello, world")
@@ -198,43 +216,6 @@ func TestTimeoutRequest(t *testing.T) {
 
 	if res != nil {
 		t.Fatal("Invalid response")
-	}
-}
-
-func TestInterceptRequest(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "Hello, world")
-	}))
-	defer ts.Close()
-
-	client := New()
-
-	client.UseRequest(func(r *http.Request, c *http.Client, s *http.Response, handler middleware.Handler) {
-		s.StatusCode = 400
-		s.Header.Set("foo", "bar")
-		WriteBodyString(s, "foo, bar")
-		handler.Stop(r, c, s)
-	})
-
-	req := client.Get(ts.URL)
-	res, err := req.Do()
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if res.StatusCode != 400 {
-		t.Fatal("Invalid response status")
-	}
-
-	if res.Header.Get("foo") != "bar" {
-		t.Fatal("Invalid header")
-	}
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	if string(body[:8]) != "foo, bar" {
-		t.Fatal("Invalid body")
 	}
 }
 

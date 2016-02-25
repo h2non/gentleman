@@ -28,7 +28,7 @@ func TestBodyTypeDefineUnsupported(t *testing.T) {
 func TestBodyType(t *testing.T) {
 	ctx := context.New()
 	fn := newHandler()
-	Set("json").Request(ctx, fn.fn)
+	Set("json").Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	st.Expect(t, ctx.Request.Header.Get("Content-Type"), "application/json")
 }

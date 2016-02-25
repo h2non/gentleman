@@ -14,7 +14,7 @@ func TestFile(t *testing.T) {
 	fn := newHandler()
 	reader := bytes.NewReader([]byte("hello world"))
 
-	File("foo", reader).Request(ctx, fn.fn)
+	File("foo", reader).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	body, _ := ioutil.ReadAll(ctx.Request.Body)
 	st.Expect(t, match(body, "Content-Type: application/octet-stream"), true)
@@ -30,7 +30,7 @@ func TestFiles(t *testing.T) {
 	file1 := FormFile{"file1.txt", reader1}
 	file2 := FormFile{"file2.txt", reader2}
 
-	Files([]FormFile{file1, file2}).Request(ctx, fn.fn)
+	Files([]FormFile{file1, file2}).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	body, _ := ioutil.ReadAll(ctx.Request.Body)
 	st.Expect(t, match(body, "Content-Type: application/octet-stream"), true)
@@ -45,7 +45,7 @@ func TestFields(t *testing.T) {
 	fn := newHandler()
 	fields := map[string]string{"foo": "data=bar", "bar": "data=baz"}
 
-	Fields(fields).Request(ctx, fn.fn)
+	Fields(fields).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	body, _ := ioutil.ReadAll(ctx.Request.Body)
 	st.Expect(t, match(body, `Content-Disposition: form-data; name="foo"`), true)
@@ -64,7 +64,7 @@ func TestData(t *testing.T) {
 		Data:  fields,
 	}
 
-	Data(data).Request(ctx, fn.fn)
+	Data(data).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	body, _ := ioutil.ReadAll(ctx.Request.Body)
 	st.Expect(t, match(body, `Content-Disposition: form-data; name="foo"`), true)

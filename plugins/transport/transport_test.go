@@ -11,7 +11,7 @@ func TestSetTransport(t *testing.T) {
 	ctx := context.New()
 	fn := newHandler()
 	transport := &http.Transport{}
-	Set(transport).Request(ctx, fn.fn)
+	Set(transport).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	newTransport := ctx.Client.Transport.(*http.Transport)
 	st.Expect(t, newTransport, transport)

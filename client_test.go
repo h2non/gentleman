@@ -19,7 +19,6 @@ func TestClientMiddlewareContext(t *testing.T) {
 	cli := New()
 	cli.UseRequest(fn)
 	cli.UseResponse(fn)
-
 	if len(cli.Middleware.GetStack()) != 2 {
 		t.Error("Invalid middleware stack length")
 	}
@@ -27,10 +26,7 @@ func TestClientMiddlewareContext(t *testing.T) {
 	ctx := NewContext()
 	cli.Middleware.Run("request", ctx)
 	cli.Middleware.Run("response", ctx)
-
-	if ctx.GetString("foo") != "barbar" {
-		t.Error("Invalid context value")
-	}
+	st.Expect(t, ctx.GetString("foo"), "barbar")
 }
 
 func TestClientInheritance(t *testing.T) {
@@ -49,9 +45,7 @@ func TestClientInheritance(t *testing.T) {
 
 	ctx := NewContext()
 	cli.Middleware.Run("request", ctx)
-	if header := ctx.Request.Header.Get("Client"); header != "gogo" {
-		t.Errorf("Invalid client header: %s", header)
-	}
+	st.Expect(t, ctx.Request.Header.Get("Client"), "gogo")
 }
 
 func TestClientRequestMiddleware(t *testing.T) {

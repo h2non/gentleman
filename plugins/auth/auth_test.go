@@ -9,7 +9,7 @@ import (
 func TestAuthBasic(t *testing.T) {
 	ctx := context.New()
 	fn := newHandler()
-	Basic("foo", "bar").Request(ctx, fn.fn)
+	Basic("foo", "bar").Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	st.Expect(t, ctx.Request.Header.Get("Authorization"), "Basic Zm9vOmJhcg==")
 }
@@ -17,7 +17,7 @@ func TestAuthBasic(t *testing.T) {
 func TestAuthBearer(t *testing.T) {
 	ctx := context.New()
 	fn := newHandler()
-	Bearer("foo").Request(ctx, fn.fn)
+	Bearer("foo").Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	st.Expect(t, ctx.Request.Header.Get("Authorization"), "Bearer foo")
 }
@@ -25,7 +25,7 @@ func TestAuthBearer(t *testing.T) {
 func TestAuthCustom(t *testing.T) {
 	ctx := context.New()
 	fn := newHandler()
-	Custom("Token foo").Request(ctx, fn.fn)
+	Custom("Token foo").Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	st.Expect(t, ctx.Request.Header.Get("Authorization"), "Token foo")
 }

@@ -10,7 +10,7 @@ func TestHeaderSet(t *testing.T) {
 	ctx := context.New()
 	fn := newHandler()
 
-	Set("foo", "bar").Request(ctx, fn.fn)
+	Set("foo", "bar").Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	st.Expect(t, ctx.Request.Header.Get("foo"), "bar")
 }
@@ -20,7 +20,7 @@ func TestHeaderAdd(t *testing.T) {
 	ctx.Request.Header.Set("foo", "foo")
 	fn := newHandler()
 
-	Add("foo", "bar").Request(ctx, fn.fn)
+	Add("foo", "bar").Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	st.Expect(t, ctx.Request.Header["Foo"][1], "bar")
 }
@@ -30,7 +30,7 @@ func TestHeaderDel(t *testing.T) {
 	ctx.Request.Header.Set("foo", "foo")
 	fn := newHandler()
 
-	Del("foo").Request(ctx, fn.fn)
+	Del("foo").Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	st.Expect(t, ctx.Request.Header.Get("foo"), "")
 }
@@ -41,7 +41,7 @@ func TestHeaderSetMap(t *testing.T) {
 	fn := newHandler()
 	headers := map[string]string{"foo": "bar"}
 
-	SetMap(headers).Request(ctx, fn.fn)
+	SetMap(headers).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	st.Expect(t, ctx.Request.Header.Get("foo"), "bar")
 }

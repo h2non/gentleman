@@ -14,7 +14,7 @@ func TestProxy(t *testing.T) {
 	fn := newHandler()
 	servers := map[string]string{"http": "http://localhost:3128"}
 
-	Set(servers).Request(ctx, fn.fn)
+	Set(servers).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 
 	transport := ctx.Client.Transport.(*http.Transport)
@@ -32,7 +32,7 @@ func TestProxyParseError(t *testing.T) {
 	fn := newHandler()
 	servers := map[string]string{"http": "://"}
 
-	Set(servers).Request(ctx, fn.fn)
+	Set(servers).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 
 	transport := ctx.Client.Transport.(*http.Transport)

@@ -13,7 +13,7 @@ func TestBodyJSONEncodeMap(t *testing.T) {
 	fn := newHandler()
 
 	json := map[string]string{"foo": "bar"}
-	JSON(json).Request(ctx, fn.fn)
+	JSON(json).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	buf, err := ioutil.ReadAll(ctx.Request.Body)
 	st.Expect(t, err, nil)
@@ -27,7 +27,7 @@ func TestBodyJSONEncodeString(t *testing.T) {
 	fn := newHandler()
 
 	json := `{"foo":"bar"}`
-	JSON(json).Request(ctx, fn.fn)
+	JSON(json).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	buf, err := ioutil.ReadAll(ctx.Request.Body)
 	st.Expect(t, err, nil)
@@ -41,7 +41,7 @@ func TestBodyJSONEncodeBytes(t *testing.T) {
 	fn := newHandler()
 
 	json := []byte(`{"foo":"bar"}`)
-	JSON(json).Request(ctx, fn.fn)
+	JSON(json).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	buf, err := ioutil.ReadAll(ctx.Request.Body)
 	st.Expect(t, err, nil)
@@ -58,7 +58,7 @@ func TestBodyXMLEncodeStruct(t *testing.T) {
 		Name string `xml:"name>first"`
 	}
 	xml := xmlTest{Name: "foo"}
-	XML(xml).Request(ctx, fn.fn)
+	XML(xml).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 
 	buf, err := ioutil.ReadAll(ctx.Request.Body)
@@ -73,7 +73,7 @@ func TestBodyXMLEncodeString(t *testing.T) {
 	fn := newHandler()
 
 	xml := "<test>foo</test>"
-	XML(xml).Request(ctx, fn.fn)
+	XML(xml).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 
 	buf, err := ioutil.ReadAll(ctx.Request.Body)
@@ -88,7 +88,7 @@ func TestBodyXMLEncodeBytes(t *testing.T) {
 	fn := newHandler()
 
 	xml := []byte("<test>foo</test>")
-	XML(xml).Request(ctx, fn.fn)
+	XML(xml).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 
 	buf, err := ioutil.ReadAll(ctx.Request.Body)
@@ -103,7 +103,7 @@ func TestBodyReader(t *testing.T) {
 	fn := newHandler()
 
 	reader := bytes.NewReader([]byte("foo bar"))
-	Reader(reader).Request(ctx, fn.fn)
+	Reader(reader).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 
 	buf, err := ioutil.ReadAll(ctx.Request.Body)

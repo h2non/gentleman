@@ -10,7 +10,7 @@ import (
 func TestDisableCompression(t *testing.T) {
 	ctx := context.New()
 	fn := newHandler()
-	Disable().Request(ctx, fn.fn)
+	Disable().Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	transport := ctx.Client.Transport.(*http.Transport)
 	st.Expect(t, transport.DisableCompression, true)

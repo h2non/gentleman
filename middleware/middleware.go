@@ -21,6 +21,9 @@ type Middleware interface {
 	// UseResposne is used to register a new resposne phase middleware function handler.
 	UseResponse(c.HandlerFunc) Middleware
 
+	// UsePhase is used to register a new phase specific middleware function handler.
+	UsePhase(string, c.HandlerFunc) Middleware
+
 	// Run is used to dispatch the middleware call chain for a specific phase.
 	Run(string, *c.Context) *c.Context
 
@@ -58,6 +61,12 @@ func New() *Layer {
 // Use registers a new plugin to the middleware stack.
 func (s *Layer) Use(plugin plugin.Plugin) Middleware {
 	s.stack = append(s.stack, plugin)
+	return s
+}
+
+// Use registers a new plugin to the middleware stack.
+func (s *Layer) UsePhase(phase string, fn c.HandlerFunc) Middleware {
+	s.stack = append(s.stack, plugin.NewPhasePlugin(phase, fn))
 	return s
 }
 
@@ -166,7 +175,7 @@ func trigger(phase string, stack []plugin.Plugin, ctx *c.Context) *c.Context {
 func nextHandler(phase string, plugin plugin.Plugin, next c.HandlerCtx, done c.HandlerCtx) c.HandlerCtx {
 	return func(ctx *c.Context) {
 		handler := c.NewHandler(eval(phase, next, done))
-		methodProxy(phase, plugin)(ctx, handler)
+		plugin.Exec(phase, ctx, handler)
 	}
 }
 
@@ -187,14 +196,4 @@ func eval(phase string, next c.HandlerCtx, done c.HandlerCtx) c.HandlerCtx {
 		}
 		next(ctx)
 	}
-}
-
-func methodProxy(phase string, plugin plugin.Plugin) c.HandlerFunc {
-	if phase == "error" {
-		return plugin.Error
-	}
-	if phase == "request" {
-		return plugin.Request
-	}
-	return plugin.Response
 }

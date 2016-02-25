@@ -10,7 +10,7 @@ import (
 func TestTimeout(t *testing.T) {
 	ctx := context.New()
 	fn := newHandler()
-	Request(1000).Request(ctx, fn.fn)
+	Request(1000).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	st.Expect(t, ctx.Error, nil)
 	st.Expect(t, int(ctx.Client.Timeout), 1000)
@@ -19,7 +19,7 @@ func TestTimeout(t *testing.T) {
 func TestTimeoutTLS(t *testing.T) {
 	ctx := context.New()
 	fn := newHandler()
-	TLS(1000).Request(ctx, fn.fn)
+	TLS(1000).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	st.Expect(t, ctx.Error, nil)
 
@@ -30,7 +30,7 @@ func TestTimeoutTLS(t *testing.T) {
 func TestTimeoutAll(t *testing.T) {
 	ctx := context.New()
 	fn := newHandler()
-	All(Timeouts{Request: 1000, Dial: 1000, TLS: 1000}).Request(ctx, fn.fn)
+	All(Timeouts{Request: 1000, Dial: 1000, TLS: 1000}).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	st.Expect(t, ctx.Error, nil)
 	transport := ctx.Client.Transport.(*http.Transport)

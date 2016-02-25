@@ -22,12 +22,10 @@ type Mux struct {
 
 // New creates a new multiplexer with default settings.
 func New() *Mux {
-	m := &Mux{Layer: &plugin.Layer{}}
+	m := &Mux{Layer: plugin.New()}
 	m.Middleware = middleware.New()
 	handler := m.Handler()
-	m.ErrorHandler = handler
-	m.RequestHandler = handler
-	m.ResponseHandler = handler
+	m.DefaultHandler = handler
 	return m
 }
 
@@ -99,6 +97,12 @@ func (m *Mux) UseRequest(fn c.HandlerFunc) *Mux {
 // UseError registers a new error phase middleware handler.
 func (m *Mux) UseError(fn c.HandlerFunc) *Mux {
 	m.Middleware.UseError(fn)
+	return m
+}
+
+// UsePhase registers a new error phase middleware handler.
+func (m *Mux) UsePhase(phase string, fn c.HandlerFunc) *Mux {
+	m.Middleware.UsePhase(phase, fn)
 	return m
 }
 

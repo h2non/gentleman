@@ -126,7 +126,10 @@ func TestMiddlewarePlugin(t *testing.T) {
 		calls++
 		h.Next(ctx)
 	}
-	plugin := plugin.New(fn, fn, fn)
+	plugin := plugin.New()
+	plugin.SetHandler("request", fn)
+	plugin.SetHandler("response", fn)
+	plugin.SetHandler("error", fn)
 
 	mw := New()
 	mw.Use(plugin)

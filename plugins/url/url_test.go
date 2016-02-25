@@ -25,7 +25,7 @@ func TestURL(t *testing.T) {
 	fn := newHandler()
 
 	for _, test := range cases {
-		URL(test.value).Request(ctx, fn.fn)
+		URL(test.value).Exec("request", ctx, fn.fn)
 		assert(t, fn, ctx, test)
 	}
 }
@@ -43,7 +43,7 @@ func TestBaseURL(t *testing.T) {
 	fn := newHandler()
 
 	for _, test := range cases {
-		BaseURL(test.value).Request(ctx, fn.fn)
+		BaseURL(test.value).Exec("request", ctx, fn.fn)
 		assert(t, fn, ctx, test)
 	}
 }
@@ -60,7 +60,7 @@ func TestPath(t *testing.T) {
 
 	ctx.Request.URL.Path = "/baz"
 	for _, test := range cases {
-		Path(test.value).Request(ctx, fn.fn)
+		Path(test.value).Exec("request", ctx, fn.fn)
 		assert(t, fn, ctx, test)
 	}
 }
@@ -77,7 +77,7 @@ func TestAddPath(t *testing.T) {
 		fn := newHandler()
 		ctx.Request.URL.Path = "/baz"
 
-		AddPath(test.value).Request(ctx, fn.fn)
+		AddPath(test.value).Exec("request", ctx, fn.fn)
 		assert(t, fn, ctx, test)
 	}
 }
@@ -94,7 +94,7 @@ func TestPathPrefix(t *testing.T) {
 		fn := newHandler()
 		ctx.Request.URL.Path = "/baz"
 
-		PathPrefix(test.value).Request(ctx, fn.fn)
+		PathPrefix(test.value).Exec("request", ctx, fn.fn)
 		assert(t, fn, ctx, test)
 	}
 }
@@ -119,7 +119,7 @@ func TestPathParam(t *testing.T) {
 		ctx := context.New()
 		fn := newHandler()
 		ctx.Request.URL.Path = test.path
-		Param(test.key, test.value).Request(ctx, fn.fn)
+		Param(test.key, test.value).Exec("request", ctx, fn.fn)
 		st.Expect(t, ctx.Request.URL.Path, test.url.Path)
 	}
 }
@@ -142,7 +142,7 @@ func TestPathParams(t *testing.T) {
 		ctx := context.New()
 		fn := newHandler()
 		ctx.Request.URL.Path = test.path
-		Params(test.list).Request(ctx, fn.fn)
+		Params(test.list).Exec("request", ctx, fn.fn)
 		st.Expect(t, ctx.Request.URL.Path, test.url.Path)
 	}
 }

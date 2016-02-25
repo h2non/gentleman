@@ -13,7 +13,10 @@ func TestPluginLayer(t *testing.T) {
 	}
 
 	ctx := context.New()
-	plugin := &Layer{false, false, fn, fn, fn}
+	plugin := New()
+	plugin.SetHandler("request", fn)
+	plugin.SetHandler("response", fn)
+	plugin.SetHandler("error", fn)
 
 	calls := 0
 	createHandler := func() context.Handler {
@@ -21,19 +24,19 @@ func TestPluginLayer(t *testing.T) {
 	}
 
 	ctx.Set("phase", "request")
-	plugin.Request(ctx, createHandler())
+	plugin.Exec("request", ctx, createHandler())
 	if phase != "request" {
 		t.Errorf("Invalid phase: %s", phase)
 	}
 
 	ctx.Set("phase", "response")
-	plugin.Response(ctx, createHandler())
+	plugin.Exec("response", ctx, createHandler())
 	if phase != "response" {
 		t.Errorf("Invalid phase: %s", phase)
 	}
 
 	ctx.Set("phase", "error")
-	plugin.Error(ctx, createHandler())
+	plugin.Exec("error", ctx, createHandler())
 	if phase != "error" {
 		t.Errorf("Invalid phase: %s", phase)
 	}
@@ -43,10 +46,19 @@ func TestPluginLayer(t *testing.T) {
 	}
 }
 
+func TestNewPhasePlugin(t *testing.T) {
+	called := false
+	plugin := NewPhasePlugin("foo", func(c *context.Context, h context.Handler) { h.Next(c) })
+	plugin.Exec("foo", context.New(), context.NewHandler(func(c *context.Context) { called = true }))
+	if !called {
+		t.Errorf("Handler not called")
+	}
+}
+
 func TestNewResponsePlugin(t *testing.T) {
 	called := false
 	plugin := NewResponsePlugin(func(c *context.Context, h context.Handler) { h.Next(c) })
-	plugin.Response(context.New(), context.NewHandler(func(c *context.Context) { called = true }))
+	plugin.Exec("response", context.New(), context.NewHandler(func(c *context.Context) { called = true }))
 	if !called {
 		t.Errorf("Handler not called")
 	}
@@ -55,7 +67,7 @@ func TestNewResponsePlugin(t *testing.T) {
 func TestNewRequestPlugin(t *testing.T) {
 	called := false
 	plugin := NewRequestPlugin(func(c *context.Context, h context.Handler) { h.Next(c) })
-	plugin.Request(context.New(), context.NewHandler(func(c *context.Context) { called = true }))
+	plugin.Exec("request", context.New(), context.NewHandler(func(c *context.Context) { called = true }))
 	if !called {
 		t.Errorf("Handler not called")
 	}
@@ -64,7 +76,7 @@ func TestNewRequestPlugin(t *testing.T) {
 func TestNewErrorPlugin(t *testing.T) {
 	called := false
 	plugin := NewErrorPlugin(func(c *context.Context, h context.Handler) { h.Next(c) })
-	plugin.Error(context.New(), context.NewHandler(func(c *context.Context) { called = true }))
+	plugin.Exec("error", context.New(), context.NewHandler(func(c *context.Context) { called = true }))
 	if !called {
 		t.Errorf("Handler not called")
 	}

@@ -21,15 +21,12 @@ type Plugin interface {
 	// Enabled returns true if the plugin was removed
 	Removed() bool
 
-	// Error phase middleware handler
-	Error(*context.Context, context.Handler)
-
-	// Request phase middleware handler
-	Request(*context.Context, context.Handler)
-
-	// Response phase middleware handler
-	Response(*context.Context, context.Handler)
+	// Exec executes the plugin handler for a specific middleware phase.
+	Exec(string, *context.Context, context.Handler)
 }
+
+// Handlers represents a map to store middleware handler functions per phase.
+type Handlers map[string]context.HandlerFunc
 
 // Layer encapsulates an Error, Request and Response function handlers
 type Layer struct {
@@ -39,14 +36,17 @@ type Layer struct {
 	// disabled stores if the plugin was disabled
 	disabled bool
 
-	// ErrorHandler function handler for the error phase
-	ErrorHandler context.HandlerFunc
+	// Handlers defines the required handlers
+	Handlers Handlers
 
-	// RequestHandler function handler for the request phase
-	RequestHandler context.HandlerFunc
+	// DefaultHandler is an optional field used to store
+	// a default handler for any middleware phase.
+	DefaultHandler context.HandlerFunc
+}
 
-	// ResponseHandler function handler for the response phase
-	ResponseHandler context.HandlerFunc
+// New creates a new plugin layer.
+func New() *Layer {
+	return &Layer{Handlers: make(Handlers)}
 }
 
 // Disable will disable the current plugin
@@ -74,56 +74,53 @@ func (p *Layer) Removed() bool {
 	return p.removed
 }
 
-// Response triggers the response middleware phase
-func (p *Layer) Response(ctx *context.Context, handler context.Handler) {
-	p.call(ctx, handler, p.ResponseHandler)
+// SetHandler uses a new handler function for the given middleware phase.
+func (p *Layer) SetHandler(phase string, handler context.HandlerFunc) {
+	p.Handlers[phase] = handler
 }
 
-// Request triggers the request middleware phase
-func (p *Layer) Request(ctx *context.Context, handler context.Handler) {
-	p.call(ctx, handler, p.RequestHandler)
+// SetHandlers uses a new map of handler functions.
+func (p *Layer) SetHandlers(handlers Handlers) {
+	p.Handlers = handlers
 }
 
-// Error triggers the error middleware phase
-func (p *Layer) Error(ctx *context.Context, handler context.Handler) {
-	p.call(ctx, handler, p.ErrorHandler)
-}
-
-func (p *Layer) call(ctx *context.Context, h context.Handler, fn context.HandlerFunc) {
-	if fn == nil {
+// Exec executes the plugin handler for the given middleware phase passing the given context.
+func (p *Layer) Exec(phase string, ctx *context.Context, h context.Handler) {
+	if p.disabled || p.removed {
 		h.Next(ctx)
 		return
 	}
-	if p.disabled || p.removed {
+	fn := p.Handlers[phase]
+	if fn == nil {
+		fn = p.DefaultHandler
+	}
+	if fn == nil {
 		h.Next(ctx)
 		return
 	}
 	fn(ctx, h)
 }
 
+// NewPhasePlugin creates a new plugin layer
+// to handle a given middleware phase.
+func NewPhasePlugin(phase string, handler context.HandlerFunc) Plugin {
+	return &Layer{Handlers: Handlers{phase: handler}}
+}
+
 // NewResponsePlugin creates a new plugin layer
 // to handle response middleware phase
 func NewResponsePlugin(handler context.HandlerFunc) Plugin {
-	return &Layer{ResponseHandler: handler}
+	return NewPhasePlugin("response", handler)
 }
 
 // NewRequestPlugin creates a new plugin layer
 // to handle request middleware phase
 func NewRequestPlugin(handler context.HandlerFunc) Plugin {
-	return &Layer{RequestHandler: handler}
+	return NewPhasePlugin("request", handler)
 }
 
 // NewErrorPlugin creates a new plugin layer
 // to handle error middleware phase
 func NewErrorPlugin(handler context.HandlerFunc) Plugin {
-	return &Layer{ErrorHandler: handler}
-}
-
-// New creates a new plugin based on phase-specific function handlers
-func New(res, req, err context.HandlerFunc) Plugin {
-	return &Layer{
-		ResponseHandler: res,
-		RequestHandler:  req,
-		ErrorHandler:    err,
-	}
+	return NewPhasePlugin("error", handler)
 }

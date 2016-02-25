@@ -21,32 +21,32 @@ import (
 )
 
 const (
-	// UserAgent represents the static user agent name and version
+	// UserAgent represents the static user agent name and version.
 	UserAgent = "gentleman/" + Version
 )
 
 var (
-	// DialTimeout represents the maximum amount of time the network dialer can take
+	// DialTimeout represents the maximum amount of time the network dialer can take.
 	DialTimeout = 30 * time.Second
 
-	// DialKeepAlive represents the maximum amount of time too keep alive the socket
+	// DialKeepAlive represents the maximum amount of time too keep alive the socket.
 	DialKeepAlive = 30 * time.Second
 
 	// TLSHandshakeTimeout represents the maximum amount of time that
-	// TLS handshake can take defined in the default http.Transport
+	// TLS handshake can take defined in the default http.Transport.
 	TLSHandshakeTimeout = 10 * time.Second
 
 	// RequestTimeout represents the maximum about of time that
-	// a request can take, including dial / request / redirect processes
+	// a request can take, including dial / request / redirect processes.
 	RequestTimeout = 60 * time.Second
 
-	// DefaultDialer defines the default network dialer
+	// DefaultDialer defines the default network dialer.
 	DefaultDialer = &net.Dialer{
 		Timeout:   DialTimeout,
 		KeepAlive: DialKeepAlive,
 	}
 
-	// DefaultTransport stores the default HTTP transport to be used
+	// DefaultTransport stores the default HTTP transport to be used.
 	DefaultTransport = NewDefaultTransport(DefaultDialer)
 )
 
@@ -67,7 +67,7 @@ type Request struct {
 	Middleware middleware.Middleware
 }
 
-// NewRequest creates a new Request entity
+// NewRequest creates a new Request entity.
 func NewRequest() *Request {
 	ctx := context.New()
 	ctx.Client.Transport = DefaultTransport
@@ -88,38 +88,14 @@ func (r *Request) SetClient(cli *Client) *Request {
 	return r
 }
 
-// Use attaches a new plugin in the middleware stack
-func (r *Request) Use(p plugin.Plugin) *Request {
-	r.Middleware.Use(p)
-	return r
-}
-
-// UseRequest attaches a request middleware handler
-func (r *Request) UseRequest(fn context.HandlerFunc) *Request {
-	r.Middleware.UseRequest(fn)
-	return r
-}
-
-// UseResponse attaches a response middleware handler
-func (r *Request) UseResponse(fn context.HandlerFunc) *Request {
-	r.Middleware.UseResponse(fn)
-	return r
-}
-
-// UseError attaches an error middleware handler
-func (r *Request) UseError(fn context.HandlerFunc) *Request {
-	r.Middleware.UseError(fn)
-	return r
-}
-
-// Mux is a middleware multiplexer for easy plugin composition
+// Mux is a middleware multiplexer for easy plugin composition.
 func (r *Request) Mux() *mux.Mux {
 	mx := mux.New()
 	r.Use(mx)
 	return mx
 }
 
-// Method defines the HTTP verb to be used
+// Method defines the HTTP verb to be used.
 func (r *Request) Method(method string) *Request {
 	r.Context.Request.Method = method
 	return r
@@ -286,6 +262,36 @@ func (r *Request) Do() (*Response, error) {
 	ctx := NewDispatcher(r).Dispatch()
 
 	return buildResponse(ctx)
+}
+
+// Use uses a new plugin in the middleware stack.
+func (r *Request) Use(p plugin.Plugin) *Request {
+	r.Middleware.Use(p)
+	return r
+}
+
+// UseRequest uses a request middleware handler.
+func (r *Request) UseRequest(fn context.HandlerFunc) *Request {
+	r.Middleware.UseRequest(fn)
+	return r
+}
+
+// UseResponse uses a response middleware handler.
+func (r *Request) UseResponse(fn context.HandlerFunc) *Request {
+	r.Middleware.UseResponse(fn)
+	return r
+}
+
+// UseError uses an error middleware handler.
+func (r *Request) UseError(fn context.HandlerFunc) *Request {
+	r.Middleware.UseError(fn)
+	return r
+}
+
+// UsePhase uses an new middleware handler for the given phase.
+func (r *Request) UsePhase(phase string, fn context.HandlerFunc) *Request {
+	r.Middleware.UsePhase(phase, fn)
+	return r
 }
 
 // Clone creates a new side-effects free Request based on the current one.

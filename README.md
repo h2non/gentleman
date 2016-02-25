@@ -11,9 +11,9 @@ Plugin-driven, middleware-oriented library to easily create rich, versatile and 
 - Plugin driven.
 - Simple and expressive API.
 - Idiomatic built on top of `net/http` package.
-- Strong extensibility capabilities.
-- Control-flow capable middleware layer to manage full HTTP live cycle.
+- Middleware layer that supports the whole HTTP life cycle.
 - Built-in multiplexer with easy composition features.
+- Strong extensibility capabilities via plugins.
 - Easy to configure and use.
 - Convenient helpers and abstractions over Go's HTTP primitives.
 - Dependency free.

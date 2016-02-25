@@ -50,7 +50,7 @@ func TestRedirectPolicyLimit(t *testing.T) {
 func TestRedirectPlugin(t *testing.T) {
 	ctx := context.New()
 	fn := newHandler()
-	Config(Options{}).Request(ctx, fn.fn)
+	Config(Options{}).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 }
 

@@ -11,7 +11,7 @@ func TestQuerySet(t *testing.T) {
 	ctx.Request.URL.RawQuery = "baz=foo&foo=foo"
 	fn := newHandler()
 
-	Set("foo", "bar").Request(ctx, fn.fn)
+	Set("foo", "bar").Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	st.Expect(t, ctx.Request.URL.RawQuery, "baz=foo&foo=bar")
 }
@@ -21,7 +21,7 @@ func TestQueryAdd(t *testing.T) {
 	ctx.Request.URL.RawQuery = "foo=baz"
 	fn := newHandler()
 
-	Add("foo", "bar").Request(ctx, fn.fn)
+	Add("foo", "bar").Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	st.Expect(t, ctx.Request.URL.RawQuery, "foo=baz&foo=bar")
 }
@@ -31,7 +31,7 @@ func TestQueryDel(t *testing.T) {
 	ctx.Request.URL.RawQuery = "foo=baz"
 	fn := newHandler()
 
-	Del("foo").Request(ctx, fn.fn)
+	Del("foo").Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	st.Expect(t, ctx.Request.URL.RawQuery, "")
 }
@@ -41,7 +41,7 @@ func TestQueryDelAll(t *testing.T) {
 	ctx.Request.URL.RawQuery = "foo=baz&foo=foo"
 	fn := newHandler()
 
-	DelAll().Request(ctx, fn.fn)
+	DelAll().Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	st.Expect(t, ctx.Request.URL.RawQuery, "")
 }
@@ -52,7 +52,7 @@ func TestQuerySetMap(t *testing.T) {
 	fn := newHandler()
 	params := map[string]string{"foo": "bar"}
 
-	SetMap(params).Request(ctx, fn.fn)
+	SetMap(params).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	st.Expect(t, ctx.Request.URL.RawQuery, "baz=foo&foo=bar")
 }

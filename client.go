@@ -171,27 +171,33 @@ func (c *Client) CookieJar() *Client {
 	return c
 }
 
-// Use attaches a new plugin to the middleware stack.
+// Use uses a new plugin to the middleware stack.
 func (c *Client) Use(p plugin.Plugin) *Client {
 	c.Middleware.Use(p)
 	return c
 }
 
-// UseRequest attaches a new middleware function for request phase.
+// UseRequest uses a new middleware function for request phase.
 func (c *Client) UseRequest(fn context.HandlerFunc) *Client {
 	c.Middleware.UseRequest(fn)
 	return c
 }
 
-// UseResponse attaches a new middleware function for response phase.
+// UseResponse uses a new middleware function for response phase.
 func (c *Client) UseResponse(fn context.HandlerFunc) *Client {
 	c.Middleware.UseResponse(fn)
 	return c
 }
 
-// UseError attaches a new middleware function for error phase.
+// UseError uses a new middleware function for error phase.
 func (c *Client) UseError(fn context.HandlerFunc) *Client {
 	c.Middleware.UseError(fn)
+	return c
+}
+
+// UsePhase uses a new middleware function for the given phase.
+func (c *Client) UsePhase(phase string, fn context.HandlerFunc) *Client {
+	c.Middleware.UsePhase(phase, fn)
 	return c
 }
 

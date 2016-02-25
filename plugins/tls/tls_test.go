@@ -12,7 +12,7 @@ func TestAuthBasic(t *testing.T) {
 	ctx := context.New()
 	fn := newHandler()
 	config := &tls.Config{InsecureSkipVerify: true}
-	Config(config).Request(ctx, fn.fn)
+	Config(config).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 
 	transport := ctx.Client.Transport.(*http.Transport)
