@@ -126,11 +126,11 @@ func TestRequestCustomPhaseMiddleware(t *testing.T) {
 
 	req := NewRequest()
 	req.URL(ts.URL)
-	req.UsePhase("request", func(c *context.Context, h context.Handler) {
+	req.UseHandler("request", func(c *context.Context, h context.Handler) {
 		c.Request.Header.Set("Client", "go")
 		h.Next(c)
 	})
-	req.UsePhase("response", func(c *context.Context, h context.Handler) {
+	req.UseHandler("response", func(c *context.Context, h context.Handler) {
 		c.Response.Header.Set("Server", c.Request.Header.Get("Client"))
 		h.Next(c)
 	})

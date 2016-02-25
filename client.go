@@ -195,9 +195,9 @@ func (c *Client) UseError(fn context.HandlerFunc) *Client {
 	return c
 }
 
-// UsePhase uses a new middleware function for the given phase.
-func (c *Client) UsePhase(phase string, fn context.HandlerFunc) *Client {
-	c.Middleware.UsePhase(phase, fn)
+// UseHandler uses a new middleware function for the given phase.
+func (c *Client) UseHandler(phase string, fn context.HandlerFunc) *Client {
+	c.Middleware.UseHandler(phase, fn)
 	return c
 }
 

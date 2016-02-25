@@ -124,7 +124,7 @@ func TestClientCustomPhaseMiddleware(t *testing.T) {
 		c.Error = errors.New("foo error")
 		h.Next(c)
 	})
-	client.UsePhase("error", func(c *context.Context, h context.Handler) {
+	client.UseHandler("error", func(c *context.Context, h context.Handler) {
 		c.Error = errors.New("error: " + c.Error.Error())
 		h.Next(c)
 	})

@@ -100,9 +100,9 @@ func (m *Mux) UseError(fn c.HandlerFunc) *Mux {
 	return m
 }
 
-// UsePhase registers a new error phase middleware handler.
-func (m *Mux) UsePhase(phase string, fn c.HandlerFunc) *Mux {
-	m.Middleware.UsePhase(phase, fn)
+// UseHandler registers a new error phase middleware handler.
+func (m *Mux) UseHandler(phase string, fn c.HandlerFunc) *Mux {
+	m.Middleware.UseHandler(phase, fn)
 	return m
 }
 

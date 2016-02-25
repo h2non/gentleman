@@ -294,9 +294,9 @@ func (r *Request) UseError(fn context.HandlerFunc) *Request {
 	return r
 }
 
-// UsePhase uses an new middleware handler for the given phase.
-func (r *Request) UsePhase(phase string, fn context.HandlerFunc) *Request {
-	r.Middleware.UsePhase(phase, fn)
+// UseHandler uses an new middleware handler for the given phase.
+func (r *Request) UseHandler(phase string, fn context.HandlerFunc) *Request {
+	r.Middleware.UseHandler(phase, fn)
 	return r
 }
 

@@ -1,3 +1,6 @@
+// Package middleware implements a HTTP client domain-specific middleware layer
+// used internally by gentleman packages.
+// It's able to execute plugin based on especific responses.
 package middleware
 
 import (
@@ -21,8 +24,8 @@ type Middleware interface {
 	// UseResposne is used to register a new resposne phase middleware function handler.
 	UseResponse(c.HandlerFunc) Middleware
 
-	// UsePhase is used to register a new phase specific middleware function handler.
-	UsePhase(string, c.HandlerFunc) Middleware
+	// UseHandler is used to register a new phase specific middleware function handler.
+	UseHandler(string, c.HandlerFunc) Middleware
 
 	// Run is used to dispatch the middleware call chain for a specific phase.
 	Run(string, *c.Context) *c.Context
@@ -64,8 +67,8 @@ func (s *Layer) Use(plugin plugin.Plugin) Middleware {
 	return s
 }
 
-// UsePhase registers a phase specific plugin handler in the middleware stack.
-func (s *Layer) UsePhase(phase string, fn c.HandlerFunc) Middleware {
+// UseHandler registers a phase specific plugin handler in the middleware stack.
+func (s *Layer) UseHandler(phase string, fn c.HandlerFunc) Middleware {
 	s.stack = append(s.stack, plugin.NewPhasePlugin(phase, fn))
 	return s
 }
