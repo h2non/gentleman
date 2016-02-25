@@ -180,7 +180,7 @@ func TestRequestInterceptor(t *testing.T) {
 
 func TestRequestTimeout(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		time.Sleep(200 * time.Millisecond)
+		time.Sleep(1000 * time.Millisecond)
 		fmt.Fprintln(w, "Hello, world")
 	}))
 	defer ts.Close()
