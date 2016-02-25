@@ -1,7 +1,7 @@
 package gentleman
 
 import (
-	"gopkg.in/h2non/gentleman.v0/context"
+	c "gopkg.in/h2non/gentleman.v0/context"
 )
 
 // Dispatcher dispatches a given request triggering the middleware
@@ -11,113 +11,149 @@ type Dispatcher struct {
 	req *Request
 }
 
+// task function represents the required interface for dispatcher pipeline tasks.
+type task func(*c.Context) (*c.Context, bool)
+
 // NewDispatcher creates a new Dispatcher based on the given Context.
 func NewDispatcher(req *Request) *Dispatcher {
 	return &Dispatcher{req}
 }
 
 // Dispatch triggers the middleware chains and performs the HTTP request.
-func (d *Dispatcher) Dispatch() *context.Context {
+func (d *Dispatcher) Dispatch() *c.Context {
+	// Pipeline of tasks to execute in FIFO order
+	pipeline := []task{
+		func(ctx *c.Context) (*c.Context, bool) {
+			return d.runBefore("request", ctx)
+		},
+		func(ctx *c.Context) (*c.Context, bool) {
+			return d.runBefore("before dial", ctx)
+		},
+		func(ctx *c.Context) (*c.Context, bool) {
+			return d.doDial(ctx)
+		},
+		func(ctx *c.Context) (*c.Context, bool) {
+			return d.runAfter("after dial", ctx)
+		},
+		func(ctx *c.Context) (*c.Context, bool) {
+			return d.runAfter("response", ctx)
+		},
+	}
+
+	// Reference to initial context
 	ctx := d.req.Context
-	mw := d.req.Middleware
 
-	// Run the request middleware
-	ctx = mw.Run("request", ctx)
-	// Handle error
-	if ctx.Error != nil {
-		ctx = mw.Run("error", ctx)
-		if ctx.Error != nil {
-			return ctx
+	// Execute tasks in order, stopping in case of error or explicit stop.
+	var stop bool
+	for _, task := range pipeline {
+		ctx, stop = task(ctx)
+		if stop {
+			break
 		}
 	}
 
-	// Verify if the request was intercepted
-	if ctx.Response.StatusCode != 0 {
-		// Then trigger the response middleware
-		ctx = mw.Run("response", ctx)
-		if ctx.Error != nil {
-			ctx = mw.Run("error", ctx)
-		}
-		return ctx
-	}
+	return ctx
+}
 
-	// If manually stopped
-	if ctx.Stopped {
-		ctx = mw.Run("stopped", ctx)
-		if ctx.Error != nil {
-			ctx = mw.Run("error", ctx)
-			if ctx.Error != nil {
-				return ctx
-			}
-		}
-		if ctx.Stopped {
-			return ctx
-		}
-	}
-
-	// Trigger the before dial phase
-	ctx = mw.Run("before dial", ctx)
-	if ctx.Error != nil {
-		ctx = mw.Run("error", ctx)
-		if ctx.Error != nil {
-			return ctx
-		}
-	}
-	// If manually stopped
-	if ctx.Stopped {
-		ctx = mw.Run("stopped", ctx)
-		if ctx.Error != nil {
-			ctx = mw.Run("error", ctx)
-			if ctx.Error != nil {
-				return ctx
-			}
-		}
-		if ctx.Stopped {
-			return ctx
-		}
-	}
-
+func (d *Dispatcher) doDial(ctx *c.Context) (*c.Context, bool) {
 	// Perform the request via ctx.Client
 	res, err := ctx.Client.Do(ctx.Request)
 	ctx.Error = err
 	if err != nil {
-		ctx = mw.Run("error", ctx)
+		ctx = d.req.Middleware.Run("error", ctx)
 		if ctx.Error != nil {
-			return ctx
+			return ctx, true
 		}
 	}
+
+	// Assign response if present
 	if res != nil {
 		ctx.Response = res
 	}
 
+	return ctx, false
+}
+
+func (d *Dispatcher) runBefore(phase string, ctx *c.Context) (*c.Context, bool) {
+	// Run the request middleware
+	ctx, stop := d.run(phase, ctx)
+	if stop {
+		return ctx, true
+	}
+
+	// Verify if the response was injected
+	ctx, stop = d.intercepted(ctx)
+	if stop {
+		return ctx, true
+	}
+
+	// Verify if the should stop
+	ctx, stop = d.stopped(ctx)
+	if stop {
+		return ctx, true
+	}
+
+	return ctx, false
+}
+
+func (d *Dispatcher) runAfter(phase string, ctx *c.Context) (*c.Context, bool) {
 	// Trigger the after dial phase
-	ctx = mw.Run("after dial", ctx)
+	ctx, stop := d.run(phase, ctx)
+	if stop {
+		return ctx, true
+	}
+
+	// Verify if the should stop
+	ctx, stop = d.stopped(ctx)
+	if stop {
+		return ctx, true
+	}
+
+	return ctx, false
+}
+
+func (d *Dispatcher) intercepted(ctx *c.Context) (*c.Context, bool) {
+	// Verify if the request was intercepted
+	if ctx.Response.StatusCode == 0 {
+		return ctx, false
+	}
+
+	// Then trigger the response middleware
+	ctx, _ = d.run("response", ctx)
+	return ctx, true
+}
+
+func (d *Dispatcher) stopped(ctx *c.Context) (*c.Context, bool) {
+	if !ctx.Stopped {
+		return ctx, false
+	}
+
+	mw := d.req.Middleware
+	ctx = mw.Run("stopped", ctx)
 	if ctx.Error != nil {
 		ctx = mw.Run("error", ctx)
 		if ctx.Error != nil {
-			return ctx
+			return ctx, true
 		}
 	}
 
-	// If manually stopped
-	if ctx.Stopped {
-		ctx = mw.Run("stopped", ctx)
-		if ctx.Error != nil {
-			ctx = mw.Run("error", ctx)
-			if ctx.Error != nil {
-				return ctx
-			}
-		}
-		if ctx.Stopped {
-			return ctx
-		}
+	return ctx, ctx.Stopped
+}
+
+func (d *Dispatcher) run(phase string, ctx *c.Context) (*c.Context, bool) {
+	mw := d.req.Middleware
+
+	// Run the middleware by phase
+	ctx = mw.Run(phase, ctx)
+	if ctx.Error == nil {
+		return ctx, false
 	}
 
-	// Run the response middleware
-	ctx = mw.Run("response", ctx)
+	// Run error middleware
+	ctx = mw.Run("error", ctx)
 	if ctx.Error != nil {
-		ctx = mw.Run("error", ctx)
+		return ctx, true
 	}
 
-	return ctx
+	return ctx, false
 }
