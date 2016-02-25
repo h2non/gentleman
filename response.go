@@ -6,7 +6,9 @@ package gentleman
 import (
 	"bytes"
 	"encoding/json"
+	"encoding/xml"
 	"gopkg.in/h2non/gentleman.v0/context"
+	"gopkg.in/h2non/gentleman.v0/utils"
 	"io"
 	"net/http"
 	"os"
@@ -21,10 +23,10 @@ type Response struct {
 	// This is the Go error flag – if something went wrong within the request, this flag will be set.
 	Error error
 
-	// Sugar to check if the response status code is a client error (4xx)
+	// Sugar to check if the response status code is a client error (4xx).
 	ClientError bool
 
-	// Sugar to check if the response status code is a server error (5xx)
+	// Sugar to check if the response status code is a server error (5xx).
 	ServerError bool
 
 	// StatusCode is the HTTP Status Code returned by the HTTP Response. Taken from resp.StatusCode.
@@ -82,7 +84,7 @@ func (r *Response) Read(p []byte) (n int, err error) {
 }
 
 // Close is part of our ability to support io.ReadCloser if
-// someone wants to make use of the raw body
+// someone wants to make use of the raw body.
 func (r *Response) Close() error {
 	if r.Error != nil {
 		return r.Error
@@ -91,7 +93,7 @@ func (r *Response) Close() error {
 }
 
 // SaveToFile allows you to download the contents
-// of the response to a file
+// of the response to a file.
 func (r *Response) SaveToFile(fileName string) error {
 	if r.Error != nil {
 		return r.Error
@@ -114,7 +116,7 @@ func (r *Response) SaveToFile(fileName string) error {
 }
 
 // JSON is a method that will populate a struct that is provided `userStruct`
-// with the JSON returned within the response body
+// with the JSON returned within the response body.
 func (r *Response) JSON(userStruct interface{}) error {
 	if r.Error != nil {
 		return r.Error
@@ -125,6 +127,26 @@ func (r *Response) JSON(userStruct interface{}) error {
 
 	err := jsonDecoder.Decode(&userStruct)
 	if err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// XML is a method that will populate a struct that is provided
+// `userStruct` with the XML returned within the response body.
+func (r *Response) XML(userStruct interface{}, charsetReader utils.XMLCharDecoder) error {
+	if r.Error != nil {
+		return r.Error
+	}
+
+	xmlDecoder := xml.NewDecoder(r.getInternalReader())
+	if charsetReader != nil {
+		xmlDecoder.CharsetReader = charsetReader
+	}
+
+	defer r.Close()
+	if err := xmlDecoder.Decode(&userStruct); err != nil && err != io.EOF {
 		return err
 	}
 
@@ -157,7 +179,7 @@ func (r *Response) populateResponseByteBuffer() {
 	}
 }
 
-// Bytes returns the response as a byte array
+// Bytes returns the response as a byte array.
 func (r *Response) Bytes() []byte {
 	if r.Error != nil {
 		return nil
@@ -172,7 +194,7 @@ func (r *Response) Bytes() []byte {
 	return r.buffer.Bytes()
 }
 
-// String returns the response as a string
+// String returns the response as a string.
 func (r *Response) String() string {
 	if r.Error != nil {
 		return ""
@@ -194,7 +216,7 @@ func (r *Response) ClearInternalBuffer() {
 
 // getInternalReader because we implement io.ReadCloser and
 // optionally hold a large buffer of the response (created by
-// the user's request)
+// the user's request).
 func (r *Response) getInternalReader() io.Reader {
 	if r.buffer.Len() != 0 {
 		return r.buffer
@@ -203,7 +225,7 @@ func (r *Response) getInternalReader() io.Reader {
 }
 
 // EnsureResponseFinalized will ensure that when the Response is GCed
-// the request body is closed so we aren't leaking fds
+// the request body is closed so we aren't leaking fds.
 func EnsureResponseFinalized(httpResp *Response) {
 	runtime.SetFinalizer(&httpResp, func(httpResponseInt **Response) {
 		(*httpResponseInt).RawResponse.Body.Close()

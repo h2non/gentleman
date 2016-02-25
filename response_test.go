@@ -1,6 +1,11 @@
 package gentleman
 
 import (
+	"errors"
+	"github.com/nbio/st"
+	"gopkg.in/h2non/gentleman.v0/utils"
+	"io/ioutil"
+	"os"
 	"testing"
 )
 
@@ -68,4 +73,161 @@ func TestResponseBuildStatusCodes(t *testing.T) {
 			t.Error("Invalid ServerError field")
 		}
 	}
+}
+
+func TestResponseReadError(t *testing.T) {
+	ctx := NewContext()
+	ctx.Error = errors.New("foo error")
+	res, _ := buildResponse(ctx)
+	num, err := res.Read([]byte{})
+	st.Reject(t, err, nil)
+	st.Expect(t, err.Error(), "foo error")
+	st.Expect(t, num, -1)
+}
+
+func TestResponseCloseError(t *testing.T) {
+	ctx := NewContext()
+	ctx.Error = errors.New("foo error")
+	res, _ := buildResponse(ctx)
+	err := res.Close()
+	st.Reject(t, err, nil)
+	st.Expect(t, err.Error(), "foo error")
+}
+
+func TestResponseSaveToFile(t *testing.T) {
+	ctx := NewContext()
+	utils.WriteBodyString(ctx.Response, "hello world")
+	res, _ := buildResponse(ctx)
+	err := res.SaveToFile("body.tmp")
+	st.Expect(t, err, nil)
+	defer os.Remove("body.tmp")
+
+	body, err := ioutil.ReadFile("body.tmp")
+	st.Expect(t, err, nil)
+	st.Expect(t, string(body), "hello world")
+}
+
+func TestResponseSaveToFileError(t *testing.T) {
+	ctx := NewContext()
+	ctx.Error = errors.New("foo error")
+	res, _ := buildResponse(ctx)
+	err := res.SaveToFile("body.tmp")
+	st.Reject(t, err, nil)
+}
+
+func TestResponseJSON(t *testing.T) {
+	type jsonData struct {
+		Foo string `json:foo`
+	}
+	json := &jsonData{}
+	ctx := NewContext()
+	utils.WriteBodyString(ctx.Response, `{"foo":"bar"}`)
+	res, _ := buildResponse(ctx)
+	err := res.JSON(json)
+	st.Expect(t, err, nil)
+	st.Expect(t, json.Foo, "bar")
+}
+
+func TestResponseJSONError(t *testing.T) {
+	type jsonData struct {
+		Foo string `json:foo`
+	}
+	json := &jsonData{}
+	ctx := NewContext()
+	ctx.Error = errors.New("foo error")
+	res, _ := buildResponse(ctx)
+	err := res.JSON(json)
+	st.Reject(t, err, nil)
+	st.Expect(t, json.Foo, "")
+}
+
+func TestResponseXML(t *testing.T) {
+	type xml struct {
+		Foo string `xml:"foo"`
+	}
+	xmlData := &xml{}
+	ctx := NewContext()
+	utils.WriteBodyString(ctx.Response, `<xml><foo>bar</foo></xml>`)
+	res, _ := buildResponse(ctx)
+	err := res.XML(xmlData, nil)
+	st.Expect(t, err, nil)
+	st.Expect(t, xmlData.Foo, "bar")
+}
+
+func TestResponseXMLError(t *testing.T) {
+	type xml struct {
+		Foo string `xml:"foo"`
+	}
+	xmlData := &xml{}
+	ctx := NewContext()
+	ctx.Error = errors.New("foo error")
+	utils.WriteBodyString(ctx.Response, `<xml><foo>bar</foo></xml>`)
+	res, _ := buildResponse(ctx)
+	err := res.XML(xmlData, nil)
+	st.Reject(t, err, nil)
+	st.Expect(t, xmlData.Foo, "")
+}
+
+func TestResponseString(t *testing.T) {
+	ctx := NewContext()
+	utils.WriteBodyString(ctx.Response, "foo bar")
+	res, err := buildResponse(ctx)
+	body := res.String()
+	st.Expect(t, err, nil)
+	st.Expect(t, body, "foo bar")
+}
+
+func TestResponseStringError(t *testing.T) {
+	ctx := NewContext()
+	ctx.Error = errors.New("foo error")
+	utils.WriteBodyString(ctx.Response, "foo bar")
+	res, err := buildResponse(ctx)
+	body := res.String()
+	st.Reject(t, err, nil)
+	st.Expect(t, body, "")
+}
+
+func TestResponseBytes(t *testing.T) {
+	ctx := NewContext()
+	utils.WriteBodyString(ctx.Response, "foo bar")
+	res, err := buildResponse(ctx)
+	body := res.Bytes()
+	st.Expect(t, err, nil)
+	st.Expect(t, string(body), "foo bar")
+}
+
+func TestResponseBytesError(t *testing.T) {
+	ctx := NewContext()
+	ctx.Error = errors.New("foo error")
+	utils.WriteBodyString(ctx.Response, "foo bar")
+	res, err := buildResponse(ctx)
+	body := res.Bytes()
+	st.Reject(t, err, nil)
+	st.Expect(t, string(body), "")
+}
+
+func TestResponseReaderBuffer(t *testing.T) {
+	ctx := NewContext()
+	utils.WriteBodyString(ctx.Response, "foo bar")
+	res, err := buildResponse(ctx)
+
+	body := res.Bytes()
+	st.Expect(t, err, nil)
+	st.Expect(t, string(body), "foo bar")
+	st.Expect(t, res.buffer.String(), "foo bar")
+
+	res.ClearInternalBuffer()
+	st.Expect(t, string(res.Bytes()), "")
+}
+
+func TestResponseReaderBufferError(t *testing.T) {
+	ctx := NewContext()
+	ctx.Error = errors.New("foo error")
+	res, err := buildResponse(ctx)
+	body := res.Bytes()
+	st.Reject(t, err, nil)
+	st.Expect(t, string(body), "")
+	st.Expect(t, res.buffer.Len(), 0)
+	res.ClearInternalBuffer()
+	st.Expect(t, res.buffer.Len(), 0)
 }

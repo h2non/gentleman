@@ -26,3 +26,4 @@ _testmain.go
 .idea/
 *.iml
 *.out
+*.tmp
