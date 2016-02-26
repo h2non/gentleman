@@ -14,7 +14,7 @@ Take a look to the [examples](#examples) or list of [supported plugins](#plugins
 - Plugin driven.
 - Simple, expressive, fluent API.
 - Idiomatic built on top of `net/http` package.
-- Middleware layer that supports the whole HTTP life cycle.
+- Middleware layer that supports the full HTTP life cycle.
 - Multiplexer for easy composition capabilities.
 - Strong extensibility via plugins.
 - Easy to configure and use.
