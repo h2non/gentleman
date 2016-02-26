@@ -193,7 +193,7 @@ go get -u gopkg.in/h2non/gentleman.v0
     <td>Configure the TLS options used by the HTTP transport</td>
   </tr>
   <tr>
-    <td><a href="https://github.com/h2non/gentleman-retry">tls</a></td>
+    <td><a href="https://github.com/h2non/gentleman-retry">retry</a></td>
     <td>
       <a href="https://godoc.org/github.com/h2non/gentleman-retry">
         <img src="https://godoc.org/github.com/h2non/gentleman-retry?status.svg" />
