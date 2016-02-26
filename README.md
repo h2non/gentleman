@@ -2,7 +2,10 @@
 
 Full-featured, plugin-driven, middleware-oriented library to easily create rich, versatile and composable HTTP clients in [Go](http://golang.org).
 
-Take a look to the [examples](#examples) to get started.
+gentleman stringly embraces extensibility and composition principles to provide a powerful way to create simple or featured HTTP client layers. 
+For instance, you can provide retry policy capabilities to your HTTP client simply attaching the [retry](https://github.com/h2non/gentleman-retry) plugin. Isn't dead simple and fun?
+
+Take a look to the [examples](#examples) or list of [supported plugins](#plugins) to get started.
 
 <img src="http://s10.postimg.org/5e31ox1ft/gentleman.png" align="center" height="320" />
 
@@ -24,8 +27,6 @@ Take a look to the [examples](#examples) to get started.
 ```bash
 go get -u gopkg.in/h2non/gentleman.v0
 ```
-
-Note: I strongly recommend you to use `gopkg.in` when depending on third-party packages to prevent unexpected breaks of the interface contract in upcoming major versions of the package.
 
 ## Plugins
 
@@ -190,6 +191,17 @@ Note: I strongly recommend you to use `gopkg.in` when depending on third-party p
     <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Configure the TLS options used by the HTTP transport</td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/h2non/gentleman-retry">tls</a></td>
+    <td>
+      <a href="https://godoc.org/github.com/h2non/gentleman-retry">
+        <img src="https://godoc.org/github.com/h2non/gentleman-retry?status.svg" />
+      </a>
+    </td>
+    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
+    <td><a href="https://travis-ci.org/h2non/gentleman-retry"><img src="https://travis-ci.org/h2non/gentleman-retry.png" /></a></td> 
+    <td>Provide retry policy capabilities to your HTTP clients</td>
   </tr>
 </table>
 
