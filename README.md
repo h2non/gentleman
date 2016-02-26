@@ -11,7 +11,7 @@ Take a look to the [examples](#examples) or list of [supported plugins](#plugins
 
 ## Goals
 
-- Plugin driven.
+- Plugin driven architecture.
 - Simple, expressive, fluent API.
 - Idiomatic built on top of `net/http` package.
 - Middleware layer that supports the full HTTP life cycle.
@@ -211,19 +211,21 @@ go get -u gopkg.in/h2non/gentleman.v0
 
 You can create your own plugins for a variety of purposes, such as server discovery, custom HTTP tranport, modify any request/response param, intercept traffic, authentication and so on.
 
-You can easily create custom plugins via [plugin](https://github.com/h2non/gentleman/tree/master/plugin) package.
+For more details about plugins see the [plugin](https://github.com/h2non/gentleman/tree/master/plugin) package.
 
-See [plugin example](https://github.com/h2non/gentleman/blob/master/_examples/plugin/plugin.go).
+Also you can take a look to a plugin [implementation example](https://github.com/h2non/gentleman/blob/master/_examples/plugin/plugin.go).
 
 ## Middleware
 
 gentleman is completely based on a hierarchical middleware layer based on simple plugin interfaces.
 
-The middleware layer allows you to plug in intermediate custom logic in for any HTTP traffic handled by gentleman. It supports multiple phases, which represents the full request/response life cycle, giving you the ability to perform actions before and after an HTTP transaction is done.
+The middleware layer allows you to plug in intermediate custom logic in for any HTTP traffic handled by gentleman. 
+
+It supports multiple phases, which represents the full request/response life cycle, giving you the ability to perform actions before and after an HTTP transaction is done.
 
 #### Middleware phases
 
-gentleman's dispatcher provides built-in support to the following middleware phases:
+gentleman's middleware dispatcher provides built-in support to the following middleware phases:
 
 - **request** - Executed before a request is sent over the network.
 - **response** - Executed when the client receives the response, even if it failed.
