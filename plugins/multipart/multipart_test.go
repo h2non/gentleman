@@ -18,7 +18,7 @@ func TestFile(t *testing.T) {
 	st.Expect(t, fn.called, true)
 	body, _ := ioutil.ReadAll(ctx.Request.Body)
 	st.Expect(t, match(body, "Content-Type: application/octet-stream"), true)
-	st.Expect(t, match(body, `Content-Disposition: form-data; name="file"; filename="foo"`), true)
+	st.Expect(t, match(body, `Content-Disposition: form-data; name="foo"; filename="foo"`), true)
 	st.Expect(t, match(body, "hello world"), true)
 }
 
@@ -27,15 +27,15 @@ func TestFiles(t *testing.T) {
 	fn := newHandler()
 	reader1 := bytes.NewReader([]byte("content1"))
 	reader2 := bytes.NewReader([]byte("content2"))
-	file1 := FormFile{"file1.txt", reader1}
-	file2 := FormFile{"file2.txt", reader2}
+	file1 := FormFile{"file1", reader1}
+	file2 := FormFile{"file2", reader2}
 
 	Files([]FormFile{file1, file2}).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
 	body, _ := ioutil.ReadAll(ctx.Request.Body)
 	st.Expect(t, match(body, "Content-Type: application/octet-stream"), true)
-	st.Expect(t, match(body, `Content-Disposition: form-data; name="file1"; filename="file1.txt"`), true)
-	st.Expect(t, match(body, `Content-Disposition: form-data; name="file2"; filename="file2.txt"`), true)
+	st.Expect(t, match(body, `Content-Disposition: form-data; name="file1"; filename="file1"`), true)
+	st.Expect(t, match(body, `Content-Disposition: form-data; name="file2"; filename="file2"`), true)
 	st.Expect(t, match(body, "content1"), true)
 	st.Expect(t, match(body, "content2"), true)
 }

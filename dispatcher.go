@@ -44,10 +44,9 @@ func (d *Dispatcher) Dispatch() *c.Context {
 	ctx := d.req.Context
 
 	// Execute tasks in order, stopping in case of error or explicit stop.
-	var stop bool
 	for _, task := range pipeline {
-		ctx, stop = task(ctx)
-		if stop {
+		var stop bool
+		if ctx, stop = task(ctx); stop {
 			break
 		}
 	}

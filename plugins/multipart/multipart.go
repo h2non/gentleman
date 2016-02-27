@@ -106,7 +106,10 @@ func writeFile(multipartWriter *multipart.Writer, data FormData, file FormFile, 
 
 	fileName := "file"
 	if len(data.Files) > 1 {
-		fileName = strings.Join([]string{"file", strconv.Itoa(index + 1)}, "")
+		fileName = strings.Join([]string{fileName, strconv.Itoa(index + 1)}, "")
+	}
+	if file.Name != "" {
+		fileName = file.Name
 	}
 
 	writer, err := multipartWriter.CreateFormFile(fileName, file.Name)
