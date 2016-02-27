@@ -274,7 +274,6 @@ func TestRequestGoroutines(t *testing.T) {
 	times := 10
 	var wg sync.WaitGroup
 
-	calls := 0
 	for i := 0; i < times; i++ {
 		wg.Add(1)
 		go func(url string) {
@@ -283,12 +282,10 @@ func TestRequestGoroutines(t *testing.T) {
 			st.Expect(t, err, nil)
 			st.Expect(t, res.Ok, true)
 			st.Expect(t, res.StatusCode, 200)
-			calls++
 		}(ts.URL)
 	}
 
 	wg.Wait()
-	st.Expect(t, calls, times)
 }
 
 // Test API methods
