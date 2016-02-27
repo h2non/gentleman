@@ -1,5 +1,9 @@
-// Package context implements a simple request-aware HTTP context
-// designed to share polymorfic data types across plugins in the middleware call chain.
+// Package context implements a simple request-aware HTTP context used by plugins
+// and exposed by the middleware layer, designed to share polymorfic data
+// types across plugins in the middleware call chain.
+//
+// Context is not thread-safe by default.
+// In case that you support multithread programming in plugins you have to use locks/mutex accordingly.
 package context
 
 import (
