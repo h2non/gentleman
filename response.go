@@ -16,6 +16,7 @@ import (
 )
 
 // Response provides a more convenient and higher level Response struct.
+// Implements an io.ReadCloser interface.
 type Response struct {
 	// Ok is a boolean flag that validates that the server returned a 2xx code.
 	Ok bool
@@ -153,32 +154,6 @@ func (r *Response) XML(userStruct interface{}, charsetReader utils.XMLCharDecode
 	return nil
 }
 
-// createResponseBytesBuffer is a utility method that will populate
-// the internal byte reader – this is largely used for .String() and .Bytes()
-func (r *Response) populateResponseByteBuffer() {
-	// Have I done this already?
-	if r.buffer.Len() != 0 {
-		return
-	}
-	defer r.Close()
-
-	// Is there any content?
-	if r.RawResponse.ContentLength == 0 {
-		return
-	}
-
-	// Did the server tell us how big the response is going to be?
-	if r.RawResponse.ContentLength > 0 {
-		r.buffer.Grow(int(r.RawResponse.ContentLength))
-	}
-
-	_, err := io.Copy(r.buffer, r)
-	if err != nil && err != io.EOF {
-		r.Error = err
-		r.RawResponse.Body.Close()
-	}
-}
-
 // Bytes returns the response as a byte array.
 func (r *Response) Bytes() []byte {
 	if r.Error != nil {
@@ -212,6 +187,32 @@ func (r *Response) ClearInternalBuffer() {
 		return // This is a noop as we will be dereferencing a null pointer
 	}
 	r.buffer.Reset()
+}
+
+// createResponseBytesBuffer is a utility method that will populate
+// the internal byte reader – this is largely used for .String() and .Bytes()
+func (r *Response) populateResponseByteBuffer() {
+	// Have I done this already?
+	if r.buffer.Len() != 0 {
+		return
+	}
+	defer r.Close()
+
+	// Is there any content?
+	if r.RawResponse.ContentLength == 0 {
+		return
+	}
+
+	// Did the server tell us how big the response is going to be?
+	if r.RawResponse.ContentLength > 0 {
+		r.buffer.Grow(int(r.RawResponse.ContentLength))
+	}
+
+	_, err := io.Copy(r.buffer, r)
+	if err != nil && err != io.EOF {
+		r.Error = err
+		r.RawResponse.Body.Close()
+	}
 }
 
 // getInternalReader because we implement io.ReadCloser and

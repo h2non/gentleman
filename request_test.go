@@ -9,11 +9,13 @@ import (
 	"gopkg.in/h2non/gentleman.v0/plugins/multipart"
 	"gopkg.in/h2non/gentleman.v0/utils"
 	"io/ioutil"
+	"math/rand"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"runtime"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 )
@@ -260,6 +262,33 @@ func TestRequestCancel(t *testing.T) {
 	res, err := req.Do()
 	st.Expect(t, err, nil)
 	st.Expect(t, res.StatusCode, 0)
+}
+
+func TestRequestGoroutines(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		time.Sleep(time.Duration(rand.Intn(50)) * time.Millisecond)
+		fmt.Fprintln(w, "Hello, world")
+	}))
+	defer ts.Close()
+
+	times := 10
+	var wg sync.WaitGroup
+
+	calls := 0
+	for i := 0; i < times; i++ {
+		wg.Add(1)
+		go func(url string) {
+			defer wg.Done()
+			res, err := NewRequest().URL(url).Send()
+			st.Expect(t, err, nil)
+			st.Expect(t, res.Ok, true)
+			st.Expect(t, res.StatusCode, 200)
+			calls++
+		}(ts.URL)
+	}
+
+	wg.Wait()
+	st.Expect(t, calls, times)
 }
 
 // Test API methods
