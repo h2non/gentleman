@@ -529,3 +529,71 @@ func TestRequestClone(t *testing.T) {
 	st.Expect(t, req2.Context.GetString("foo"), req1.Context.GetString("foo"))
 	st.Expect(t, len(req2.Middleware.GetStack()), 1)
 }
+
+func BenchmarkSimpleRequestGet(b *testing.B) {
+	ts := createEchoServer()
+	defer ts.Close()
+
+	for n := 0; n < b.N; n++ {
+		NewRequest().URL(ts.URL).Send()
+	}
+}
+
+func BenchmarkSimpleRequestPostSmallString(b *testing.B) {
+	body := randomString(200)
+	ts := createEchoServer()
+	defer ts.Close()
+
+	for n := 0; n < b.N; n++ {
+		NewRequest().URL(ts.URL).BodyString(body).Send()
+	}
+}
+
+func BenchmarkSimpleRequestPostLargeString(b *testing.B) {
+	body := randomString(10000)
+	ts := createEchoServer()
+	defer ts.Close()
+
+	for n := 0; n < b.N; n++ {
+		NewRequest().URL(ts.URL).BodyString(body).Send()
+	}
+}
+
+func BenchmarkRequestPlugins(b *testing.B) {
+	ts := createEchoServer()
+	defer ts.Close()
+
+	for n := 0; n < b.N; n++ {
+		req := NewRequest().URL(ts.URL)
+		for i := 0; i < 10; i++ {
+			req.UseRequest(headerRequestMiddleware)
+			req.UseResponse(headerResponseMiddleware)
+		}
+		req.Send()
+	}
+}
+
+func headerRequestMiddleware(ctx *context.Context, h context.Handler) {
+	ctx.Request.Header.Set("foo", ctx.Request.Header.Get("foo")+"bar")
+	h.Next(ctx)
+}
+
+func headerResponseMiddleware(ctx *context.Context, h context.Handler) {
+	ctx.Response.Header.Set("foo", ctx.Response.Header.Get("foo")+"bar")
+	h.Next(ctx)
+}
+
+func createEchoServer() *httptest.Server {
+	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "Hello, world")
+	}))
+}
+
+func randomString(n int) string {
+	letterBytes := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	b := make([]byte, n)
+	for i := range b {
+		b[i] = letterBytes[rand.Int63()%int64(len(letterBytes))]
+	}
+	return string(b)
+}

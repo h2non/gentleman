@@ -15,6 +15,7 @@ import (
 // String defines the HTTP request body based on the given string.
 func String(data string) p.Plugin {
 	return p.NewRequestPlugin(func(ctx *c.Context, h c.Handler) {
+		ctx.Request.Method = getMethod(ctx)
 		ctx.Request.Body = utils.StringReader(data)
 		ctx.Request.ContentLength = int64(bytes.NewBufferString(data).Len())
 		h.Next(ctx)
@@ -39,6 +40,7 @@ func JSON(data interface{}) p.Plugin {
 			}
 		}
 
+		ctx.Request.Method = getMethod(ctx)
 		ctx.Request.Body = ioutil.NopCloser(buf)
 		ctx.Request.ContentLength = int64(buf.Len())
 		ctx.Request.Header.Set("Content-Type", "application/json")
@@ -65,6 +67,7 @@ func XML(data interface{}) p.Plugin {
 			}
 		}
 
+		ctx.Request.Method = getMethod(ctx)
 		ctx.Request.Body = ioutil.NopCloser(buf)
 		ctx.Request.ContentLength = int64(buf.Len())
 		ctx.Request.Header.Set("Content-Type", "application/xml")
@@ -95,6 +98,16 @@ func Reader(body io.Reader) p.Plugin {
 		}
 
 		req.Body = rc
+		ctx.Request.Method = getMethod(ctx)
+
 		h.Next(ctx)
 	})
+}
+
+func getMethod(ctx *c.Context) string {
+	method := ctx.Request.Method
+	if method == "GET" || method == "" {
+		return "POST"
+	}
+	return method
 }
