@@ -13,12 +13,13 @@ func main() {
 	// Define the base URL
 	cli.Use(url.BaseURL("http://httpbin.org"))
 
-	// Define the path with dynamic param
+	// Define the path with dynamic params
 	// Use the :<name> notation
-	cli.Use(url.Path("/:resource"))
+	cli.Use(url.Path("/:action/:subaction"))
 
-	// Define the path value
-	cli.Use(url.Param("resource", "headers"))
+	// Define the path params to replace
+	cli.Use(url.Param("action", "delay"))
+	cli.Use(url.Param("subaction", "1"))
 
 	// Perform the request
 	res, err := cli.Request().Send()

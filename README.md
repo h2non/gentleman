@@ -1,8 +1,8 @@
 # gentleman [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/badge/version-0.1.1-orange.svg?style=flat)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman?status.svg)](https://godoc.org/github.com/h2non/gentleman) [![Coverage Status](https://coveralls.io/repos/github/h2non/gentleman/badge.svg?branch=master)](https://coveralls.io/github/h2non/gentleman?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman)](https://goreportcard.com/report/github.com/h2non/gentleman)
 
-Full-featured, plugin-driven, middleware-oriented library to easily create rich, versatile and composable HTTP clients in [Go](http://golang.org).
+Full-featured, plugin-driven, middleware-oriented toolkit to easily create rich, versatile and composable HTTP client layers in [Go](http://golang.org).
 
-gentleman embraces extensibility and composition principles to provide a powerful way to create simple or featured HTTP client layers. 
+gentleman embraces extensibility and composition principles to provide a powerful way to create simple and featured HTTP clients based on built-in or third-party plugins. 
 For instance, you can provide retry policy capabilities to your HTTP client simply attaching the [retry](https://github.com/h2non/gentleman-retry) plugin.
 
 Take a look to the [examples](#examples) or list of [supported plugins](#plugins) to get started.
@@ -211,7 +211,9 @@ go get -u gopkg.in/h2non/gentleman.v0
 
 You can create your own plugins for a variety of purposes, such as server discovery, custom HTTP tranport, modify any request/response param, intercept traffic, authentication and so on.
 
-For more details about plugins see the [plugin](https://github.com/h2non/gentleman/tree/master/plugin) package.
+Plugins are essentially a specific set of phase-specific middleware function handlers providing [a concrete interface](https://github.com/h2non/gentleman/blob/755d55eef0bd26ae6b4ee19fe59001db2c46a51b/plugin/plugin.go#L16-L35) consumed by gentleman.
+
+For more details about plugins see the [plugin](https://github.com/h2non/gentleman/tree/master/plugin) package and [examples](https://github.com/h2non/gentleman/tree/master/_examples/plugin).
 
 Also you can take a look to a plugin [implementation example](https://github.com/h2non/gentleman/blob/master/_examples/plugin/plugin.go).
 
@@ -224,9 +226,11 @@ It supports multiple phases which represents the full HTTP request/response life
 The middleware stack chain is executed in FIFO order designed for single thread model. 
 Plugins can support goroutines, but plugins implementors should prevent data race issues due to concurrency in multithreading programming.
 
+For more implementation details about the middleware layer, see the [middleware](https://github.com/h2non/gentleman/tree/master/middleware) package and [examples](https://github.com/h2non/gentleman/tree/master/_examples/middleware).
+
 #### Middleware phases
 
-gentleman's middleware dispatcher provides built-in support to the following middleware phases:
+Supported middleware phases triggered by gentleman HTTP dispatcher:
 
 - **request** - Executed before a request is sent over the network.
 - **response** - Executed when the client receives the response, even if it failed.
@@ -235,6 +239,10 @@ gentleman's middleware dispatcher provides built-in support to the following mid
 - **intercept** - Executed in case that the request has been intercepted before network dialing.
 - **before dial** - Executed before a request is sent over the network.
 - **after dial** - Executed after the request dialing is done and the response has been received.
+
+Note that the middleware layer has been designed for easy extensibility, therefore new phases may be added in the future and/or the developer could be able to trigger custom middleware phases if needed. 
+
+Feel free to an issue to discuss this capabilities in detail.
 
 ## API
 
