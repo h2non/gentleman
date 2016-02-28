@@ -87,7 +87,7 @@ func createForm(data FormData, ctx *c.Context) error {
 		return err
 	}
 
-	ctx.Request.Method = "POST"
+	ctx.Request.Method = setMethod(ctx)
 	ctx.Request.Body = ioutil.NopCloser(body)
 	ctx.Request.Header.Add("Content-Type", multipartWriter.FormDataContentType())
 
@@ -122,4 +122,12 @@ func writeFile(multipartWriter *multipart.Writer, data FormData, file FormFile, 
 	rc.Close()
 
 	return nil
+}
+
+func setMethod(ctx *c.Context) string {
+	method := ctx.Request.Method
+	if method == "GET" || method == "" {
+		return "POST"
+	}
+	return method
 }
