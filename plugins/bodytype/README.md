@@ -2,6 +2,16 @@
 
 gentleman's plugin to easy define HTTP bodies. Supports JSON, XML, strings or streams with interface polymorphism. 
 
+Supported type aliases:
+
+- html       - `text/html`
+- json       - `application/json`
+- xml        - `application/xml`
+- text       - `text/plain`
+- urlencoded - `application/x-www-form-urlencoded`
+- form       - `application/x-www-form-urlencoded`
+- form-data  - `application/x-www-form-urlencoded`
+
 ## Installation
 
 ```bash
