@@ -7,7 +7,7 @@ For instance, you can provide retry policy capabilities to your HTTP client simp
 
 Take a look to the [examples](#examples) or list of [supported plugins](#plugins) to get started.
 
-<img src="http://s10.postimg.org/5e31ox1ft/gentleman.png" align="center" height="320" />
+<img src="http://s10.postimg.org/5e31ox1ft/gentleman.png" align="right" height="260" />
 
 ## Goals
 
