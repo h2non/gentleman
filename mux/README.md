@@ -2,6 +2,8 @@
 
 `mux` package implements a versatile HTTP client multiplexer with built-in matchers for easy plugin composition.
 
+multiplexer can be used to compose plugins for both request/response phases.
+
 ## Installation
 
 ```bash
