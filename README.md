@@ -1,13 +1,13 @@
 # gentleman [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/badge/version-0.1.2-orange.svg?style=flat)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman?status.svg)](https://godoc.org/github.com/h2non/gentleman) [![Coverage Status](https://coveralls.io/repos/github/h2non/gentleman/badge.svg?branch=master)](https://coveralls.io/github/h2non/gentleman?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman)](https://goreportcard.com/report/github.com/h2non/gentleman)
 
+<img src="http://s10.postimg.org/5e31ox1ft/gentleman.png" align="right" height="260" />
+
 Full-featured, plugin-driven, middleware-oriented toolkit to easily create rich, versatile and composable HTTP clients in [Go](http://golang.org).
 
 gentleman embraces extensibility and composition principles to provide a powerful way to create simple and featured HTTP client layers based on built-in or third-party plugins. 
 For instance, you can provide retry policy capabilities to your HTTP client simply attaching the [retry](https://github.com/h2non/gentleman-retry) plugin.
 
 Take a look to the [examples](#examples) or list of [supported plugins](#plugins) to get started.
-
-<img src="http://s10.postimg.org/5e31ox1ft/gentleman.png" align="right" height="260" />
 
 ## Goals
 
