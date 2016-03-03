@@ -21,6 +21,7 @@ Take a look to the [examples](#examples) or list of [supported plugins](#plugins
 - Ability to intercept or mock HTTP traffic.
 - Convenient helpers and abstractions over Go's HTTP primitives.
 - Built-in JSON, XML and multipart bodies serialization and parsing.
+- Easy to test via HTTP mocking (see [gentleman-mock](https://github.com/h2non/gentleman-mock))
 - Dependency free.
 
 ## Installation
@@ -203,6 +204,17 @@ go get -u gopkg.in/h2non/gentleman.v0
     <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman-retry"><img src="https://travis-ci.org/h2non/gentleman-retry.png" /></a></td> 
     <td>Provide retry policy capabilities to your HTTP clients</td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/h2non/gentleman-mock">mock</a></td>
+    <td>
+      <a href="https://godoc.org/github.com/h2non/gentleman-mock">
+        <img src="https://godoc.org/github.com/h2non/gentleman-mock?status.svg" />
+      </a>
+    </td>
+    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
+    <td><a href="https://travis-ci.org/h2non/gentleman-mock"><img src="https://travis-ci.org/h2non/gentleman-mock.png" /></a></td> 
+    <td>Easy HTTP mocking using <a href="https://github.com/h2non/gock">gock</a></td>
   </tr>
 </table>
 
