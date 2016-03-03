@@ -241,42 +241,42 @@ func TestClientCookieJar(t *testing.T) {
 func TestClientVerbMethods(t *testing.T) {
 	cli := New()
 	req := cli.Get()
-	cli.Middleware.Run("request", req.Context)
+	req.Middleware.Run("request", req.Context)
 	if req.Context.Request.Method != "GET" {
 		t.Errorf("Invalid request method: %s", req.Context.Request.Method)
 	}
 
 	cli = New()
 	req = cli.Post()
-	cli.Middleware.Run("request", req.Context)
+	req.Middleware.Run("request", req.Context)
 	if req.Context.Request.Method != "POST" {
 		t.Errorf("Invalid request method: %s", req.Context.Request.Method)
 	}
 
 	cli = New()
 	req = cli.Put()
-	cli.Middleware.Run("request", req.Context)
+	req.Middleware.Run("request", req.Context)
 	if req.Context.Request.Method != "PUT" {
 		t.Errorf("Invalid request method: %s", req.Context.Request.Method)
 	}
 
 	cli = New()
 	req = cli.Delete()
-	cli.Middleware.Run("request", req.Context)
+	req.Middleware.Run("request", req.Context)
 	if req.Context.Request.Method != "DELETE" {
 		t.Errorf("Invalid request method: %s", req.Context.Request.Method)
 	}
 
 	cli = New()
 	req = cli.Patch()
-	cli.Middleware.Run("request", req.Context)
+	req.Middleware.Run("request", req.Context)
 	if req.Context.Request.Method != "PATCH" {
 		t.Errorf("Invalid request method: %s", req.Context.Request.Method)
 	}
 
 	cli = New()
 	req = cli.Head()
-	cli.Middleware.Run("request", req.Context)
+	req.Middleware.Run("request", req.Context)
 	if req.Context.Request.Method != "HEAD" {
 		t.Errorf("Invalid request method: %s", req.Context.Request.Method)
 	}

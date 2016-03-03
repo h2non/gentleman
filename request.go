@@ -96,7 +96,10 @@ func (r *Request) Mux() *mux.Mux {
 
 // Method defines the HTTP verb to be used.
 func (r *Request) Method(method string) *Request {
-	r.Context.Request.Method = method
+	r.Middleware.UseRequest(func(ctx *context.Context, h context.Handler) {
+		ctx.Request.Method = method
+		h.Next(ctx)
+	})
 	return r
 }
 
