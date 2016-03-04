@@ -15,8 +15,12 @@ func main() {
 	cli.Use(url.BaseURL("http://httpbin.org"))
 	cli.Use(url.Path("/get"))
 
-	// Define a custom query param
+	// Define a custom query params
 	cli.Use(query.Set("foo", "bar"))
+	cli.Use(query.Set("bar", "baz"))
+
+	// Or multiple values
+	cli.Use(query.SetMap(map[string]string{"foo": "bar"}))
 
 	// Remove a query param
 	cli.Use(query.Del("bar"))
