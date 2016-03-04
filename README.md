@@ -14,7 +14,7 @@ Take a look to the [examples](#examples) or list of [supported plugins](#plugins
 - Plugin driven architecture.
 - Simple, expressive, fluent API.
 - Idiomatic built on top of `net/http` package.
-- Middleware layer that supports all the HTTP life cycle.
+- Context-aware middleware layer supporting all the HTTP life cycle.
 - Multiplexer for easy composition capabilities.
 - Strong extensibility via plugins.
 - Easy to configure and use.
