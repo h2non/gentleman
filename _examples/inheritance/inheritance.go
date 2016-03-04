@@ -18,7 +18,6 @@ func main() {
 
 	// Create a new client
 	cli := gentleman.New()
-	cli.Method("GET")
 
 	// Bind parent client
 	cli.UseParent(parent)
