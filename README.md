@@ -21,7 +21,7 @@ Take a look to the [examples](#examples) or list of [supported plugins](#plugins
 - Ability to intercept or mock HTTP traffic.
 - Convenient helpers and abstractions over Go's HTTP primitives.
 - Built-in JSON, XML and multipart bodies serialization and parsing.
-- Easy to test via HTTP mocking (see [gentleman-mock](https://github.com/h2non/gentleman-mock).
+- Easy to test via HTTP mocking (e.g: [gentleman-mock](https://github.com/h2non/gentleman-mock)).
 - Data passing across plugins/middleware via context.
 - Dependency free.
 
