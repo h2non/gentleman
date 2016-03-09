@@ -5,7 +5,7 @@
 Full-featured, plugin-driven, middleware-oriented toolkit to easily create rich, versatile and composable HTTP clients in [Go](http://golang.org).
 
 gentleman embraces extensibility and composition principles to provide a powerful way to create simple and featured HTTP client layers based on built-in or third-party plugins. 
-For instance, you can provide retry policy capabilities to your HTTP client simply attaching the [retry](https://github.com/h2non/gentleman-retry) plugin.
+For instance, you can provide retry policy capabilities or dynamic server discovery to your HTTP clients simply attaching the [retry](https://github.com/h2non/gentleman-retry) or [consul](https://github.com/h2non/gentleman-consul) plugins respectively.
 
 Take a look to the [examples](#examples) or list of [supported plugins](#plugins) to get started.
 
