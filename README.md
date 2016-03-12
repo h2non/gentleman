@@ -236,7 +236,7 @@ go get -u gopkg.in/h2non/gentleman.v0
 
 You can create your own plugins for a variety of purposes, such as server discovery, custom HTTP tranport, modify any request/response param, intercept traffic, authentication and so on.
 
-Plugins are essentially a specific set of phase-specific middleware function handlers providing [a concrete interface](https://github.com/h2non/gentleman/blob/755d55eef0bd26ae6b4ee19fe59001db2c46a51b/plugin/plugin.go#L16-L35) consumed by gentleman.
+Plugins are essentially a set of middleware function handlers for one or multiple HTTP life cycle phases exposing [a concrete interface](https://github.com/h2non/gentleman/blob/755d55eef0bd26ae6b4ee19fe59001db2c46a51b/plugin/plugin.go#L16-L35) consumed by gentleman middleware layer.
 
 For more details about plugins see the [plugin](https://github.com/h2non/gentleman/tree/master/plugin) package and [examples](https://github.com/h2non/gentleman/tree/master/_examples/plugin).
 
