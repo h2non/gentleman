@@ -37,7 +37,6 @@ go get -u gopkg.in/h2non/gentleman.v0
   <tr>
     <th>Name</th>
     <th>Docs</th>
-    <th>API</th>
     <th>Status</th> 
     <th>Description</th>
   </tr>
@@ -48,7 +47,6 @@ go get -u gopkg.in/h2non/gentleman.v0
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /</a></td>
     <td>Easily declare URL, base URL and path values in HTTP requests</td>
   </tr>
@@ -59,7 +57,6 @@ go get -u gopkg.in/h2non/gentleman.v0
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Declare authorization headers in your requests</td>
   </tr>
@@ -70,7 +67,6 @@ go get -u gopkg.in/h2non/gentleman.v0
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Easily define bodies based on JSON, XML, strings, buffers or streams</td>
   </tr>
@@ -81,7 +77,6 @@ go get -u gopkg.in/h2non/gentleman.v0
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Define body MIME type by alias</td>
   </tr>
@@ -92,7 +87,6 @@ go get -u gopkg.in/h2non/gentleman.v0
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Declare and store HTTP cookies easily</td>
   </tr>
@@ -103,7 +97,6 @@ go get -u gopkg.in/h2non/gentleman.v0
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/status-beta-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Helpers to define enable/disable HTTP compression</td>
   </tr>
@@ -114,7 +107,6 @@ go get -u gopkg.in/h2non/gentleman.v0
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Manage HTTP headers easily</td>
   </tr>
@@ -125,7 +117,6 @@ go get -u gopkg.in/h2non/gentleman.v0
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Create multipart forms easily. Supports files and text fields</td>
   </tr>
@@ -136,7 +127,6 @@ go get -u gopkg.in/h2non/gentleman.v0
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Configure HTTP proxy servers</td>
   </tr>
@@ -147,7 +137,6 @@ go get -u gopkg.in/h2non/gentleman.v0
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Easily manage query params</td>
   </tr>
@@ -158,7 +147,6 @@ go get -u gopkg.in/h2non/gentleman.v0
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Easily configure a custom redirect policy</td>
   </tr>
@@ -169,7 +157,6 @@ go get -u gopkg.in/h2non/gentleman.v0
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Easily configure the HTTP timeouts (request, dial, TLS...)</td>
   </tr>
@@ -180,7 +167,6 @@ go get -u gopkg.in/h2non/gentleman.v0
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Define a custom HTTP transport easily</td>
   </tr>
@@ -191,7 +177,6 @@ go get -u gopkg.in/h2non/gentleman.v0
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
     <td>Configure the TLS options used by the HTTP transport</td>
   </tr>
@@ -202,7 +187,6 @@ go get -u gopkg.in/h2non/gentleman.v0
         <img src="https://godoc.org/github.com/h2non/gentleman-retry?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman-retry"><img src="https://travis-ci.org/h2non/gentleman-retry.png" /></a></td> 
     <td>Provide retry policy capabilities to your HTTP clients</td>
   </tr>
@@ -213,7 +197,6 @@ go get -u gopkg.in/h2non/gentleman.v0
         <img src="https://godoc.org/github.com/h2non/gentleman-mock?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman-mock"><img src="https://travis-ci.org/h2non/gentleman-mock.png" /></a></td> 
     <td>Easy HTTP mocking using <a href="https://github.com/h2non/gock">gock</a></td>
   </tr>
@@ -224,7 +207,6 @@ go get -u gopkg.in/h2non/gentleman.v0
         <img src="https://godoc.org/github.com/h2non/gentleman-consul?status.svg" />
       </a>
     </td>
-    <td><img src="https://img.shields.io/badge/status-stable-green.svg?style=flat" /></td>
     <td><a href="https://travis-ci.org/h2non/gentleman-consul"><img src="https://travis-ci.org/h2non/gentleman-consul.png" /></a></td> 
     <td><a href="https://www.consul.io">Consul</a> based server discovery with configurable retry/backoff policy</td>
   </tr>
