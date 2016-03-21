@@ -31,13 +31,6 @@ func New() *Mux {
 	return m
 }
 
-// Match creates a new multiplexer based on a given matcher function.
-func Match(matchers ...Matcher) *Mux {
-	mx := New()
-	mx.AddMatcher(matchers...)
-	return mx
-}
-
 // Match matches the give Context againts a list of matchers and
 // returns `true` if all the matchers passed.
 func (m *Mux) Match(ctx *c.Context) bool {

@@ -46,7 +46,7 @@ type Middleware interface {
 }
 
 // Layer type represent an HTTP domain
-// specific middleware layer with hieritance support.
+// specific middleware layer with inheritance support.
 type Layer struct {
 	// stack stores the plugins registered in the current middleware instance.
 	stack []plugin.Plugin

@@ -265,11 +265,11 @@ Supported middleware phases triggered by gentleman HTTP dispatcher:
 - **stop** - Executed in case that the request has been manually stopped via middleware (e.g: after interception).
 - **intercept** - Executed in case that the request has been intercepted before network dialing.
 - **before dial** - Executed before a request is sent over the network.
-- **after dial** - Executed after the request dialing is done and the response has been received.
+- **after dial** - Executed after the request dialing was done and the response has been received.
 
 Note that the middleware layer has been designed for easy extensibility, therefore new phases may be added in the future and/or the developer could be able to trigger custom middleware phases if needed. 
 
-Feel free to an issue to discuss this capabilities in detail.
+Feel free to fill an issue to discuss this capabilities in detail.
 
 ## API
 

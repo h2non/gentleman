@@ -10,6 +10,13 @@ import (
 // Matcher represent the function interface implemented by matchers
 type Matcher func(ctx *c.Context) bool
 
+// Match creates a new multiplexer based on a given matcher function.
+func Match(matchers ...Matcher) *Mux {
+	mx := New()
+	mx.AddMatcher(matchers...)
+	return mx
+}
+
 // Method returns a new multiplexer who matches an HTTP request based on the given method/s.
 func Method(methods ...string) *Mux {
 	return Match(func(ctx *c.Context) bool {
