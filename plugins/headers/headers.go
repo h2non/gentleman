@@ -1,8 +1,8 @@
 package headers
 
 import (
-	c "gopkg.in/h2non/gentleman.v0/context"
-	p "gopkg.in/h2non/gentleman.v0/plugin"
+	c "gopkg.in/h2non/gentleman.v1/context"
+	p "gopkg.in/h2non/gentleman.v1/plugin"
 )
 
 // Set sets the header entries associated with key to the single element value.

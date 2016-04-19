@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"gopkg.in/h2non/gentleman.v0"
-	"gopkg.in/h2non/gentleman.v0/plugins/auth"
+	"gopkg.in/h2non/gentleman.v1"
+	"gopkg.in/h2non/gentleman.v1/plugins/auth"
 )
 
 func main() {

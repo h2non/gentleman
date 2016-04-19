@@ -1,8 +1,8 @@
 package mux
 
 import (
-	c "gopkg.in/h2non/gentleman.v0/context"
-	types "gopkg.in/h2non/gentleman.v0/plugins/bodytype"
+	c "gopkg.in/h2non/gentleman.v1/context"
+	types "gopkg.in/h2non/gentleman.v1/plugins/bodytype"
 	"regexp"
 	"strings"
 )

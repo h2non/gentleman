@@ -7,8 +7,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"encoding/xml"
-	"gopkg.in/h2non/gentleman.v0/context"
-	"gopkg.in/h2non/gentleman.v0/utils"
+	"gopkg.in/h2non/gentleman.v1/context"
+	"gopkg.in/h2non/gentleman.v1/utils"
 	"io"
 	"net/http"
 	"os"
@@ -58,7 +58,7 @@ func buildResponse(ctx *context.Context) (*Response, error) {
 
 	res := &Response{
 		// If your code is within the 2xx range – the response is considered `Ok`
-		Ok:          resp.StatusCode >= 200 && resp.StatusCode < 300,
+		Ok:          statusRange >= 2 && statusRange <= 3,
 		Error:       ctx.Error,
 		ClientError: statusRange == 4,
 		ServerError: statusRange == 5,

@@ -3,11 +3,12 @@ package gentleman
 import (
 	"errors"
 	"fmt"
-	"github.com/nbio/st"
-	"gopkg.in/h2non/gentleman.v0/context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/nbio/st"
+	"gopkg.in/h2non/gentleman.v1/context"
 )
 
 func TestClientMiddlewareContext(t *testing.T) {

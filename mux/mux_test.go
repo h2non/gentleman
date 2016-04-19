@@ -1,9 +1,10 @@
 package mux
 
 import (
-	"github.com/nbio/st"
-	"gopkg.in/h2non/gentleman.v0/context"
 	"testing"
+
+	"github.com/nbio/st"
+	"gopkg.in/h2non/gentleman.v1/context"
 )
 
 func TestMuxSimple(t *testing.T) {

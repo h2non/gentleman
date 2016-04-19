@@ -29,7 +29,7 @@ Take a look to the [examples](#examples) or list of [supported plugins](#plugins
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/gentleman.v0
+go get -u gopkg.in/h2non/gentleman.v1
 ```
 
 ## Plugins
@@ -294,7 +294,7 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v0"
+  "gopkg.in/h2non/gentleman.v1"
 )
 
 func main() {
@@ -336,8 +336,8 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v0"
-  "gopkg.in/h2non/gentleman.v0/plugins/body"
+  "gopkg.in/h2non/gentleman.v1"
+  "gopkg.in/h2non/gentleman.v1/plugins/body"
 )
 
 func main() {
@@ -380,9 +380,9 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v0"
-  "gopkg.in/h2non/gentleman.v0/mux"
-  "gopkg.in/h2non/gentleman.v0/plugins/url"
+  "gopkg.in/h2non/gentleman.v1"
+  "gopkg.in/h2non/gentleman.v1/mux"
+  "gopkg.in/h2non/gentleman.v1/plugins/url"
 )
 
 func main() {

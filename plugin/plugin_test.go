@@ -1,8 +1,9 @@
 package plugin
 
 import (
-	"gopkg.in/h2non/gentleman.v0/context"
 	"testing"
+
+	"gopkg.in/h2non/gentleman.v1/context"
 )
 
 func TestPluginLayer(t *testing.T) {

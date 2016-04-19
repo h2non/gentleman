@@ -4,8 +4,9 @@
 package context
 
 import (
-	"github.com/nbio/st"
 	"testing"
+
+	"github.com/nbio/st"
 )
 
 type keyType int

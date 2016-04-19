@@ -2,7 +2,7 @@ package url
 
 import (
 	"github.com/nbio/st"
-	"gopkg.in/h2non/gentleman.v0/context"
+	"gopkg.in/h2non/gentleman.v1/context"
 	"net/url"
 	"testing"
 )

@@ -7,7 +7,7 @@ Package `context` implements a simple request-aware HTTP context used by plugins
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/gentleman.v0/context
+go get -u gopkg.in/h2non/gentleman.v1/context
 ```
 
 ## API

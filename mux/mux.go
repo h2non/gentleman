@@ -3,9 +3,9 @@
 package mux
 
 import (
-	c "gopkg.in/h2non/gentleman.v0/context"
-	"gopkg.in/h2non/gentleman.v0/middleware"
-	"gopkg.in/h2non/gentleman.v0/plugin"
+	c "gopkg.in/h2non/gentleman.v1/context"
+	"gopkg.in/h2non/gentleman.v1/middleware"
+	"gopkg.in/h2non/gentleman.v1/plugin"
 )
 
 // Mux is a HTTP request/response/error multiplexer who implements both

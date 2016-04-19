@@ -9,9 +9,7 @@
 // middleware phase or instead handle multiple phases: request, response, error...
 package plugin
 
-import (
-	"gopkg.in/h2non/gentleman.v0/context"
-)
+import "gopkg.in/h2non/gentleman.v1/context"
 
 // Plugin interface that must be implemented by plugins
 type Plugin interface {

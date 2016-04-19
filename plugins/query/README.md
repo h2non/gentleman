@@ -5,7 +5,7 @@ gentleman's plugin to easily manage HTTP query params.
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/gentleman.v0/plugins/query
+go get -u gopkg.in/h2non/gentleman.v1/plugins/query
 ```
 
 ## API
@@ -19,9 +19,9 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v0"
-  "gopkg.in/h2non/gentleman.v0/plugins/query"
-  "gopkg.in/h2non/gentleman.v0/plugins/url"
+  "gopkg.in/h2non/gentleman.v1"
+  "gopkg.in/h2non/gentleman.v1/plugins/query"
+  "gopkg.in/h2non/gentleman.v1/plugins/url"
 )
 
 func main() {

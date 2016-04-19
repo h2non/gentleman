@@ -2,22 +2,23 @@ package gentleman
 
 import (
 	"errors"
-	"gopkg.in/h2non/gentleman.v0/context"
-	"gopkg.in/h2non/gentleman.v0/middleware"
-	"gopkg.in/h2non/gentleman.v0/mux"
-	"gopkg.in/h2non/gentleman.v0/plugin"
-	"gopkg.in/h2non/gentleman.v0/plugins/body"
-	"gopkg.in/h2non/gentleman.v0/plugins/bodytype"
-	"gopkg.in/h2non/gentleman.v0/plugins/cookies"
-	"gopkg.in/h2non/gentleman.v0/plugins/headers"
-	"gopkg.in/h2non/gentleman.v0/plugins/multipart"
-	"gopkg.in/h2non/gentleman.v0/plugins/query"
-	"gopkg.in/h2non/gentleman.v0/plugins/url"
-	"gopkg.in/h2non/gentleman.v0/utils"
 	"io"
 	"net"
 	"net/http"
 	"time"
+
+	"gopkg.in/h2non/gentleman.v1/context"
+	"gopkg.in/h2non/gentleman.v1/middleware"
+	"gopkg.in/h2non/gentleman.v1/mux"
+	"gopkg.in/h2non/gentleman.v1/plugin"
+	"gopkg.in/h2non/gentleman.v1/plugins/body"
+	"gopkg.in/h2non/gentleman.v1/plugins/bodytype"
+	"gopkg.in/h2non/gentleman.v1/plugins/cookies"
+	"gopkg.in/h2non/gentleman.v1/plugins/headers"
+	"gopkg.in/h2non/gentleman.v1/plugins/multipart"
+	"gopkg.in/h2non/gentleman.v1/plugins/query"
+	"gopkg.in/h2non/gentleman.v1/plugins/url"
+	"gopkg.in/h2non/gentleman.v1/utils"
 )
 
 const (

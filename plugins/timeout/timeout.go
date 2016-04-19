@@ -1,9 +1,9 @@
 package timeout
 
 import (
-	g "gopkg.in/h2non/gentleman.v0"
-	c "gopkg.in/h2non/gentleman.v0/context"
-	p "gopkg.in/h2non/gentleman.v0/plugin"
+	g "gopkg.in/h2non/gentleman.v1"
+	c "gopkg.in/h2non/gentleman.v1/context"
+	p "gopkg.in/h2non/gentleman.v1/plugin"
 	"net"
 	"net/http"
 	"time"

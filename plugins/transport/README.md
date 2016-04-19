@@ -5,7 +5,7 @@ gentleman's plugin to easily define the HTTP transport to be used by `http.Clien
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/gentleman.v0/plugins/transport
+go get -u gopkg.in/h2non/gentleman.v1/plugins/transport
 ```
 
 ## API
@@ -20,8 +20,8 @@ package main
 import (
   "fmt"
   "net/http"
-  "gopkg.in/h2non/gentleman.v0"
-  "gopkg.in/h2non/gentleman.v0/plugins/transport"
+  "gopkg.in/h2non/gentleman.v1"
+  "gopkg.in/h2non/gentleman.v1/plugins/transport"
 )
 
 func main() {

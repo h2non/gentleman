@@ -2,8 +2,8 @@ package cookies
 
 import (
 	"golang.org/x/net/publicsuffix"
-	c "gopkg.in/h2non/gentleman.v0/context"
-	p "gopkg.in/h2non/gentleman.v0/plugin"
+	c "gopkg.in/h2non/gentleman.v1/context"
+	p "gopkg.in/h2non/gentleman.v1/plugin"
 	"net/http"
 	"net/http/cookiejar"
 )

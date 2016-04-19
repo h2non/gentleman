@@ -3,9 +3,10 @@
 package middleware
 
 import (
-	c "gopkg.in/h2non/gentleman.v0/context"
-	"gopkg.in/h2non/gentleman.v0/plugin"
 	"sync"
+
+	c "gopkg.in/h2non/gentleman.v1/context"
+	"gopkg.in/h2non/gentleman.v1/plugin"
 )
 
 // Middleware especifies the required interface that must be

@@ -4,10 +4,6 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/nbio/st"
-	"gopkg.in/h2non/gentleman.v0/context"
-	"gopkg.in/h2non/gentleman.v0/plugins/multipart"
-	"gopkg.in/h2non/gentleman.v0/utils"
 	"io/ioutil"
 	"math/rand"
 	"net/http"
@@ -18,6 +14,11 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/nbio/st"
+	"gopkg.in/h2non/gentleman.v1/context"
+	"gopkg.in/h2non/gentleman.v1/plugins/multipart"
+	"gopkg.in/h2non/gentleman.v1/utils"
 )
 
 func TestRequest(t *testing.T) {

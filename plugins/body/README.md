@@ -5,7 +5,7 @@ gentleman's plugin to easy define HTTP bodies. Supports JSON, XML, strings or st
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/gentleman.v0/plugins/body
+go get -u gopkg.in/h2non/gentleman.v1/plugins/body
 ```
 
 ## API
@@ -19,8 +19,8 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v0"
-  "gopkg.in/h2non/gentleman.v0/plugins/body"
+  "gopkg.in/h2non/gentleman.v1"
+  "gopkg.in/h2non/gentleman.v1/plugins/body"
 )
 
 func main() {

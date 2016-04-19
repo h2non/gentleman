@@ -2,11 +2,12 @@ package gentleman
 
 import (
 	"errors"
-	"github.com/nbio/st"
-	"gopkg.in/h2non/gentleman.v0/utils"
 	"io/ioutil"
 	"os"
 	"testing"
+
+	"github.com/nbio/st"
+	"gopkg.in/h2non/gentleman.v1/utils"
 )
 
 func TestResponseBuild(t *testing.T) {
@@ -48,7 +49,7 @@ func TestResponseBuildStatusCodes(t *testing.T) {
 		{0, false, false, false},
 		{200, true, false, false},
 		{204, true, false, false},
-		{300, false, false, false},
+		{300, true, false, false},
 		{400, false, true, false},
 		{404, false, true, false},
 		{499, false, true, false},
@@ -64,7 +65,7 @@ func TestResponseBuildStatusCodes(t *testing.T) {
 			t.Errorf("Invalid status code: %d", res.StatusCode)
 		}
 		if res.Ok != test.ok {
-			t.Error("Invalid Ok field")
+			t.Errorf("Invalid Ok field: %v", res.Ok)
 		}
 		if res.ClientError != test.client {
 			t.Error("Invalid ClientError field")

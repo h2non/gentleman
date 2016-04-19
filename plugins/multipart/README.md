@@ -5,7 +5,7 @@ gentleman's plugin to easily define `multipart/form-data` bodies supporting file
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/gentleman.v0/plugins/multipart
+go get -u gopkg.in/h2non/gentleman.v1/plugins/multipart
 ```
 
 ## API
@@ -19,8 +19,8 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v0"
-  "gopkg.in/h2non/gentleman.v0/plugins/multipart"
+  "gopkg.in/h2non/gentleman.v1"
+  "gopkg.in/h2non/gentleman.v1/plugins/multipart"
 )
 
 func main() {

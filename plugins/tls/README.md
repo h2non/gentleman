@@ -5,7 +5,7 @@ gentleman's plugin to easily define TLS config used by `http.Transport`/`RoundTr
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/gentleman.v0/plugins/tls
+go get -u gopkg.in/h2non/gentleman.v1/plugins/tls
 ```
 
 ## API
@@ -20,8 +20,8 @@ package main
 import (
   "fmt"
   "crypto/tls"
-  "gopkg.in/h2non/gentleman.v0"
-  "gopkg.in/h2non/gentleman.v0/plugins/tls"
+  "gopkg.in/h2non/gentleman.v1"
+  "gopkg.in/h2non/gentleman.v1/plugins/tls"
 )
 
 func main() {

@@ -2,10 +2,11 @@ package middleware
 
 import (
 	"errors"
-	"gopkg.in/h2non/gentleman.v0/context"
-	"gopkg.in/h2non/gentleman.v0/plugin"
 	"testing"
 	"time"
+
+	"gopkg.in/h2non/gentleman.v1/context"
+	"gopkg.in/h2non/gentleman.v1/plugin"
 )
 
 func TestCreateMiddleware(t *testing.T) {

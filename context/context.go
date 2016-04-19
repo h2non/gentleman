@@ -7,10 +7,11 @@
 package context
 
 import (
-	"gopkg.in/h2non/gentleman.v0/utils"
 	"io"
 	"net/http"
 	"net/url"
+
+	"gopkg.in/h2non/gentleman.v1/utils"
 )
 
 // Context encapsulates required domain-specific HTTP entities

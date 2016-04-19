@@ -3,7 +3,7 @@ package multipart
 import (
 	"bytes"
 	"github.com/nbio/st"
-	"gopkg.in/h2non/gentleman.v0/context"
+	"gopkg.in/h2non/gentleman.v1/context"
 	"io/ioutil"
 	"strings"
 	"testing"

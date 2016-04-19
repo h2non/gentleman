@@ -2,10 +2,11 @@ package mux
 
 import (
 	"errors"
-	"github.com/nbio/st"
-	"gopkg.in/h2non/gentleman.v0/context"
 	"net/url"
 	"testing"
+
+	"github.com/nbio/st"
+	"gopkg.in/h2non/gentleman.v1/context"
 )
 
 func TestMatchMethod(t *testing.T) {

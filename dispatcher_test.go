@@ -3,12 +3,13 @@ package gentleman
 import (
 	"errors"
 	"fmt"
-	"github.com/nbio/st"
-	"gopkg.in/h2non/gentleman.v0/context"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"testing"
+
+	"github.com/nbio/st"
+	"gopkg.in/h2non/gentleman.v1/context"
 )
 
 func TestDispatcher(t *testing.T) {

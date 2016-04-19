@@ -5,7 +5,7 @@ gentleman's plugin to easily deal and manage cookies HTTP clients.
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/gentleman.v0/plugins/cookies
+go get -u gopkg.in/h2non/gentleman.v1/plugins/cookies
 ```
 
 ## API
@@ -19,8 +19,8 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v0"
-  "gopkg.in/h2non/gentleman.v0/plugins/cookies"
+  "gopkg.in/h2non/gentleman.v1"
+  "gopkg.in/h2non/gentleman.v1/plugins/cookies"
 )
 
 func main() {
