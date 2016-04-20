@@ -1,4 +1,4 @@
-# gentleman/timeout [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GoDoc](https://godoc.org/github.com/h2non/gentleman/plugins/timeout?status.svg)](https://godoc.org/github.com/h2non/gentleman/plugins/timeout) [![API](https://img.shields.io/badge/api-beta-green.svg?style=flat)](https://godoc.org/github.com/h2non/gentleman/plugins/timeout) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman/plugins/timeout)](https://goreportcard.com/report/github.com/h2non/gentleman/plugins/timeout)
+# gentleman/timeout [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GoDoc](https://godoc.org/github.com/h2non/gentleman/plugins/timeout?status.svg)](https://godoc.org/github.com/h2non/gentleman/plugins/timeout) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman/plugins/timeout)](https://goreportcard.com/report/github.com/h2non/gentleman/plugins/timeout)
  
 gentleman's plugin to easily define HTTP timeouts per specific phase in the HTTP connection live cycle.
 

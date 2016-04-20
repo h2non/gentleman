@@ -1,4 +1,4 @@
-# gentleman/url [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GoDoc](https://godoc.org/github.com/h2non/gentleman/plugins/url?status.svg)](https://godoc.org/github.com/h2non/gentleman/plugins/url) [![API](https://img.shields.io/badge/api-beta-green.svg?style=flat)](https://godoc.org/github.com/h2non/gentleman/plugins/url) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman/plugins/url)](https://goreportcard.com/report/github.com/h2non/gentleman/plugins/url)
+# gentleman/url [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GoDoc](https://godoc.org/github.com/h2non/gentleman/plugins/url?status.svg)](https://godoc.org/github.com/h2non/gentleman/plugins/url) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman/plugins/url)](https://goreportcard.com/report/github.com/h2non/gentleman/plugins/url)
 
 gentleman's plugin to easily define URL fields in HTTP requests.
 

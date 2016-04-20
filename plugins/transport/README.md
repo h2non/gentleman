@@ -1,4 +1,4 @@
-# gentleman/transport [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GoDoc](https://godoc.org/github.com/h2non/gentleman/plugins/transport?status.svg)](https://godoc.org/github.com/h2non/gentleman/plugins/transport) [![API](https://img.shields.io/badge/api-beta-green.svg?style=flat)](https://godoc.org/github.com/h2non/gentleman/plugins/transport) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman/plugins/transport)](https://goreportcard.com/report/github.com/h2non/gentleman/plugins/transport)
+# gentleman/transport [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GoDoc](https://godoc.org/github.com/h2non/gentleman/plugins/transport?status.svg)](https://godoc.org/github.com/h2non/gentleman/plugins/transport) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman/plugins/transport)](https://goreportcard.com/report/github.com/h2non/gentleman/plugins/transport)
 
 gentleman's plugin to easily define the HTTP transport to be used by `http.Client`.
 
