@@ -7,12 +7,13 @@ import (
 	"bytes"
 	"encoding/json"
 	"encoding/xml"
-	"gopkg.in/h2non/gentleman.v1/context"
-	"gopkg.in/h2non/gentleman.v1/utils"
 	"io"
 	"net/http"
 	"os"
 	"runtime"
+
+	"gopkg.in/h2non/gentleman.v1/context"
+	"gopkg.in/h2non/gentleman.v1/utils"
 )
 
 // Response provides a more convenient and higher level Response struct.
