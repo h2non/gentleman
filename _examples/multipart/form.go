@@ -10,12 +10,20 @@ func main() {
 	// Create a new client
 	cli := gentleman.New()
 
+        // Define the generic base URL
+  	cli.URL("http://httpbin.org/post")
+
+	// Create a new request
+        req := cli.Request()
+
 	// Create a text based form fields
 	fields := map[string]string{"foo": "bar", "bar": "baz"}
-	cli.Use(multipart.Fields(fields))
+	
+	// Register the multipart plugin at request middleware level
+	req.Use(multipart.Fields(fields))
 
 	// Perform the request
-	res, err := cli.Request().Method("POST").URL("http://httpbin.org/post").Send()
+	res, err := req.Send()
 	if err != nil {
 		fmt.Printf("Request error: %s\n", err)
 		return

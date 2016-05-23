@@ -11,13 +11,21 @@ func main() {
 	// Create a new client
 	cli := gentleman.New()
 
+        // Define the generic base URL
+        cli.URL("http://httpbin.org/post")
+
+        // Create a new request
+        req := cli.Request()
+
 	// Read a file from disk and post it
 	file, _ := os.Open("LICENSE")
-	cli.Use(multipart.File("license", file))
-	defer file.Close()
+        defer file.Close()
+
+	// Register the multipart plugin at request specific middleware level
+	req.Use(multipart.File("license", file))
 
 	// Perform the request
-	res, err := cli.Request().Method("POST").URL("http://httpbin.org/post").Send()
+	res, err := req.Send()
 	if err != nil {
 		fmt.Printf("Request error: %s\n", err)
 		return
