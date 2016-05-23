@@ -10,11 +10,11 @@ func main() {
 	// Create a new client
 	cli := gentleman.New()
 
-        // Define the generic base URL
-  	cli.URL("http://httpbin.org/post")
+	// Define the generic base URL
+	cli.URL("http://httpbin.org/post")
 
 	// Create a new request
-        req := cli.Request()
+	req := cli.Request()
 
 	// Create a text based form fields
 	fields := map[string]string{"foo": "bar", "bar": "baz"}
