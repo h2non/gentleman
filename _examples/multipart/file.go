@@ -11,11 +11,11 @@ func main() {
 	// Create a new client
 	cli := gentleman.New()
 
-        // Define the generic base URL
-        cli.URL("http://httpbin.org/post")
+	// Define the generic base URL
+	cli.URL("http://httpbin.org/post")
 
-        // Create a new request
-        req := cli.Request()
+	// Create a new request
+	req := cli.Request()
 
 	// Read a file from disk and post it
 	file, _ := os.Open("LICENSE")
