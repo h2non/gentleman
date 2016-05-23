@@ -18,7 +18,7 @@ func main() {
 
 	// Create a text based form fields
 	fields := map[string]string{"foo": "bar", "bar": "baz"}
-	
+
 	// Register the multipart plugin at request middleware level
 	req.Use(multipart.Fields(fields))
 

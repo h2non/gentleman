@@ -19,7 +19,7 @@ func main() {
 
 	// Read a file from disk and post it
 	file, _ := os.Open("LICENSE")
-        defer file.Close()
+	defer file.Close()
 
 	// Register the multipart plugin at request specific middleware level
 	req.Use(multipart.File("license", file))
