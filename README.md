@@ -9,7 +9,7 @@ For instance, you can provide retry policy capabilities or dynamic server discov
 
 Take a look to the [examples](#examples) or list of [supported plugins](#plugins) to get started.
 
-## Goals
+## Features
 
 - Plugin driven architecture.
 - Simple, expressive, fluent API.
