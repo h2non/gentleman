@@ -10,7 +10,7 @@ For instance, you can easily provide retry policy capabilities or dynamic server
 
 You can take a look to the [examples](#examples), list of [supported plugins](#plugins), [HTTP entities](#http-entities) or [middleware layer](#middleware) to get started.
 
-Also see [baloo](https://github.com/h2non/baloo), an utility library for expressive end-to-end HTTP API testing, built on top of `gentleman`.
+For testing purposes, see [baloo](https://github.com/h2non/baloo), an utility library for expressive end-to-end HTTP API testing, built on top of `gentleman` toolkit.
 
 ## Features
 
