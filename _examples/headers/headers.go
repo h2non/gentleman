@@ -10,10 +10,13 @@ func main() {
 	// Create a new client
 	cli := gentleman.New()
 
-	// Define a custom header
+	// Define a global header at client level
+	cli.SetHeader("Version", "1.0"))
+
+	// Define a custom header (via headers plugin)
 	cli.Use(headers.Set("API-Token", "s3cr3t"))
 
-	// Remove a header
+	// Remove a header (via headers plugin)
 	cli.Use(headers.Del("User-Agent"))
 
 	// Perform the request

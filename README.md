@@ -1,29 +1,33 @@
-# gentleman [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/badge/version-1.0.0-orange.svg?style=flat)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman?status.svg)](https://godoc.org/github.com/h2non/gentleman) [![Coverage Status](https://coveralls.io/repos/github/h2non/gentleman/badge.svg?branch=master)](https://coveralls.io/github/h2non/gentleman?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman)](https://goreportcard.com/report/github.com/h2non/gentleman)
+# gentleman [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/badge/version-1.0.0-orange.svg?style=flat)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman?status.svg)](https://godoc.org/github.com/h2non/gentleman) [![Coverage Status](https://coveralls.io/repos/github/h2non/gentleman/badge.svg?branch=master)](https://coveralls.io/github/h2non/gentleman?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman)](https://goreportcard.com/report/github.com/h2non/gentleman) [![Go Version](https://img.shields.io/badge/go-v1.0+-green.svg?style=flat)](https://github.com/h2non/gentleman)
 
 <img src="http://s10.postimg.org/5e31ox1ft/gentleman.png" align="right" height="260" />
 
 Full-featured, plugin-driven, middleware-oriented toolkit to easily create rich, versatile and composable HTTP clients in [Go](http://golang.org).
 
-gentleman embraces extensibility and composition principles to provide a powerful way to create simple and featured HTTP client layers based on built-in or third-party plugins. 
-For instance, you can provide retry policy capabilities or dynamic server discovery to your HTTP clients simply attaching the [retry](https://github.com/h2non/gentleman-retry) or [consul](https://github.com/h2non/gentleman-consul) plugins respectively.
+gentleman embraces extensibility and composition principles in order to provide a powerful way to easily create featured HTTP client layers based on built-in or third-party plugins that you register and reuse across HTTP clients. 
 
-Take a look to the [examples](#examples) or list of [supported plugins](#plugins) to get started.
+For instance, you can easily provide retry policy capabilities or dynamic server discovery in your HTTP clients simply attaching the [retry](https://github.com/h2non/gentleman-retry) or [consul](https://github.com/h2non/gentleman-consul) plugins.
 
-## Goals
+You can take a look to the [examples](#examples), list of [supported plugins](#plugins), [HTTP entities](#http-entities) or [middleware layer](#middleware) to get started.
+
+For testing purposes, see [baloo](https://github.com/h2non/baloo), an utility library for expressive end-to-end HTTP API testing, built on top of `gentleman` toolkit.
+
+## Features
 
 - Plugin driven architecture.
 - Simple, expressive, fluent API.
 - Idiomatic built on top of `net/http` package.
-- Context-aware middleware layer supporting all the HTTP life cycle.
-- Multiplexer for easy composition capabilities.
-- Strong extensibility via plugins.
-- Easy to configure and use.
-- Ability to easily intercept and modify HTTP traffic.
+- Context-aware hirarchical middleware layer supporting all the HTTP life cycle.
+- Built-in multiplexer for easy composition capabilities.
+- Easy to extend via plugins/middleware.
+- Ability to easily intercept and modify HTTP traffic on-the-fly.
 - Convenient helpers and abstractions over Go's HTTP primitives.
 - URL template path params.
 - Built-in JSON, XML and multipart bodies serialization and parsing.
 - Easy to test via HTTP mocking (e.g: [gentleman-mock](https://github.com/h2non/gentleman-mock)).
-- Data passing across plugins/middleware via context.
+- Supports data passing across plugins/middleware via its built-in context.
+- Fits good while building domain-specific HTTP API clients.
+- Easy to hack.
 - Dependency free.
 
 ## Installation
@@ -217,7 +221,7 @@ go get -u gopkg.in/h2non/gentleman.v1
 
 ### Creating plugins
 
-You can create your own plugins for a variety of purposes, such as server discovery, custom HTTP tranport, modify any request/response param, intercept traffic, authentication and so on.
+You can create your own plugins for a wide variety of purposes, such as server discovery, custom HTTP tranport, modify any request/response param, intercept traffic, authentication and so on.
 
 Plugins are essentially a set of middleware function handlers for one or multiple HTTP life cycle phases exposing [a concrete interface](https://github.com/h2non/gentleman/blob/755d55eef0bd26ae6b4ee19fe59001db2c46a51b/plugin/plugin.go#L16-L35) consumed by gentleman middleware layer.
 
@@ -229,24 +233,26 @@ Also you can take a look to a plugin [implementation example](https://github.com
 
 `gentleman` provides two HTTP high level entities: `Client` and `Request`.
 
-Each of these entities provides a common API and are middleware capable, giving the ability to plug in logic
-in any of them. 
+Each of these entities provides a common API and are both middleware capable, giving you the ability to plug in custom components with own logic into any of them. 
 
-`gentleman` was designed to provide strong reusability capabilities, achieved via simple middleware layer inheritance.
-The following describes how inheritance affects to gentleman's entities.
+`gentleman` was designed to provide strong reusability capabilities. 
+This is mostly achieved via its built-in hierarchical, inheritance-based middleware layer.
 
-- `Client` can inherit from other `Client`.
-- `Request` can inherit from `Client`.
-- `Client` is mostly designed for reusability.
-- `Client` can create multiple `Request` entities who implicitly inherits from the current `Client`.
-- Both `Client` and `Request` are full middleware capable interfaces.
-- Both `Client` and  `Request` can be cloned to have a new side-effects free entity.
+The following list describes how inheritance hierarchy works and is used across gentleman's entities.
 
-You can see an inheritance example [here](https://github.com/h2non/gentleman/blob/master/_examples/inheritance/inheritance.go).
+- `Client` entity can inherit from other `Client` entity.
+- `Request` entity can inherit from a `Client` entity.
+- `Client` entity is mostly designed for reusability.
+- `Client` entity can create multiple `Request` entities who implicitly inherits from `Client` entity itself.
+- `Request` entity is designed to have specific HTTP request logic that is not typically reused.
+- Both `Client` and `Request` entities are full middleware capable interfaces.
+- Both `Client` and  `Request` entities can be cloned in order to produce a copy but side-effects free new entity.
+
+You can see an inheritance usage example [here](https://github.com/h2non/gentleman/blob/master/_examples/inheritance/inheritance.go).
 
 ## Middleware
 
-gentleman is completely based on a hierarchical middleware layer based on plugin that executes one or multiple function handlers, providing a simple way to plug in intermediate logic. 
+gentleman is completely based on a hierarchical middleware layer based on plugins that executes one or multiple function handlers (aka plugin interface) providing a simple way to plug in intermediate custom logic in your HTTP client. 
 
 It supports multiple phases which represents the full HTTP request/response life cycle, giving you the ability to perform actions before and after an HTTP transaction happen, even intercepting and stopping it.
 
