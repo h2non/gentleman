@@ -1,3 +1,7 @@
+## 1.0.1 / 2016-01-29
+
+- fix(body): do not enforce POST method unless method is not already present.
+
 ## 0.1.3 / 03-03-2016
 
 - fix(#12): define request method via middleware.
