@@ -1,10 +1,10 @@
-# gentleman [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/badge/version-1.0.0-orange.svg?style=flat)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman?status.svg)](https://godoc.org/github.com/h2non/gentleman) [![Coverage Status](https://coveralls.io/repos/github/h2non/gentleman/badge.svg?branch=master)](https://coveralls.io/github/h2non/gentleman?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman)](https://goreportcard.com/report/github.com/h2non/gentleman) [![Go Version](https://img.shields.io/badge/go-v1.0+-green.svg?style=flat)](https://github.com/h2non/gentleman)
+# gentleman [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/badge/version-1.0.1-orange.svg?style=flat)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman?status.svg)](https://godoc.org/github.com/h2non/gentleman) [![Coverage Status](https://coveralls.io/repos/github/h2non/gentleman/badge.svg?branch=master)](https://coveralls.io/github/h2non/gentleman?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman)](https://goreportcard.com/report/github.com/h2non/gentleman) [![Go Version](https://img.shields.io/badge/go-v1.0+-green.svg?style=flat)](https://github.com/h2non/gentleman)
 
 <img src="http://s10.postimg.org/5e31ox1ft/gentleman.png" align="right" height="260" />
 
 Full-featured, plugin-driven, middleware-oriented toolkit to easily create rich, versatile and composable HTTP clients in [Go](http://golang.org).
 
-gentleman embraces extensibility and composition principles in order to provide a powerful way to easily create featured HTTP client layers based on built-in or third-party plugins that you register and reuse across HTTP clients. 
+gentleman embraces extensibility and composition principles in order to provide a powerful way to easily create featured HTTP client layers based on built-in or third-party plugins that you register and reuse across HTTP clients.
 
 For instance, you can easily provide retry policy capabilities or dynamic server discovery in your HTTP clients simply attaching the [retry](https://github.com/h2non/gentleman-retry) or [consul](https://github.com/h2non/gentleman-consul) plugins.
 
@@ -42,7 +42,7 @@ go get -u gopkg.in/h2non/gentleman.v1
   <tr>
     <th>Name</th>
     <th>Docs</th>
-    <th>Status</th> 
+    <th>Status</th>
     <th>Description</th>
   </tr>
   <tr>
@@ -62,7 +62,7 @@ go get -u gopkg.in/h2non/gentleman.v1
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
     <td>Declare authorization headers in your requests</td>
   </tr>
   <tr>
@@ -72,7 +72,7 @@ go get -u gopkg.in/h2non/gentleman.v1
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
     <td>Easily define bodies based on JSON, XML, strings, buffers or streams</td>
   </tr>
   <tr>
@@ -82,7 +82,7 @@ go get -u gopkg.in/h2non/gentleman.v1
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
     <td>Define body MIME type by alias</td>
   </tr>
   <tr>
@@ -92,7 +92,7 @@ go get -u gopkg.in/h2non/gentleman.v1
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
     <td>Declare and store HTTP cookies easily</td>
   </tr>
   <tr>
@@ -102,7 +102,7 @@ go get -u gopkg.in/h2non/gentleman.v1
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
     <td>Helpers to define enable/disable HTTP compression</td>
   </tr>
   <tr>
@@ -112,7 +112,7 @@ go get -u gopkg.in/h2non/gentleman.v1
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
     <td>Manage HTTP headers easily</td>
   </tr>
   <tr>
@@ -122,7 +122,7 @@ go get -u gopkg.in/h2non/gentleman.v1
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
     <td>Create multipart forms easily. Supports files and text fields</td>
   </tr>
   <tr>
@@ -132,7 +132,7 @@ go get -u gopkg.in/h2non/gentleman.v1
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
     <td>Configure HTTP proxy servers</td>
   </tr>
   <tr>
@@ -142,7 +142,7 @@ go get -u gopkg.in/h2non/gentleman.v1
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
     <td>Easily manage query params</td>
   </tr>
   <tr>
@@ -152,7 +152,7 @@ go get -u gopkg.in/h2non/gentleman.v1
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
     <td>Easily configure a custom redirect policy</td>
   </tr>
   <tr>
@@ -162,7 +162,7 @@ go get -u gopkg.in/h2non/gentleman.v1
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
     <td>Easily configure the HTTP timeouts (request, dial, TLS...)</td>
   </tr>
   <tr>
@@ -172,7 +172,7 @@ go get -u gopkg.in/h2non/gentleman.v1
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
     <td>Define a custom HTTP transport easily</td>
   </tr>
   <tr>
@@ -182,7 +182,7 @@ go get -u gopkg.in/h2non/gentleman.v1
         <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
       </a>
     </td>
-    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
     <td>Configure the TLS options used by the HTTP transport</td>
   </tr>
   <tr>
@@ -192,7 +192,7 @@ go get -u gopkg.in/h2non/gentleman.v1
         <img src="https://godoc.org/github.com/h2non/gentleman-retry?status.svg" />
       </a>
     </td>
-    <td><a href="https://travis-ci.org/h2non/gentleman-retry"><img src="https://travis-ci.org/h2non/gentleman-retry.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman-retry"><img src="https://travis-ci.org/h2non/gentleman-retry.png" /></a></td>
     <td>Provide retry policy capabilities to your HTTP clients</td>
   </tr>
   <tr>
@@ -202,7 +202,7 @@ go get -u gopkg.in/h2non/gentleman.v1
         <img src="https://godoc.org/github.com/h2non/gentleman-mock?status.svg" />
       </a>
     </td>
-    <td><a href="https://travis-ci.org/h2non/gentleman-mock"><img src="https://travis-ci.org/h2non/gentleman-mock.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman-mock"><img src="https://travis-ci.org/h2non/gentleman-mock.png" /></a></td>
     <td>Easy HTTP mocking using <a href="https://github.com/h2non/gock">gock</a></td>
   </tr>
   <tr>
@@ -212,7 +212,7 @@ go get -u gopkg.in/h2non/gentleman.v1
         <img src="https://godoc.org/github.com/h2non/gentleman-consul?status.svg" />
       </a>
     </td>
-    <td><a href="https://travis-ci.org/h2non/gentleman-consul"><img src="https://travis-ci.org/h2non/gentleman-consul.png" /></a></td> 
+    <td><a href="https://travis-ci.org/h2non/gentleman-consul"><img src="https://travis-ci.org/h2non/gentleman-consul.png" /></a></td>
     <td><a href="https://www.consul.io">Consul</a> based server discovery with configurable retry/backoff policy</td>
   </tr>
 </table>
@@ -233,9 +233,9 @@ Also you can take a look to a plugin [implementation example](https://github.com
 
 `gentleman` provides two HTTP high level entities: `Client` and `Request`.
 
-Each of these entities provides a common API and are both middleware capable, giving you the ability to plug in custom components with own logic into any of them. 
+Each of these entities provides a common API and are both middleware capable, giving you the ability to plug in custom components with own logic into any of them.
 
-`gentleman` was designed to provide strong reusability capabilities. 
+`gentleman` was designed to provide strong reusability capabilities.
 This is mostly achieved via its built-in hierarchical, inheritance-based middleware layer.
 
 The following list describes how inheritance hierarchy works and is used across gentleman's entities.
@@ -252,11 +252,11 @@ You can see an inheritance usage example [here](https://github.com/h2non/gentlem
 
 ## Middleware
 
-gentleman is completely based on a hierarchical middleware layer based on plugins that executes one or multiple function handlers (aka plugin interface) providing a simple way to plug in intermediate custom logic in your HTTP client. 
+gentleman is completely based on a hierarchical middleware layer based on plugins that executes one or multiple function handlers (aka plugin interface) providing a simple way to plug in intermediate custom logic in your HTTP client.
 
 It supports multiple phases which represents the full HTTP request/response life cycle, giving you the ability to perform actions before and after an HTTP transaction happen, even intercepting and stopping it.
 
-The middleware stack chain is executed in FIFO order designed for single thread model. 
+The middleware stack chain is executed in FIFO order designed for single thread model.
 Plugins can support goroutines, but plugins implementors should prevent data race issues due to concurrency in multithreading programming.
 
 For more implementation details about the middleware layer, see the [middleware](https://github.com/h2non/gentleman/tree/master/middleware) package and [examples](https://github.com/h2non/gentleman/tree/master/_examples/middleware).
@@ -273,7 +273,7 @@ Supported middleware phases triggered by gentleman HTTP dispatcher:
 - **before dial** - Executed before a request is sent over the network.
 - **after dial** - Executed after the request dialing was done and the response has been received.
 
-Note that the middleware layer has been designed for easy extensibility, therefore new phases may be added in the future and/or the developer could be able to trigger custom middleware phases if needed. 
+Note that the middleware layer has been designed for easy extensibility, therefore new phases may be added in the future and/or the developer could be able to trigger custom middleware phases if needed.
 
 Feel free to fill an issue to discuss this capabilities in detail.
 
@@ -349,13 +349,13 @@ import (
 func main() {
   // Create a new client
   cli := gentleman.New()
-  
+
   // Define the Base URL
   cli.URL("http://httpbin.org/post")
 
   // Create a new request based on the current client
   req := cli.Request()
-  
+
   // Method to be used
   req.Method("POST")
 
@@ -423,6 +423,6 @@ func main() {
 }
 ```
 
-## License 
+## License
 
 MIT - Tomas Aparicio
