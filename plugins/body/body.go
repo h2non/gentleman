@@ -106,7 +106,7 @@ func Reader(body io.Reader) p.Plugin {
 
 func getMethod(ctx *c.Context) string {
 	method := ctx.Request.Method
-	if method == "GET" || method == "" {
+	if method == "" {
 		return "POST"
 	}
 	return method

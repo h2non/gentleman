@@ -27,3 +27,4 @@ _testmain.go
 *.iml
 *.out
 *.tmp
+.DS_Store

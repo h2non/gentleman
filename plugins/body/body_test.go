@@ -17,7 +17,7 @@ func TestBodyJSONEncodeMap(t *testing.T) {
 	st.Expect(t, fn.called, true)
 	buf, err := ioutil.ReadAll(ctx.Request.Body)
 	st.Expect(t, err, nil)
-	st.Expect(t, ctx.Request.Method, "POST")
+	st.Expect(t, ctx.Request.Method, "GET")
 	st.Expect(t, ctx.Request.Header.Get("Content-Type"), "application/json")
 	st.Expect(t, int(ctx.Request.ContentLength), 14)
 	st.Expect(t, string(buf[0:len(buf)-1]), `{"foo":"bar"}`)
@@ -32,7 +32,7 @@ func TestBodyJSONEncodeString(t *testing.T) {
 	st.Expect(t, fn.called, true)
 	buf, err := ioutil.ReadAll(ctx.Request.Body)
 	st.Expect(t, err, nil)
-	st.Expect(t, ctx.Request.Method, "POST")
+	st.Expect(t, ctx.Request.Method, "GET")
 	st.Expect(t, ctx.Request.Header.Get("Content-Type"), "application/json")
 	st.Expect(t, int(ctx.Request.ContentLength), 13)
 	st.Expect(t, string(buf), `{"foo":"bar"}`)
@@ -47,7 +47,7 @@ func TestBodyJSONEncodeBytes(t *testing.T) {
 	st.Expect(t, fn.called, true)
 	buf, err := ioutil.ReadAll(ctx.Request.Body)
 	st.Expect(t, err, nil)
-	st.Expect(t, ctx.Request.Method, "POST")
+	st.Expect(t, ctx.Request.Method, "GET")
 	st.Expect(t, ctx.Request.Header.Get("Content-Type"), "application/json")
 	st.Expect(t, int(ctx.Request.ContentLength), 13)
 	st.Expect(t, string(buf), `{"foo":"bar"}`)
@@ -66,7 +66,7 @@ func TestBodyXMLEncodeStruct(t *testing.T) {
 
 	buf, err := ioutil.ReadAll(ctx.Request.Body)
 	st.Expect(t, err, nil)
-	st.Expect(t, ctx.Request.Method, "POST")
+	st.Expect(t, ctx.Request.Method, "GET")
 	st.Expect(t, ctx.Request.Header.Get("Content-Type"), "application/xml")
 	st.Expect(t, int(ctx.Request.ContentLength), 50)
 	st.Expect(t, string(buf), `<xmlTest><name><first>foo</first></name></xmlTest>`)
@@ -82,7 +82,7 @@ func TestBodyXMLEncodeString(t *testing.T) {
 
 	buf, err := ioutil.ReadAll(ctx.Request.Body)
 	st.Expect(t, err, nil)
-	st.Expect(t, ctx.Request.Method, "POST")
+	st.Expect(t, ctx.Request.Method, "GET")
 	st.Expect(t, ctx.Request.Header.Get("Content-Type"), "application/xml")
 	st.Expect(t, int(ctx.Request.ContentLength), 16)
 	st.Expect(t, string(buf), `<test>foo</test>`)
@@ -90,6 +90,7 @@ func TestBodyXMLEncodeString(t *testing.T) {
 
 func TestBodyXMLEncodeBytes(t *testing.T) {
 	ctx := context.New()
+	ctx.Request.Method = ""
 	fn := newHandler()
 
 	xml := []byte("<test>foo</test>")
@@ -106,6 +107,7 @@ func TestBodyXMLEncodeBytes(t *testing.T) {
 
 func TestBodyReader(t *testing.T) {
 	ctx := context.New()
+	ctx.Request.Method = "POST"
 	fn := newHandler()
 
 	reader := bytes.NewReader([]byte("foo bar"))
