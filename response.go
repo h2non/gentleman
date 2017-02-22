@@ -71,7 +71,9 @@ func buildResponse(ctx *context.Context) (*Response, error) {
 		Cookies:     resp.Cookies(),
 		buffer:      bytes.NewBuffer([]byte{}),
 	}
-	EnsureResponseFinalized(res)
+	if !isChunkedResponse(resp) {
+		EnsureResponseFinalized(res)
+	}
 
 	return res, res.Error
 }
@@ -232,4 +234,15 @@ func EnsureResponseFinalized(httpResp *Response) {
 	runtime.SetFinalizer(&httpResp, func(httpResponseInt **Response) {
 		(*httpResponseInt).RawResponse.Body.Close()
 	})
+}
+
+// isChunkedResponse iterates over the response's transfer encodings
+// and returns either true whether 'chunked' is found, or false, otherwise.
+func isChunkedResponse(res *http.Response) bool {
+	for _, te := range res.TransferEncoding {
+		if te == "chunked" {
+			return true
+		}
+	}
+	return false
 }
