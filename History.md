@@ -1,3 +1,10 @@
+
+v1.0.2 / 2017-02-22
+===================
+
+  * Merge pull request #21 from ewilazarus/master
+  * fix(#20): Prevents finalizing chunked responses
+
 ## 1.0.1 / 2016-01-29
 
 - fix(body): do not enforce POST method unless method is not already present.
