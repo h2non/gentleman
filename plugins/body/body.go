@@ -4,12 +4,13 @@ import (
 	"bytes"
 	"encoding/json"
 	"encoding/xml"
-	c "gopkg.in/h2non/gentleman.v1/context"
-	p "gopkg.in/h2non/gentleman.v1/plugin"
-	"gopkg.in/h2non/gentleman.v1/utils"
 	"io"
 	"io/ioutil"
 	"strings"
+
+	c "gopkg.in/h2non/gentleman.v1/context"
+	p "gopkg.in/h2non/gentleman.v1/plugin"
+	"gopkg.in/h2non/gentleman.v1/utils"
 )
 
 // String defines the HTTP request body based on the given string.

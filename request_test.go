@@ -481,8 +481,8 @@ func TestRequestXML(t *testing.T) {
 func TestRequestForm(t *testing.T) {
 	reader := bytes.NewReader([]byte("hello world"))
 	fields := map[string]multipart.Values{
-			"foo": multipart.Values{"data=bar"},
-			"bar": multipart.Values{"data=baz"},
+		"foo": {"data=bar"},
+		"bar": {"data=baz"},
 	}
 	data := multipart.FormData{
 		Files: []multipart.FormFile{{Name: "foo", Reader: reader}},

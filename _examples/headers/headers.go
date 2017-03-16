@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"gopkg.in/h2non/gentleman.v1"
 	"gopkg.in/h2non/gentleman.v1/plugins/headers"
 )
@@ -11,7 +12,7 @@ func main() {
 	cli := gentleman.New()
 
 	// Define a global header at client level
-	cli.SetHeader("Version", "1.0"))
+	cli.SetHeader("Version", "1.0")
 
 	// Define a custom header (via headers plugin)
 	cli.Use(headers.Set("API-Token", "s3cr3t"))
