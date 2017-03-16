@@ -3,17 +3,21 @@ package multipart
 import (
 	"bytes"
 	"errors"
-	c "gopkg.in/h2non/gentleman.v1/context"
-	p "gopkg.in/h2non/gentleman.v1/plugin"
 	"io"
 	"io/ioutil"
 	"mime/multipart"
 	"strconv"
 	"strings"
+
+	c "gopkg.in/h2non/gentleman.v1/context"
+	p "gopkg.in/h2non/gentleman.v1/plugin"
 )
 
+// Values represents multiple multipart from values.
+type Values []string
+
 // DataFields represents a map of text based fields.
-type DataFields map[string]string
+type DataFields map[string]Values
 
 // FormFile represents the file form field data.
 type FormFile struct {
@@ -80,8 +84,10 @@ func createForm(data FormData, ctx *c.Context) error {
 	}
 
 	// Populate the other parts of the form (if there are any)
-	for key, value := range data.Data {
-		multipartWriter.WriteField(key, value)
+	for key, values := range data.Data {
+		for _, value := range values {
+			multipartWriter.WriteField(key, value)
+		}
 	}
 	if err := multipartWriter.Close(); err != nil {
 		return err

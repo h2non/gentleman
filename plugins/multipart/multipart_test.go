@@ -45,7 +45,7 @@ func TestFiles(t *testing.T) {
 func TestFields(t *testing.T) {
 	ctx := context.New()
 	fn := newHandler()
-	fields := map[string]string{"foo": "data=bar", "bar": "data=baz"}
+	fields := map[string]Values{"foo": Values{"data=bar"}, "bar": Values{"data=baz"}}
 
 	Fields(fields).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
@@ -61,7 +61,7 @@ func TestData(t *testing.T) {
 	ctx := context.New()
 	fn := newHandler()
 	reader := bytes.NewReader([]byte("hello world"))
-	fields := map[string]string{"foo": "data=bar", "bar": "data=baz"}
+	fields := map[string]Values{"foo": Values{"data=bar"}, "bar": Values{"data=baz"}}
 	data := FormData{
 		Files: []FormFile{{Name: "foo", Reader: reader}},
 		Data:  fields,
