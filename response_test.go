@@ -118,7 +118,7 @@ func TestResponseSaveToFileError(t *testing.T) {
 
 func TestResponseJSON(t *testing.T) {
 	type jsonData struct {
-		Foo string `json:foo`
+		Foo string `json:"foo"`
 	}
 	json := &jsonData{}
 	ctx := NewContext()
@@ -131,7 +131,7 @@ func TestResponseJSON(t *testing.T) {
 
 func TestResponseJSONError(t *testing.T) {
 	type jsonData struct {
-		Foo string `json:foo`
+		Foo string `json:"foo"`
 	}
 	json := &jsonData{}
 	ctx := NewContext()

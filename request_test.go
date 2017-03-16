@@ -511,8 +511,8 @@ func TestRequestFile(t *testing.T) {
 func TestRequestFiles(t *testing.T) {
 	reader1 := bytes.NewReader([]byte("content1"))
 	reader2 := bytes.NewReader([]byte("content2"))
-	file1 := multipart.FormFile{"file1.txt", reader1}
-	file2 := multipart.FormFile{"file2.txt", reader2}
+	file1 := multipart.FormFile{Name: "file1.txt", Reader: reader1}
+	file2 := multipart.FormFile{Name: "file2.txt", Reader: reader2}
 
 	req := NewRequest()
 	req.Files([]multipart.FormFile{file1, file2})
