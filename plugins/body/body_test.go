@@ -2,10 +2,11 @@ package body
 
 import (
 	"bytes"
-	"github.com/nbio/st"
-	"gopkg.in/h2non/gentleman.v1/context"
 	"io/ioutil"
 	"testing"
+
+	"github.com/nbio/st"
+	"gopkg.in/h2non/gentleman.v1/context"
 )
 
 func TestBodyJSONEncodeMap(t *testing.T) {
@@ -120,6 +121,31 @@ func TestBodyReader(t *testing.T) {
 	st.Expect(t, ctx.Request.Header.Get("Content-Type"), "")
 	st.Expect(t, int(ctx.Request.ContentLength), 7)
 	st.Expect(t, string(buf), "foo bar")
+}
+
+func TestBodyReaderContextDataSharing(t *testing.T) {
+	ctx := context.New()
+	ctx.Request.Method = "POST"
+	fn := newHandler()
+
+	// Set sample context data
+	ctx.Set("foo", "bar")
+	ctx.Set("bar", "baz")
+
+	reader := bytes.NewReader([]byte("foo bar"))
+	Reader(reader).Exec("request", ctx, fn.fn)
+	st.Expect(t, fn.called, true)
+
+	buf, err := ioutil.ReadAll(ctx.Request.Body)
+	st.Expect(t, err, nil)
+	st.Expect(t, ctx.Request.Method, "POST")
+	st.Expect(t, ctx.Request.Header.Get("Content-Type"), "")
+	st.Expect(t, int(ctx.Request.ContentLength), 7)
+	st.Expect(t, string(buf), "foo bar")
+
+	// Test context data
+	st.Expect(t, ctx.GetString("foo"), "bar")
+	st.Expect(t, ctx.GetString("bar"), "baz")
 }
 
 type handler struct {

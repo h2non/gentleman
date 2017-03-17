@@ -146,12 +146,23 @@ func (c *Context) Copy(req *http.Request) {
 	req.Body = getContextReadCloser(c.Request).Clone()
 }
 
+// WrapBody wraps and copies the current context data to a new request body.
+// Since context metadata is "overloaded" as part of the request body reader
+// calling this method is mandatory for any new request body.
+func (c *Context) WrapBody(body io.ReadCloser) ReadCloser {
+	ctx := getContextReadCloser(c.Request).Context()
+	newBody := wrapContextReadCloser(body)
+	newBody.SetContext(ctx)
+	return newBody
+}
+
 // ReadCloser augments the io.ReadCloser interface
 // with a Context() method
 type ReadCloser interface {
 	io.ReadCloser
 	Clone() ReadCloser
 	Context() map[interface{}]interface{}
+	SetContext(map[interface{}]interface{})
 }
 
 type contextReadCloser struct {
@@ -174,16 +185,27 @@ func (crc *contextReadCloser) Clone() ReadCloser {
 	return clone
 }
 
-func getContextReadCloser(req *http.Request) ReadCloser {
-	crc, ok := req.Body.(ReadCloser)
+func (crc *contextReadCloser) SetContext(store map[interface{}]interface{}) {
+	for key, value := range store {
+		crc.store[key] = value
+	}
+}
+
+func wrapContextReadCloser(body io.ReadCloser) ReadCloser {
+	crc, ok := body.(ReadCloser)
 	if !ok {
 		crc = &contextReadCloser{
-			ReadCloser: req.Body,
+			ReadCloser: body,
 			store:      make(map[interface{}]interface{}),
 		}
-		req.Body = crc
 	}
 	return crc
+}
+
+func getContextReadCloser(req *http.Request) ReadCloser {
+	body := wrapContextReadCloser(req.Body)
+	req.Body = body
+	return body
 }
 
 func createRequest() *http.Request {

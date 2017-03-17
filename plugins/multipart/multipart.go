@@ -94,7 +94,7 @@ func createForm(data FormData, ctx *c.Context) error {
 	}
 
 	ctx.Request.Method = setMethod(ctx)
-	ctx.Request.Body = ioutil.NopCloser(body)
+	ctx.Request.Body = ctx.WrapBody(ioutil.NopCloser(body))
 	ctx.Request.Header.Add("Content-Type", multipartWriter.FormDataContentType())
 
 	return nil
