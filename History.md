@@ -1,4 +1,13 @@
 
+v1.0.3 / 2017-03-17
+===================
+
+  * fix(#23): persist context data across body updates
+  * fix(lint): use proper code style
+  * fix(test): several lint issues
+  * fix(#22): adds support for multipart multiple form values. This introduces a minor interface breaking change
+  * feat(travis): add Go 1.8 CI support
+
 v1.0.2 / 2017-02-22
 ===================
 
