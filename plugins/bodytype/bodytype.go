@@ -17,12 +17,17 @@ var Types = map[string]string{
 	"form-data":  "application/x-www-form-urlencoded",
 }
 
-// Set defines an authorization basic header in the outgoing request
+// Set sets the Content Type header value, optionally based on a MIME type alias.
 func Set(name string) p.Plugin {
 	return p.NewRequestPlugin(func(ctx *c.Context, h c.Handler) {
 		defineType(name, ctx.Request)
 		h.Next(ctx)
 	})
+}
+
+// Type is an alias to Set, which defines the Content-Type header
+func Type(name string) p.Plugin {
+	return Set(name)
 }
 
 func defineType(name string, req *http.Request) {
