@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"gopkg.in/h2non/gentleman.v2"
 	"sync"
+
+	"gopkg.in/h2non/gentleman.v2"
 )
 
 func main() {

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"gopkg.in/h2non/gentleman.v2"
 	"gopkg.in/h2non/gentleman.v2/plugins/body"
 )

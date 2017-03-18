@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"time"
+
 	"gopkg.in/h2non/gentleman.v2"
 	"gopkg.in/h2non/gentleman.v2/plugins/timeout"
-	"time"
 )
 
 func main() {

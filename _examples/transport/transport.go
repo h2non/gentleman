@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+
 	"gopkg.in/h2non/gentleman.v2"
 	"gopkg.in/h2non/gentleman.v2/plugins/transport"
-	"net/http"
 )
 
 func main() {
