@@ -36,6 +36,10 @@ For testing purposes, see [baloo](https://github.com/h2non/baloo), an utility li
 go get -u gopkg.in/h2non/gentleman.v2
 ```
 
+## Requirements
+
+- Go 1.7+
+
 ## Plugins
 
 <table>
