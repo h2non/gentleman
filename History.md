@@ -1,4 +1,13 @@
 
+v2.0.0-rc.0 / 2017-03-18
+========================
+
+  * feat(version): bump to v2.0.0-rc.0
+  * fix: format code accordingly
+  * fix(travis): use Go 1.7+
+  * refactor(context): adopt standard `context`. Introduces several breaking changes
+  * feat(v2): push v2 preview release
+
 v1.0.3 / 2017-03-17
 ===================
 
