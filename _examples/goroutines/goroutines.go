@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"gopkg.in/h2non/gentleman.v1"
+	"gopkg.in/h2non/gentleman.v2"
 	"sync"
 )
 

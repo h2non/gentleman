@@ -7,7 +7,7 @@ Supports full URL parsing, base URL, base path, full path and dynamic path param
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/gentleman.v1/plugins/url
+go get -u gopkg.in/h2non/gentleman.v2/plugins/url
 ```
 
 ## API
@@ -21,8 +21,8 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v1"
-  "gopkg.in/h2non/gentleman.v1/plugins/url"
+  "gopkg.in/h2non/gentleman.v2"
+  "gopkg.in/h2non/gentleman.v2/plugins/url"
 )
 
 func main() {

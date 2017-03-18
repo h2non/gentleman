@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"gopkg.in/h2non/gentleman.v1"
-	"gopkg.in/h2non/gentleman.v1/plugins/query"
-	"gopkg.in/h2non/gentleman.v1/plugins/url"
+	"gopkg.in/h2non/gentleman.v2"
+	"gopkg.in/h2non/gentleman.v2/plugins/query"
+	"gopkg.in/h2non/gentleman.v2/plugins/url"
 )
 
 func main() {

@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"gopkg.in/h2non/gentleman.v1"
-	"gopkg.in/h2non/gentleman.v1/context"
-	"gopkg.in/h2non/gentleman.v1/plugins/headers"
+	"gopkg.in/h2non/gentleman.v2"
+	"gopkg.in/h2non/gentleman.v2/context"
+	"gopkg.in/h2non/gentleman.v2/plugins/headers"
 	"net/url"
 )
 

@@ -18,7 +18,7 @@ const (
 
 func TestContext(t *testing.T) {
 	ctx := New()
-	crc := getContextReadCloser(ctx.Request)
+	store := ctx.getStore()
 
 	// Get()
 	st.Expect(t, ctx.Get(key1), nil)
@@ -26,11 +26,12 @@ func TestContext(t *testing.T) {
 	// Set()
 	ctx.Set(key1, "1")
 	st.Expect(t, ctx.Get(key1), "1")
-	st.Expect(t, len(crc.Context()), 1)
+	st.Expect(t, len(store), 1)
+  st.Expect(t, store[key1], "1")
 
 	ctx.Set(key2, "2")
 	st.Expect(t, ctx.Get(key2), "2")
-	st.Expect(t, len(crc.Context()), 2)
+	st.Expect(t, len(store), 2)
 
 	// GetOk()
 	value, ok := ctx.GetOk(key1)
@@ -61,17 +62,17 @@ func TestContext(t *testing.T) {
 	// Delete()
 	ctx.Delete(key1)
 	st.Expect(t, ctx.Get(key1), nil)
-	st.Expect(t, len(crc.Context()), 4)
+	st.Expect(t, len(store), 4)
 
 	ctx.Delete(key2)
 	st.Expect(t, ctx.Get(key2), nil)
-	st.Expect(t, len(crc.Context()), 3)
+	st.Expect(t, len(store), 3)
 
 	// Clear()
 	ctx.Set(key1, true)
 	values = ctx.GetAll()
 	ctx.Clear()
-	st.Expect(t, len(crc.Context()), 0)
+	st.Expect(t, len(store), 0)
 	val, _ := values["int value"].(int)
 	st.Expect(t, val, 13) // Clear shouldn't delete values grabbed before
 }
@@ -90,6 +91,20 @@ func TestContextInheritance(t *testing.T) {
 	st.Expect(t, ctx.Get("foo"), "foo")
 }
 
+func TestContextGetAll(t *testing.T) {
+	parent := New()
+	ctx := New()
+	ctx.UseParent(parent)
+
+	parent.Set("foo", "bar")
+	ctx.Set("bar", "foo")
+	st.Expect(t, ctx.Get("foo"), "bar")
+	st.Expect(t, ctx.Get("bar"), "foo")
+
+	store := ctx.GetAll()
+  st.Expect(t, len(store), 2)
+}
+
 func TestContextRoot(t *testing.T) {
 	root := New()
 	parent := New()
@@ -99,6 +114,30 @@ func TestContextRoot(t *testing.T) {
 	if ctx.Root() != root {
 		t.Error("Invalid root context")
 	}
+}
+
+func TestContextGetters(t *testing.T) {
+	parent := New()
+	ctx := New()
+	ctx.UseParent(parent)
+
+	parent.Set("foo", "bar")
+	ctx.Set("bar", "foo")
+	st.Expect(t, ctx.GetString("foo"), "bar")
+	st.Expect(t, ctx.GetString("bar"), "foo")
+  ctx.Clear()
+
+  parent.Set("foo", 1)
+	ctx.Set("bar", 2)
+  foo, ok := ctx.GetInt("foo")
+  st.Expect(t, ok, true)
+  st.Expect(t, foo, 1)
+  bar, ok := ctx.GetInt("bar")
+  st.Expect(t, ok, true)
+	st.Expect(t, bar, 2)
+
+  store := ctx.GetAll()
+  st.Expect(t, len(store), 2)
 }
 
 func TestContextClone(t *testing.T) {
@@ -121,7 +160,7 @@ func TestContextCopy(t *testing.T) {
 	st.Expect(t, ctx.Get("bar"), "foo")
 
 	newCtx := New()
-	ctx.Copy(newCtx.Request)
+	ctx.CopyTo(newCtx)
 	st.Expect(t, newCtx.Get("bar"), "foo")
 
 	// Ensure inmutability
@@ -136,7 +175,7 @@ func TestContextSetRequest(t *testing.T) {
 	st.Expect(t, ctx.Get("bar"), "foo")
 
 	newCtx := New()
-	ctx.Copy(newCtx.Request)
+	ctx.CopyTo(newCtx)
 	st.Expect(t, newCtx.Get("bar"), "foo")
 
 	// Ensure inmutability

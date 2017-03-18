@@ -5,7 +5,7 @@
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/gentleman.v1/utils
+go get -u gopkg.in/h2non/gentleman.v2/utils
 ```
 
 ## API

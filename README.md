@@ -1,14 +1,14 @@
-# gentleman [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/badge/version-1.0.2-orange.svg?style=flat)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman?status.svg)](https://godoc.org/github.com/h2non/gentleman) [![Coverage Status](https://coveralls.io/repos/github/h2non/gentleman/badge.svg?branch=master)](https://coveralls.io/github/h2non/gentleman?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman)](https://goreportcard.com/report/github.com/h2non/gentleman) [![Go Version](https://img.shields.io/badge/go-v1.0+-green.svg?style=flat)](https://github.com/h2non/gentleman)
+# gentleman [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/badge/version-2.0.0-orange.svg?style=flat)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman?status.svg)](https://godoc.org/gopkg.in/h2non/gentleman.v2) [![Coverage Status](https://coveralls.io/repos/github/h2non/gentleman/badge.svg?branch=v2)](https://coveralls.io/github/h2non/gentleman?branch=v2) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman)](https://goreportcard.com/report/github.com/h2non/gentleman) [![Go Version](https://img.shields.io/badge/go-v1.0+-green.svg?style=flat)](https://github.com/h2non/gentleman)
 
 <img src="http://s10.postimg.org/5e31ox1ft/gentleman.png" align="right" height="260" />
 
 Full-featured, plugin-driven, middleware-oriented toolkit to easily create rich, versatile and composable HTTP clients in [Go](http://golang.org).
 
-gentleman embraces extensibility and composition principles in order to provide a powerful way to easily create featured HTTP client layers based on built-in or third-party plugins that you register and reuse across HTTP clients.
+gentleman embraces extensibility and composition principles in order to provide a flexible way to easily create featured HTTP client layers based on built-in or third-party plugins that you can register and reuse across HTTP clients.
 
-For instance, you can easily provide retry policy capabilities or dynamic server discovery in your HTTP clients simply attaching the [retry](https://github.com/h2non/gentleman-retry) or [consul](https://github.com/h2non/gentleman-consul) plugins.
+As an example, you can easily provide retry policy capabilities or dynamic server discovery in your HTTP clients simply attaching the [retry](https://github.com/h2non/gentleman-retry) or [consul](https://github.com/h2non/gentleman-consul) plugins.
 
-You can take a look to the [examples](#examples), list of [supported plugins](#plugins), [HTTP entities](#http-entities) or [middleware layer](#middleware) to get started.
+Take a look to the [examples](#examples), list of [supported plugins](#plugins), [HTTP entities](#http-entities) or [middleware layer](#middleware) to get started.
 
 For testing purposes, see [baloo](https://github.com/h2non/baloo), an utility library for expressive end-to-end HTTP API testing, built on top of `gentleman` toolkit.
 
@@ -33,7 +33,7 @@ For testing purposes, see [baloo](https://github.com/h2non/baloo), an utility li
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/gentleman.v1
+go get -u gopkg.in/h2non/gentleman.v2
 ```
 
 ## Plugins
@@ -279,7 +279,7 @@ Feel free to fill an issue to discuss this capabilities in detail.
 
 ## API
 
-See [godoc reference](https://godoc.org/github.com/h2non/gentleman) for detailed API documentation.
+See [godoc reference](https://godoc.org/gopkg.in/h2non/gentleman.v2) for detailed API documentation.
 
 #### Subpackages
 
@@ -300,7 +300,8 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v1"
+
+  "gopkg.in/h2non/gentleman.v2"
 )
 
 func main() {
@@ -342,8 +343,9 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v1"
-  "gopkg.in/h2non/gentleman.v1/plugins/body"
+
+  "gopkg.in/h2non/gentleman.v2"
+  "gopkg.in/h2non/gentleman.v2/plugins/body"
 )
 
 func main() {
@@ -386,9 +388,10 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v1"
-  "gopkg.in/h2non/gentleman.v1/mux"
-  "gopkg.in/h2non/gentleman.v1/plugins/url"
+
+  "gopkg.in/h2non/gentleman.v2"
+  "gopkg.in/h2non/gentleman.v2/mux"
+  "gopkg.in/h2non/gentleman.v2/plugins/url"
 )
 
 func main() {

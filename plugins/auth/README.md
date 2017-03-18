@@ -5,7 +5,7 @@ gentleman's plugin to easily define HTTP authorization headers based on multiple
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/gentleman.v1/plugins/auth
+go get -u gopkg.in/h2non/gentleman.v2/plugins/auth
 ```
 
 ## API
@@ -19,8 +19,8 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v1"
-  "gopkg.in/h2non/gentleman.v1/plugins/auth"
+  "gopkg.in/h2non/gentleman.v2"
+  "gopkg.in/h2non/gentleman.v2/plugins/auth"
 )
 
 func main() {

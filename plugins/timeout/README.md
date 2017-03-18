@@ -5,7 +5,7 @@ gentleman's plugin to easily define HTTP timeouts per specific phase in the HTTP
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/gentleman.v1/plugins/timeout
+go get -u gopkg.in/h2non/gentleman.v2/plugins/timeout
 ```
 
 ## API
@@ -19,8 +19,8 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v1"
-  "gopkg.in/h2non/gentleman.v1/plugins/timeout"
+  "gopkg.in/h2non/gentleman.v2"
+  "gopkg.in/h2non/gentleman.v2/plugins/timeout"
   "time"
 )
 

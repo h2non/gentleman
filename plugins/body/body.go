@@ -8,16 +8,16 @@ import (
 	"io/ioutil"
 	"strings"
 
-	c "gopkg.in/h2non/gentleman.v1/context"
-	p "gopkg.in/h2non/gentleman.v1/plugin"
-	"gopkg.in/h2non/gentleman.v1/utils"
+	c "gopkg.in/h2non/gentleman.v2/context"
+	p "gopkg.in/h2non/gentleman.v2/plugin"
+	"gopkg.in/h2non/gentleman.v2/utils"
 )
 
 // String defines the HTTP request body based on the given string.
 func String(data string) p.Plugin {
 	return p.NewRequestPlugin(func(ctx *c.Context, h c.Handler) {
 		ctx.Request.Method = getMethod(ctx)
-		ctx.Request.Body = ctx.WrapBody(utils.StringReader(data))
+		ctx.Request.Body = utils.StringReader(data)
 		ctx.Request.ContentLength = int64(bytes.NewBufferString(data).Len())
 		h.Next(ctx)
 	})
@@ -42,7 +42,7 @@ func JSON(data interface{}) p.Plugin {
 		}
 
 		ctx.Request.Method = getMethod(ctx)
-		ctx.Request.Body = ctx.WrapBody(ioutil.NopCloser(buf))
+		ctx.Request.Body = ioutil.NopCloser(buf)
 		ctx.Request.ContentLength = int64(buf.Len())
 		ctx.Request.Header.Set("Content-Type", "application/json")
 
@@ -69,7 +69,7 @@ func XML(data interface{}) p.Plugin {
 		}
 
 		ctx.Request.Method = getMethod(ctx)
-		ctx.Request.Body = ctx.WrapBody(ioutil.NopCloser(buf))
+		ctx.Request.Body = ioutil.NopCloser(buf)
 		ctx.Request.ContentLength = int64(buf.Len())
 		ctx.Request.Header.Set("Content-Type", "application/xml")
 
@@ -98,7 +98,7 @@ func Reader(body io.Reader) p.Plugin {
 			}
 		}
 
-		req.Body = ctx.WrapBody(rc)
+		req.Body = rc
 		ctx.Request.Method = getMethod(ctx)
 
 		h.Next(ctx)

@@ -7,7 +7,7 @@ multiplexer can be used to compose plugins for both request/response phases.
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/gentleman.v1/mux
+go get -u gopkg.in/h2non/gentleman.v2/mux
 ```
 
 ## API
@@ -22,10 +22,10 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v1"
-  "gopkg.in/h2non/gentleman.v1/mux"
-  "gopkg.in/h2non/gentleman.v1/context"
-  "gopkg.in/h2non/gentleman.v1/plugins/url"
+  "gopkg.in/h2non/gentleman.v2"
+  "gopkg.in/h2non/gentleman.v2/mux"
+  "gopkg.in/h2non/gentleman.v2/context"
+  "gopkg.in/h2non/gentleman.v2/plugins/url"
 )
 
 func main() {
@@ -59,9 +59,9 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v1"
-  "gopkg.in/h2non/gentleman.v1/mux"
-  "gopkg.in/h2non/gentleman.v1/plugins/url"
+  "gopkg.in/h2non/gentleman.v2"
+  "gopkg.in/h2non/gentleman.v2/mux"
+  "gopkg.in/h2non/gentleman.v2/plugins/url"
 )
 
 func main() {

@@ -5,7 +5,7 @@ gentleman's plugin to easily manage HTTP proxies used by clients.
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/gentleman.v1/plugins/proxy
+go get -u gopkg.in/h2non/gentleman.v2/plugins/proxy
 ```
 
 ## API
@@ -19,8 +19,8 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v1"
-  "gopkg.in/h2non/gentleman.v1/plugins/proxy"
+  "gopkg.in/h2non/gentleman.v2"
+  "gopkg.in/h2non/gentleman.v2/plugins/proxy"
 )
 
 func main() {

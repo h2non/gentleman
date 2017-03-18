@@ -1,7 +1,7 @@
 package mux
 
 import (
-	c "gopkg.in/h2non/gentleman.v1/context"
+	c "gopkg.in/h2non/gentleman.v2/context"
 )
 
 // If creates a new multiplexer that will be executed if all the mux matchers passes.

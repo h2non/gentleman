@@ -1,7 +1,7 @@
 package gentleman
 
 import (
-	c "gopkg.in/h2non/gentleman.v1/context"
+	c "gopkg.in/h2non/gentleman.v2/context"
 )
 
 // Dispatcher dispatches a given request triggering the middleware
