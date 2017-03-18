@@ -27,7 +27,7 @@ func TestContext(t *testing.T) {
 	ctx.Set(key1, "1")
 	st.Expect(t, ctx.Get(key1), "1")
 	st.Expect(t, len(store), 1)
-  st.Expect(t, store[key1], "1")
+	st.Expect(t, store[key1], "1")
 
 	ctx.Set(key2, "2")
 	st.Expect(t, ctx.Get(key2), "2")
@@ -102,7 +102,7 @@ func TestContextGetAll(t *testing.T) {
 	st.Expect(t, ctx.Get("bar"), "foo")
 
 	store := ctx.GetAll()
-  st.Expect(t, len(store), 2)
+	st.Expect(t, len(store), 2)
 }
 
 func TestContextRoot(t *testing.T) {
@@ -125,19 +125,19 @@ func TestContextGetters(t *testing.T) {
 	ctx.Set("bar", "foo")
 	st.Expect(t, ctx.GetString("foo"), "bar")
 	st.Expect(t, ctx.GetString("bar"), "foo")
-  ctx.Clear()
+	ctx.Clear()
 
-  parent.Set("foo", 1)
+	parent.Set("foo", 1)
 	ctx.Set("bar", 2)
-  foo, ok := ctx.GetInt("foo")
-  st.Expect(t, ok, true)
-  st.Expect(t, foo, 1)
-  bar, ok := ctx.GetInt("bar")
-  st.Expect(t, ok, true)
+	foo, ok := ctx.GetInt("foo")
+	st.Expect(t, ok, true)
+	st.Expect(t, foo, 1)
+	bar, ok := ctx.GetInt("bar")
+	st.Expect(t, ok, true)
 	st.Expect(t, bar, 2)
 
-  store := ctx.GetAll()
-  st.Expect(t, len(store), 2)
+	store := ctx.GetAll()
+	st.Expect(t, len(store), 2)
 }
 
 func TestContextClone(t *testing.T) {

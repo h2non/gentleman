@@ -10,10 +10,10 @@
 package context
 
 import (
-  "time"
-  "context"
+	"context"
 	"net/http"
 	"net/url"
+	"time"
 
 	"gopkg.in/h2non/gentleman.v2/utils"
 )
@@ -56,28 +56,28 @@ func New() *Context {
 
 // getStore retrieves the current request context data store.
 func (c *Context) getStore() Store {
-  store, ok := c.Request.Context().Value(Key).(Store)
-  if !ok {
-    panic("invalid request context")
-  }
+	store, ok := c.Request.Context().Value(Key).(Store)
+	if !ok {
+		panic("invalid request context")
+	}
 	return store
 }
 
 // Set sets a value on the current store
 func (c *Context) Set(key interface{}, value interface{}) {
 	store := c.getStore()
-  store[key] = value
+	store[key] = value
 }
 
 // Get gets a value by key in the current or parent context
 func (c *Context) Get(key interface{}) interface{} {
 	store := c.getStore()
 	if store == nil {
-    return store
-  }
-  if value, ok := store[key]; ok {
-    return value
-  }
+		return store
+	}
+	if value, ok := store[key]; ok {
+		return value
+	}
 	if c.Parent != nil {
 		return c.Parent.Get(key)
 	}
@@ -89,11 +89,11 @@ func (c *Context) Get(key interface{}) interface{} {
 func (c *Context) GetOk(key interface{}) (interface{}, bool) {
 	store := c.getStore()
 	val, ok := store[key]
-  if !ok {
-    if c.Parent != nil {
-      return c.Parent.GetOk(key)
-    }
-  }
+	if !ok {
+		if c.Parent != nil {
+			return c.Parent.GetOk(key)
+		}
+	}
 	return val, ok
 }
 
@@ -102,11 +102,11 @@ func (c *Context) GetOk(key interface{}) (interface{}, bool) {
 // or the value does not evaluate to a string
 func (c *Context) GetInt(key interface{}) (int, bool) {
 	value, ok := c.GetOk(key)
-  if !ok {
-    if c.Parent != nil {
-      return c.Parent.GetInt(key)
-    }
-  }
+	if !ok {
+		if c.Parent != nil {
+			return c.Parent.GetInt(key)
+		}
+	}
 	if num, ok := value.(int); ok {
 		return num, ok
 	}
@@ -123,9 +123,9 @@ func (c *Context) GetString(key interface{}) string {
 			return typed
 		}
 	}
-  if c.Parent != nil {
-    return c.Parent.GetString(key)
-  }
+	if c.Parent != nil {
+		return c.Parent.GetString(key)
+	}
 	return ""
 }
 
@@ -133,15 +133,15 @@ func (c *Context) GetString(key interface{}) string {
 // Will always return a valid map. Returns an empty map for
 // requests context data previously set
 func (c *Context) GetAll() Store {
-  buf := Store{}
-  for key, value := range c.getStore() {
-    buf[key] = value
-  }
-  if c.Parent != nil {
-    for key, value := range c.Parent.GetAll() {
-      buf[key] = value
-    }
-  }
+	buf := Store{}
+	for key, value := range c.getStore() {
+		buf[key] = value
+	}
+	if c.Parent != nil {
+		for key, value := range c.Parent.GetAll() {
+			buf[key] = value
+		}
+	}
 	return buf
 }
 
@@ -153,10 +153,10 @@ func (c *Context) Delete(key interface{}) {
 // Clear clears all stored values in the current request’s context.
 // Parent context store will not be cleaned.
 func (c *Context) Clear() {
-  store := c.getStore()
-  for key := range store {
-    delete(store, key)
-  }
+	store := c.getStore()
+	for key := range store {
+		delete(store, key)
+	}
 }
 
 // UseParent uses a new parent Context
@@ -185,7 +185,7 @@ func (c *Context) Clone() *Context {
 
 	req := new(http.Request)
 	*req = *c.Request
-  ctx.Request = req
+	ctx.Request = req
 	c.CopyTo(ctx)
 
 	res := new(http.Response)
@@ -197,21 +197,21 @@ func (c *Context) Clone() *Context {
 
 // CopyTo copies the current context store into a new Context.
 func (c *Context) CopyTo(newCtx *Context) {
-  store := Store{}
+	store := Store{}
 
-  for key, value := range c.getStore() {
-    store[key] = value
-  }
+	for key, value := range c.getStore() {
+		store[key] = value
+	}
 
-  ctx := context.WithValue(context.Background(), Key, store)
-  newCtx.Request = newCtx.Request.WithContext(ctx)
+	ctx := context.WithValue(context.Background(), Key, store)
+	newCtx.Request = newCtx.Request.WithContext(ctx)
 }
 
 // Deadline returns the time when work done on behalf of this context
 // should be canceled. Deadline returns ok==false when no deadline is
 // set. Successive calls to Deadline return the same results.
 func (c *Context) Deadline() (deadline time.Time, ok bool) {
-  return c.Request.Context().Deadline()
+	return c.Request.Context().Deadline()
 }
 
 // Done returns a channel that's closed when work done on behalf of this
@@ -244,7 +244,7 @@ func (c *Context) Deadline() (deadline time.Time, ok bool) {
 // See https://blog.golang.org/pipelines for more examples of how to use
 // a Done channel for cancelation.
 func (c *Context) Done() <-chan struct{} {
-  return c.Request.Context().Done()
+	return c.Request.Context().Done()
 }
 
 // Err returns a non-nil error value after Done is closed. Err returns
@@ -252,7 +252,7 @@ func (c *Context) Done() <-chan struct{} {
 // context's deadline passed. No other values for Err are defined.
 // After Done is closed, successive calls to Err return the same value.
 func (c *Context) Err() error {
-  return c.Request.Context().Err()
+	return c.Request.Context().Err()
 }
 
 // Value returns the value associated with this context for key, or nil
@@ -301,17 +301,17 @@ func (c *Context) Err() error {
 // 		return u, ok
 // 	}
 func (c *Context) Value(key interface{}) interface{} {
-  return c.Request.Context().Value(key)
+	return c.Request.Context().Value(key)
 }
 
 // emptyContext creates a new empty context.Context
 func emptyContext() context.Context {
-  return context.WithValue(context.Background(), Key, Store{})
+	return context.WithValue(context.Background(), Key, Store{})
 }
 
 // createRequest creates a default http.Request instance.
 func createRequest() *http.Request {
-  // Create HTTP request
+	// Create HTTP request
 	req := &http.Request{
 		Method:     "GET",
 		URL:        &url.URL{},
@@ -322,8 +322,8 @@ func createRequest() *http.Request {
 		Header:     make(http.Header),
 		Body:       utils.NopCloser(),
 	}
-  // Return shallow copy of Request with the new context
-  return req.WithContext(emptyContext())
+	// Return shallow copy of Request with the new context
+	return req.WithContext(emptyContext())
 }
 
 // createResponse creates a default http.Response instance.
