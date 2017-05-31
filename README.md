@@ -1,4 +1,4 @@
-# gentleman [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/badge/version-1.0.2-orange.svg?style=flat)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman?status.svg)](https://godoc.org/github.com/h2non/gentleman) [![Coverage Status](https://coveralls.io/repos/github/h2non/gentleman/badge.svg?branch=master)](https://coveralls.io/github/h2non/gentleman?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman)](https://goreportcard.com/report/github.com/h2non/gentleman) [![Go Version](https://img.shields.io/badge/go-v1.0+-green.svg?style=flat)](https://github.com/h2non/gentleman)
+# gentleman [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/badge/v1.0.4-orange.svg?style=flat)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman?status.svg)](https://godoc.org/github.com/h2non/gentleman) [![Coverage Status](https://coveralls.io/repos/github/h2non/gentleman/badge.svg?branch=master)](https://coveralls.io/github/h2non/gentleman?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman)](https://goreportcard.com/report/github.com/h2non/gentleman) [![Go Version](https://img.shields.io/badge/go-v1.0+-green.svg?style=flat)](https://github.com/h2non/gentleman)
 
 <img src="http://s10.postimg.org/5e31ox1ft/gentleman.png" align="right" height="260" />
 
@@ -14,7 +14,7 @@ For testing purposes, see [baloo](https://github.com/h2non/baloo), an utility li
 
 #### v2 preview
 
-Future `v2` version of `gentleman` is now available as beta preview release [here](https://github.com/h2non/gentleman/tree/v2). 
+Future `v2` version of `gentleman` is now available as beta preview release [here](https://github.com/h2non/gentleman/tree/v2).
 One of the major changes is the adoption of standard `context`.
 
 There's also an [outgoing PR](https://github.com/h2non/gentleman/pull/26) in case that you're interested in code review changes.
