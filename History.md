@@ -1,4 +1,11 @@
 
+v1.0.4 / 2017-05-31
+===================
+
+  * Merge pull request #28 from eyalpost/master
+  * refactor: remove finalizers (this introduces a minor breaking change)
+  * feat(docs): add v2 notice
+
 v1.0.3 / 2017-03-17
 ===================
 
