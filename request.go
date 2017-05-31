@@ -18,7 +18,6 @@ import (
 	"gopkg.in/h2non/gentleman.v1/plugins/multipart"
 	"gopkg.in/h2non/gentleman.v1/plugins/query"
 	"gopkg.in/h2non/gentleman.v1/plugins/url"
-	"gopkg.in/h2non/gentleman.v1/utils"
 )
 
 const (
@@ -321,6 +320,5 @@ func NewDefaultTransport(dialer *net.Dialer) *http.Transport {
 		Dial:                dialer.Dial,
 		TLSHandshakeTimeout: TLSHandshakeTimeout,
 	}
-	utils.SetTransportFinalizer(transport)
 	return transport
 }
