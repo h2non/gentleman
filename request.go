@@ -18,7 +18,6 @@ import (
 	"gopkg.in/h2non/gentleman.v2/plugins/multipart"
 	"gopkg.in/h2non/gentleman.v2/plugins/query"
 	"gopkg.in/h2non/gentleman.v2/plugins/url"
-	"gopkg.in/h2non/gentleman.v2/utils"
 )
 
 const (
