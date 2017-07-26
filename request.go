@@ -321,6 +321,5 @@ func NewDefaultTransport(dialer *net.Dialer) *http.Transport {
 		Dial:                dialer.Dial,
 		TLSHandshakeTimeout: TLSHandshakeTimeout,
 	}
-	utils.SetTransportFinalizer(transport)
 	return transport
 }

@@ -8,6 +8,13 @@ v2.0.0-rc.0 / 2017-03-18
   * refactor(context): adopt standard `context`. Introduces several breaking changes
   * feat(v2): push v2 preview release
 
+v1.0.4 / 2017-05-31
+===================
+
+  * Merge pull request #28 from eyalpost/master
+  * refactor: remove finalizers (this introduces a minor breaking change)
+  * feat(docs): add v2 notice
+
 v1.0.3 / 2017-03-17
 ===================
 

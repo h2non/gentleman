@@ -10,7 +10,6 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"runtime"
 
 	"gopkg.in/h2non/gentleman.v2/context"
 	"gopkg.in/h2non/gentleman.v2/utils"
@@ -70,9 +69,6 @@ func buildResponse(ctx *context.Context) (*Response, error) {
 		Header:      resp.Header,
 		Cookies:     resp.Cookies(),
 		buffer:      bytes.NewBuffer([]byte{}),
-	}
-	if !isChunkedResponse(resp) {
-		EnsureResponseFinalized(res)
 	}
 
 	return res, res.Error
@@ -226,14 +222,6 @@ func (r *Response) getInternalReader() io.Reader {
 		return r.buffer
 	}
 	return r
-}
-
-// EnsureResponseFinalized will ensure that when the Response is GCed
-// the request body is closed so we aren't leaking fds.
-func EnsureResponseFinalized(httpResp *Response) {
-	runtime.SetFinalizer(&httpResp, func(httpResponseInt **Response) {
-		(*httpResponseInt).RawResponse.Body.Close()
-	})
 }
 
 // isChunkedResponse iterates over the response's transfer encodings
