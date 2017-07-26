@@ -12,12 +12,10 @@ Take a look to the [examples](#examples), list of [supported plugins](#plugins),
 
 For testing purposes, see [baloo](https://github.com/h2non/baloo), an utility library for expressive end-to-end HTTP API testing, built on top of `gentleman` toolkit.
 
-#### v2 preview
+## Versions
 
-Future `v2` version of `gentleman` is now available as beta preview release [here](https://github.com/h2non/gentleman/tree/v2). 
-One of the major changes is the adoption of standard `context`.
-
-There's also an [outgoing PR](https://github.com/h2non/gentleman/pull/26) in case that you're interested in code review changes.
+- [v2](https://github.com/h2non/gentleman/) - Latest version. Stable. Recommended.
+- [v1](https://github.com/h2non/gentleman/tree/v1) - First version. Stable. Still maintained.
 
 ## Features
 
