@@ -3,7 +3,7 @@ package tls
 import (
 	"crypto/tls"
 	"github.com/nbio/st"
-	"gopkg.in/h2non/gentleman.v1/context"
+	"gopkg.in/h2non/gentleman.v2/context"
 	"net/http"
 	"testing"
 )

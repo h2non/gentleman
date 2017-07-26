@@ -2,8 +2,8 @@ package redirect
 
 import (
 	"errors"
-	c "gopkg.in/h2non/gentleman.v1/context"
-	p "gopkg.in/h2non/gentleman.v1/plugin"
+	c "gopkg.in/h2non/gentleman.v2/context"
+	p "gopkg.in/h2non/gentleman.v2/plugin"
 	"net/http"
 	"strings"
 )

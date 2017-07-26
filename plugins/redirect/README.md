@@ -5,7 +5,7 @@ gentleman's plugin to easily define HTTP request redirect policy and settings.
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/gentleman.v1/plugins/redirect
+go get -u gopkg.in/h2non/gentleman.v2/plugins/redirect
 ```
 
 ## API
@@ -19,8 +19,8 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v1"
-  "gopkg.in/h2non/gentleman.v1/plugins/redirect"
+  "gopkg.in/h2non/gentleman.v2"
+  "gopkg.in/h2non/gentleman.v2/plugins/redirect"
 )
 
 func main() {

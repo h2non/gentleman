@@ -5,7 +5,7 @@ gentleman's plugin to disable and customize data compression in HTTP requests/re
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/gentleman.v1/plugins/compression
+go get -u gopkg.in/h2non/gentleman.v2/plugins/compression
 ```
 
 ## API
@@ -19,8 +19,8 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v1"
-  "gopkg.in/h2non/gentleman.v1/plugins/compression"
+  "gopkg.in/h2non/gentleman.v2"
+  "gopkg.in/h2non/gentleman.v2/plugins/compression"
 )
 
 func main() {

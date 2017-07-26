@@ -1,4 +1,30 @@
 
+v2.0.0 / 2017-07-26
+===================
+
+  * fix(merge): resolve conflicts from master
+  * feat(docs): add versions notes
+  * refactor(docs): update version badge
+  * refactor(docs): update version badge
+  * Merge branch 'master' of https://github.com/h2non/gentleman into v2
+  * rerafctor(docs): use v2 godoc links
+  * refactor(examples): normalize import statements
+  * fix(bodytype): add Type() alias public method
+  * feat(History): update changes
+  * feat(version): bump to v2.0.0-rc.0
+  * fix: format code accordingly
+  * fix(travis): use Go 1.7+
+  * feat(v2): push v2 preview release
+
+v2.0.0-rc.0 / 2017-03-18
+========================
+
+  * feat(version): bump to v2.0.0-rc.0
+  * fix: format code accordingly
+  * fix(travis): use Go 1.7+
+  * refactor(context): adopt standard `context`. Introduces several breaking changes
+  * feat(v2): push v2 preview release
+
 v1.0.4 / 2017-05-31
 ===================
 

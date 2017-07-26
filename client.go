@@ -3,12 +3,12 @@ package gentleman
 import (
 	"net/http"
 
-	"gopkg.in/h2non/gentleman.v1/context"
-	"gopkg.in/h2non/gentleman.v1/middleware"
-	"gopkg.in/h2non/gentleman.v1/plugin"
-	"gopkg.in/h2non/gentleman.v1/plugins/cookies"
-	"gopkg.in/h2non/gentleman.v1/plugins/headers"
-	"gopkg.in/h2non/gentleman.v1/plugins/url"
+	"gopkg.in/h2non/gentleman.v2/context"
+	"gopkg.in/h2non/gentleman.v2/middleware"
+	"gopkg.in/h2non/gentleman.v2/plugin"
+	"gopkg.in/h2non/gentleman.v2/plugins/cookies"
+	"gopkg.in/h2non/gentleman.v2/plugins/headers"
+	"gopkg.in/h2non/gentleman.v2/plugins/url"
 )
 
 // NewContext is a convenient alias to context.New factory.

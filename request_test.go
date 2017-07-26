@@ -16,9 +16,9 @@ import (
 	"time"
 
 	"github.com/nbio/st"
-	"gopkg.in/h2non/gentleman.v1/context"
-	"gopkg.in/h2non/gentleman.v1/plugins/multipart"
-	"gopkg.in/h2non/gentleman.v1/utils"
+	"gopkg.in/h2non/gentleman.v2/context"
+	"gopkg.in/h2non/gentleman.v2/plugins/multipart"
+	"gopkg.in/h2non/gentleman.v2/utils"
 )
 
 func TestRequest(t *testing.T) {

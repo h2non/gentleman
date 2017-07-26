@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"strings"
 
-	c "gopkg.in/h2non/gentleman.v1/context"
-	p "gopkg.in/h2non/gentleman.v1/plugin"
+	c "gopkg.in/h2non/gentleman.v2/context"
+	p "gopkg.in/h2non/gentleman.v2/plugin"
 )
 
 // Values represents multiple multipart from values.
@@ -94,7 +94,7 @@ func createForm(data FormData, ctx *c.Context) error {
 	}
 
 	ctx.Request.Method = setMethod(ctx)
-	ctx.Request.Body = ctx.WrapBody(ioutil.NopCloser(body))
+	ctx.Request.Body = ioutil.NopCloser(body)
 	ctx.Request.Header.Add("Content-Type", multipartWriter.FormDataContentType())
 
 	return nil

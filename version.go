@@ -1,4 +1,4 @@
 package gentleman
 
 // Version defines the package semantic version
-const Version = "1.0.4"
+const Version = "2.0.0"

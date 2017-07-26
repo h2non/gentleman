@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"gopkg.in/h2non/gentleman.v1"
-	"gopkg.in/h2non/gentleman.v1/plugins/compression"
+
+	"gopkg.in/h2non/gentleman.v2"
+	"gopkg.in/h2non/gentleman.v2/plugins/compression"
 )
 
 func main() {

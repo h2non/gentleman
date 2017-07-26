@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/nbio/st"
-	"gopkg.in/h2non/gentleman.v1/utils"
+	"gopkg.in/h2non/gentleman.v2/utils"
 )
 
 func TestResponseBuild(t *testing.T) {

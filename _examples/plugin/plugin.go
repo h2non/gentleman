@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"gopkg.in/h2non/gentleman.v1"
-	"gopkg.in/h2non/gentleman.v1/context"
-	"gopkg.in/h2non/gentleman.v1/plugin"
-	"gopkg.in/h2non/gentleman.v1/plugins/headers"
 	"net/url"
+
+	"gopkg.in/h2non/gentleman.v2"
+	"gopkg.in/h2non/gentleman.v2/context"
+	"gopkg.in/h2non/gentleman.v2/plugin"
+	"gopkg.in/h2non/gentleman.v2/plugins/headers"
 )
 
 func main() {

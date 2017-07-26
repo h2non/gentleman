@@ -5,7 +5,7 @@
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/gentleman.v1/middleware
+go get -u gopkg.in/h2non/gentleman.v2/middleware
 ```
 
 ## API

@@ -7,7 +7,7 @@ Provides multiple factory functions to create plugins easily.
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/gentleman.v1/plugin
+go get -u gopkg.in/h2non/gentleman.v2/plugin
 ```
 
 ## API
@@ -23,9 +23,9 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v1"
-  "gopkg.in/h2non/gentleman.v1/context"
-  "gopkg.in/h2non/gentleman.v1/plugin"
+  "gopkg.in/h2non/gentleman.v2"
+  "gopkg.in/h2non/gentleman.v2/context"
+  "gopkg.in/h2non/gentleman.v2/plugin"
   "net/url"
 )
 

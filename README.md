@@ -1,23 +1,21 @@
-# gentleman [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/badge/version-1.0.4-orange.svg?style=flat)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/github.com/h2non/gentleman?status.svg)](https://godoc.org/github.com/h2non/gentleman) [![Coverage Status](https://coveralls.io/repos/github/h2non/gentleman/badge.svg?branch=master)](https://coveralls.io/github/h2non/gentleman?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman)](https://goreportcard.com/report/github.com/h2non/gentleman) [![Go Version](https://img.shields.io/badge/go-v1.0+-green.svg?style=flat)](https://github.com/h2non/gentleman)
+# gentleman [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/badge/version-2.0.0-orange.svg?style=flat)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/gopkg.in/h2non/gentleman.v2?status.svg)](https://godoc.org/gopkg.in/h2non/gentleman.v2) [![Coverage Status](https://coveralls.io/repos/github/h2non/gentleman/badge.svg?branch=master)](https://coveralls.io/github/h2non/gentleman?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman)](https://goreportcard.com/report/github.com/h2non/gentleman) [![Go Version](https://img.shields.io/badge/go-v2.0+-green.svg?style=flat)](https://github.com/h2non/gentleman)
 
 <img src="http://s10.postimg.org/5e31ox1ft/gentleman.png" align="right" height="260" />
 
 Full-featured, plugin-driven, middleware-oriented toolkit to easily create rich, versatile and composable HTTP clients in [Go](http://golang.org).
 
-gentleman embraces extensibility and composition principles in order to provide a powerful way to easily create featured HTTP client layers based on built-in or third-party plugins that you register and reuse across HTTP clients.
+gentleman embraces extensibility and composition principles in order to provide a flexible way to easily create featured HTTP client layers based on built-in or third-party plugins that you can register and reuse across HTTP clients.
 
-For instance, you can easily provide retry policy capabilities or dynamic server discovery in your HTTP clients simply attaching the [retry](https://github.com/h2non/gentleman-retry) or [consul](https://github.com/h2non/gentleman-consul) plugins.
+As an example, you can easily provide retry policy capabilities or dynamic server discovery in your HTTP clients simply attaching the [retry](https://github.com/h2non/gentleman-retry) or [consul](https://github.com/h2non/gentleman-consul) plugins.
 
-You can take a look to the [examples](#examples), list of [supported plugins](#plugins), [HTTP entities](#http-entities) or [middleware layer](#middleware) to get started.
+Take a look to the [examples](#examples), list of [supported plugins](#plugins), [HTTP entities](#http-entities) or [middleware layer](#middleware) to get started.
 
 For testing purposes, see [baloo](https://github.com/h2non/baloo), an utility library for expressive end-to-end HTTP API testing, built on top of `gentleman` toolkit.
 
-#### v2 preview
+## Versions
 
-Future `v2` version of `gentleman` is now available as beta preview release [here](https://github.com/h2non/gentleman/tree/v2).
-One of the major changes is the adoption of standard `context`.
-
-There's also an [outgoing PR](https://github.com/h2non/gentleman/pull/26) in case that you're interested in code review changes.
+- [v2](https://github.com/h2non/gentleman/) - Latest version. Stable. Recommended.
+- [v1](https://github.com/h2non/gentleman/tree/v1) - First version. Stable. Actively maintained.
 
 ## Features
 
@@ -40,8 +38,12 @@ There's also an [outgoing PR](https://github.com/h2non/gentleman/pull/26) in cas
 ## Installation
 
 ```bash
-go get -u gopkg.in/h2non/gentleman.v1
+go get -u gopkg.in/h2non/gentleman.v2
 ```
+
+## Requirements
+
+- Go 1.7+
 
 ## Plugins
 
@@ -55,8 +57,8 @@ go get -u gopkg.in/h2non/gentleman.v1
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/url">url</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/url">
-        <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
+      <a href="https://godoc.org/gopkg.in/h2non/gentleman.v2/plugins/url">
+        <img src="https://godoc.org/gopkg.in/h2non/gentleman.v2?status.svg" />
       </a>
     </td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /</a></td>
@@ -65,8 +67,8 @@ go get -u gopkg.in/h2non/gentleman.v1
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/auth">auth</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/auth">
-        <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
+      <a href="https://godoc.org/gopkg.in/h2non/gentleman.v2/plugins/auth">
+        <img src="https://godoc.org/gopkg.in/h2non/gentleman.v2?status.svg" />
       </a>
     </td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
@@ -75,8 +77,8 @@ go get -u gopkg.in/h2non/gentleman.v1
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/body">body</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/body">
-        <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
+      <a href="https://godoc.org/gopkg.in/h2non/gentleman.v2/plugins/body">
+        <img src="https://godoc.org/gopkg.in/h2non/gentleman.v2?status.svg" />
       </a>
     </td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
@@ -85,8 +87,8 @@ go get -u gopkg.in/h2non/gentleman.v1
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/bodytype">bodytype</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/bodytype">
-        <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
+      <a href="https://godoc.org/gopkg.in/h2non/gentleman.v2/plugins/bodytype">
+        <img src="https://godoc.org/gopkg.in/h2non/gentleman.v2?status.svg" />
       </a>
     </td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
@@ -95,8 +97,8 @@ go get -u gopkg.in/h2non/gentleman.v1
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/cookies">cookies</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/cookies">
-        <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
+      <a href="https://godoc.org/gopkg.in/h2non/gentleman.v2/plugins/cookies">
+        <img src="https://godoc.org/gopkg.in/h2non/gentleman.v2?status.svg" />
       </a>
     </td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
@@ -105,8 +107,8 @@ go get -u gopkg.in/h2non/gentleman.v1
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/compression">compression</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/compression">
-        <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
+      <a href="https://godoc.org/gopkg.in/h2non/gentleman.v2/plugins/compression">
+        <img src="https://godoc.org/gopkg.in/h2non/gentleman.v2?status.svg" />
       </a>
     </td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
@@ -115,8 +117,8 @@ go get -u gopkg.in/h2non/gentleman.v1
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/headers">headers</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/headers">
-        <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
+      <a href="https://godoc.org/gopkg.in/h2non/gentleman.v2/plugins/headers">
+        <img src="https://godoc.org/gopkg.in/h2non/gentleman.v2?status.svg" />
       </a>
     </td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
@@ -125,8 +127,8 @@ go get -u gopkg.in/h2non/gentleman.v1
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/multipart">multipart</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/multipart">
-        <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
+      <a href="https://godoc.org/gopkg.in/h2non/gentleman.v2/plugins/multipart">
+        <img src="https://godoc.org/gopkg.in/h2non/gentleman.v2?status.svg" />
       </a>
     </td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
@@ -135,8 +137,8 @@ go get -u gopkg.in/h2non/gentleman.v1
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/proxy">proxy</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/proxy">
-        <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
+      <a href="https://godoc.org/gopkg.in/h2non/gentleman.v2/plugins/proxy">
+        <img src="https://godoc.org/gopkg.in/h2non/gentleman.v2?status.svg" />
       </a>
     </td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
@@ -145,8 +147,8 @@ go get -u gopkg.in/h2non/gentleman.v1
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/query">query</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/query">
-        <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
+      <a href="https://godoc.org/gopkg.in/h2non/gentleman.v2/plugins/query">
+        <img src="https://godoc.org/gopkg.in/h2non/gentleman.v2?status.svg" />
       </a>
     </td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
@@ -155,8 +157,8 @@ go get -u gopkg.in/h2non/gentleman.v1
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/redirect">redirect</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/redirect">
-        <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
+      <a href="https://godoc.org/gopkg.in/h2non/gentleman.v2/plugins/redirect">
+        <img src="https://godoc.org/gopkg.in/h2non/gentleman.v2?status.svg" />
       </a>
     </td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
@@ -165,8 +167,8 @@ go get -u gopkg.in/h2non/gentleman.v1
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/timeout">timeout</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/timeout">
-        <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
+      <a href="https://godoc.org/gopkg.in/h2non/gentleman.v2/plugins/timeout">
+        <img src="https://godoc.org/gopkg.in/h2non/gentleman.v2?status.svg" />
       </a>
     </td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
@@ -175,8 +177,8 @@ go get -u gopkg.in/h2non/gentleman.v1
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/transport">transport</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/transport">
-        <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
+      <a href="https://godoc.org/gopkg.in/h2non/gentleman.v2/plugins/transport">
+        <img src="https://godoc.org/gopkg.in/h2non/gentleman.v2?status.svg" />
       </a>
     </td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
@@ -185,8 +187,8 @@ go get -u gopkg.in/h2non/gentleman.v1
   <tr>
     <td><a href="https://github.com/h2non/gentleman/tree/master/plugins/tls">tls</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman/plugins/tls">
-        <img src="https://godoc.org/github.com/h2non/gentleman?status.svg" />
+      <a href="https://godoc.org/gopkg.in/h2non/gentleman.v2/plugins/tls">
+        <img src="https://godoc.org/gopkg.in/h2non/gentleman.v2?status.svg" />
       </a>
     </td>
     <td><a href="https://travis-ci.org/h2non/gentleman"><img src="https://travis-ci.org/h2non/gentleman.png" /></a></td>
@@ -195,8 +197,8 @@ go get -u gopkg.in/h2non/gentleman.v1
   <tr>
     <td><a href="https://github.com/h2non/gentleman-retry">retry</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman-retry">
-        <img src="https://godoc.org/github.com/h2non/gentleman-retry?status.svg" />
+      <a href="https://godoc.org/gopkg.in/h2non/gentleman.v2-retry">
+        <img src="https://godoc.org/gopkg.in/h2non/gentleman.v2-retry?status.svg" />
       </a>
     </td>
     <td><a href="https://travis-ci.org/h2non/gentleman-retry"><img src="https://travis-ci.org/h2non/gentleman-retry.png" /></a></td>
@@ -205,8 +207,8 @@ go get -u gopkg.in/h2non/gentleman.v1
   <tr>
     <td><a href="https://github.com/h2non/gentleman-mock">mock</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman-mock">
-        <img src="https://godoc.org/github.com/h2non/gentleman-mock?status.svg" />
+      <a href="https://godoc.org/gopkg.in/h2non/gentleman.v2-mock">
+        <img src="https://godoc.org/gopkg.in/h2non/gentleman.v2-mock?status.svg" />
       </a>
     </td>
     <td><a href="https://travis-ci.org/h2non/gentleman-mock"><img src="https://travis-ci.org/h2non/gentleman-mock.png" /></a></td>
@@ -215,8 +217,8 @@ go get -u gopkg.in/h2non/gentleman.v1
   <tr>
     <td><a href="https://github.com/h2non/gentleman-consul">consul</a></td>
     <td>
-      <a href="https://godoc.org/github.com/h2non/gentleman-consul">
-        <img src="https://godoc.org/github.com/h2non/gentleman-consul?status.svg" />
+      <a href="https://godoc.org/gopkg.in/h2non/gentleman.v2-consul">
+        <img src="https://godoc.org/gopkg.in/h2non/gentleman.v2-consul?status.svg" />
       </a>
     </td>
     <td><a href="https://travis-ci.org/h2non/gentleman-consul"><img src="https://travis-ci.org/h2non/gentleman-consul.png" /></a></td>
@@ -286,15 +288,15 @@ Feel free to fill an issue to discuss this capabilities in detail.
 
 ## API
 
-See [godoc reference](https://godoc.org/github.com/h2non/gentleman) for detailed API documentation.
+See [godoc reference](https://godoc.org/gopkg.in/h2non/gentleman.v2) for detailed API documentation.
 
 #### Subpackages
 
-- [plugin](https://github.com/h2non/gentleman/tree/master/plugin) - [godoc](https://godoc.org/github.com/h2non/gentleman/plugin) - Plugin layer for gentleman.
-- [mux](https://github.com/h2non/gentleman/tree/master/mux) - [godoc](https://godoc.org/github.com/h2non/gentleman/mux) - HTTP client multiplexer with built-in matchers.
-- [middleware](https://github.com/h2non/gentleman/tree/master/middleware) - [godoc](https://godoc.org/github.com/h2non/gentleman/middleware) - Middleware layer used by gentleman.
-- [context](https://github.com/h2non/gentleman/tree/master/context) - [godoc](https://godoc.org/github.com/h2non/gentleman/context) - HTTP context implementation for gentleman's middleware.
-- [utils](https://github.com/h2non/gentleman/tree/master/utils) - [godoc](https://godoc.org/github.com/h2non/gentleman/utils) - HTTP utilities internally used.
+- [plugin](https://github.com/h2non/gentleman/tree/master/plugin) - [godoc](https://godoc.org/gopkg.in/h2non/gentleman.v2/plugin) - Plugin layer for gentleman.
+- [mux](https://github.com/h2non/gentleman/tree/master/mux) - [godoc](https://godoc.org/gopkg.in/h2non/gentleman.v2/mux) - HTTP client multiplexer with built-in matchers.
+- [middleware](https://github.com/h2non/gentleman/tree/master/middleware) - [godoc](https://godoc.org/gopkg.in/h2non/gentleman.v2/middleware) - Middleware layer used by gentleman.
+- [context](https://github.com/h2non/gentleman/tree/master/context) - [godoc](https://godoc.org/gopkg.in/h2non/gentleman.v2/context) - HTTP context implementation for gentleman's middleware.
+- [utils](https://github.com/h2non/gentleman/tree/master/utils) - [godoc](https://godoc.org/gopkg.in/h2non/gentleman.v2/utils) - HTTP utilities internally used.
 
 ## Examples
 
@@ -307,7 +309,8 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v1"
+
+  "gopkg.in/h2non/gentleman.v2"
 )
 
 func main() {
@@ -349,8 +352,9 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v1"
-  "gopkg.in/h2non/gentleman.v1/plugins/body"
+
+  "gopkg.in/h2non/gentleman.v2"
+  "gopkg.in/h2non/gentleman.v2/plugins/body"
 )
 
 func main() {
@@ -393,9 +397,10 @@ package main
 
 import (
   "fmt"
-  "gopkg.in/h2non/gentleman.v1"
-  "gopkg.in/h2non/gentleman.v1/mux"
-  "gopkg.in/h2non/gentleman.v1/plugins/url"
+
+  "gopkg.in/h2non/gentleman.v2"
+  "gopkg.in/h2non/gentleman.v2/mux"
+  "gopkg.in/h2non/gentleman.v2/plugins/url"
 )
 
 func main() {

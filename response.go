@@ -11,8 +11,8 @@ import (
 	"net/http"
 	"os"
 
-	"gopkg.in/h2non/gentleman.v1/context"
-	"gopkg.in/h2non/gentleman.v1/utils"
+	"gopkg.in/h2non/gentleman.v2/context"
+	"gopkg.in/h2non/gentleman.v2/utils"
 )
 
 // Response provides a more convenient and higher level Response struct.
