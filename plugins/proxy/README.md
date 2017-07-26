@@ -28,7 +28,7 @@ func main() {
   cli := gentleman.New()
 
   // Define a list of HTTP proxies to be used
-  cli.Use(proxy.Set([]string{"http://proxy:3128", http://proxy2:3128}))
+  cli.Use(proxy.Set([]string{"http://proxy:3128", "http://proxy2:3128"}))
 
   // Perform the request
   res, err := cli.Request().URL("http://httpbin.org/headers").Send()
