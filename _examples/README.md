@@ -8,7 +8,7 @@ gentleman's examples showing multiple built-in features and common practical use
 go run _examples/<example>/<example>.go
 ```
 
-### Example
+### Example
 
 ```bash
 go run _examples/url/url.go
