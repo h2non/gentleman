@@ -22,7 +22,7 @@ For testing purposes, see [baloo](https://github.com/h2non/baloo), an utility li
 - Plugin driven architecture.
 - Simple, expressive, fluent API.
 - Idiomatic built on top of `net/http` package.
-- Context-aware hirarchical middleware layer supporting all the HTTP life cycle.
+- Context-aware hierarchical middleware layer supporting all the HTTP life cycle.
 - Built-in multiplexer for easy composition capabilities.
 - Easy to extend via plugins/middleware.
 - Ability to easily intercept and modify HTTP traffic on-the-fly.
