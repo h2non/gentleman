@@ -224,6 +224,16 @@ go get -u gopkg.in/h2non/gentleman.v2
     <td><a href="https://travis-ci.org/h2non/gentleman-consul"><img src="https://travis-ci.org/h2non/gentleman-consul.png" /></a></td>
     <td><a href="https://www.consul.io">Consul</a> based server discovery with configurable retry/backoff policy</td>
   </tr>
+  <tr>
+    <td><a href="https://github.com/izumin5210/gentleman-logger">logger</a></td>
+    <td>
+      <a href="https://godoc.org/github.com/izumin5210/gentleman-logger">
+        <img src="https://godoc.org/github.com/izumin5210/gentleman-logger?status.svg" />
+      </a>
+    </td>
+    <td><a href="https://travis-ci.org/izumin5210/gentleman-logger"><img src="https://travis-ci.org/izumin5210/gentleman-logger.png" /></a></td>
+    <td>Easily log requests and responses</td>
+  </tr>
 </table>
 
 [Send](https://github.com/h2non/gentleman/pull/new/master) a PR to add your plugin to the list.
