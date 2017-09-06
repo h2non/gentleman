@@ -224,6 +224,17 @@ go get -u gopkg.in/h2non/gentleman.v2
     <td><a href="https://travis-ci.org/h2non/gentleman-consul"><img src="https://travis-ci.org/h2non/gentleman-consul.png" /></a></td>
     <td><a href="https://www.consul.io">Consul</a> based server discovery with configurable retry/backoff policy</td>
   </tr>
+</table>
+
+### Community plugins
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Docs</th>
+    <th>Status</th>
+    <th>Description</th>
+  </tr>
   <tr>
     <td><a href="https://github.com/izumin5210/gentleman-logger">logger</a></td>
     <td>
