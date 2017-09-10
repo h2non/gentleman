@@ -10,7 +10,7 @@ As an example, you can easily provide retry policy capabilities or dynamic serve
 
 Take a look to the [examples](#examples), list of [supported plugins](#plugins), [HTTP entities](#http-entities) or [middleware layer](#middleware) to get started.
 
-For testing purposes, see [baloo](https://github.com/h2non/baloo), an utility library for expressive end-to-end HTTP API testing, built on top of `gentleman` toolkit.
+For testing purposes, see [baloo](https://github.com/h2non/baloo), an utility library for expressive end-to-end HTTP API testing, built on top of `gentleman` toolkit. For HTTP mocking, see [gentleman-mock](https://github.com/h2non/gentleman-mock), which uses under the hood [gock](https://github.com/h2non/gock).
 
 ## Versions
 
@@ -22,7 +22,7 @@ For testing purposes, see [baloo](https://github.com/h2non/baloo), an utility li
 - Plugin driven architecture.
 - Simple, expressive, fluent API.
 - Idiomatic built on top of `net/http` package.
-- Context-aware hirarchical middleware layer supporting all the HTTP life cycle.
+- Context-aware hierarchical middleware layer supporting all the HTTP life cycle.
 - Built-in multiplexer for easy composition capabilities.
 - Easy to extend via plugins/middleware.
 - Ability to easily intercept and modify HTTP traffic on-the-fly.
@@ -223,6 +223,27 @@ go get -u gopkg.in/h2non/gentleman.v2
     </td>
     <td><a href="https://travis-ci.org/h2non/gentleman-consul"><img src="https://travis-ci.org/h2non/gentleman-consul.png" /></a></td>
     <td><a href="https://www.consul.io">Consul</a> based server discovery with configurable retry/backoff policy</td>
+  </tr>
+</table>
+
+### Community plugins
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Docs</th>
+    <th>Status</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/izumin5210/gentleman-logger">logger</a></td>
+    <td>
+      <a href="https://godoc.org/github.com/izumin5210/gentleman-logger">
+        <img src="https://godoc.org/github.com/izumin5210/gentleman-logger?status.svg" />
+      </a>
+    </td>
+    <td><a href="https://travis-ci.org/izumin5210/gentleman-logger"><img src="https://travis-ci.org/izumin5210/gentleman-logger.png" /></a></td>
+    <td>Easily log requests and responses</td>
   </tr>
 </table>
 
