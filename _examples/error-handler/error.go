@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-  "errors"
+	"errors"
 
 	"gopkg.in/h2non/gentleman.v2"
 	"gopkg.in/h2non/gentleman.v2/context"
@@ -16,23 +16,23 @@ func main() {
 	// Define a custom header
 	cli.Use(headers.Set("Token", "s3cr3t"))
 
-  // Delcare first error phase middleware handler
-  cli.UseError(func(ctx *context.Context, h context.Handler) {
-    fmt.Printf("1) Handling error: %s\n", ctx.Error)
+	// Delcare first error phase middleware handler
+	cli.UseError(func(ctx *context.Context, h context.Handler) {
+		fmt.Printf("1) Handling error: %s\n", ctx.Error)
 		h.Next(ctx)
 	})
 
-  // Declare second error phase middleware handler
-  cli.UseError(func(ctx *context.Context, h context.Handler) {
-    fmt.Printf("2) Handling error: %s\n", ctx.Error)
-    // Overwrite error with wrapped message
-    ctx.Error = errors.New("wrapped error: " + ctx.Error.Error())
+	// Declare second error phase middleware handler
+	cli.UseError(func(ctx *context.Context, h context.Handler) {
+		fmt.Printf("2) Handling error: %s\n", ctx.Error)
+		// Overwrite error with wrapped message
+		ctx.Error = errors.New("wrapped error: " + ctx.Error.Error())
 		h.Next(ctx)
 	})
 
-  // Attach a phase-specific middleware function.
+	// Attach a phase-specific middleware function.
 	cli.UseHandler("after dial", func(ctx *context.Context, h context.Handler) {
-    ctx.Error = errors.New("simulated error")
+		ctx.Error = errors.New("simulated error")
 		h.Next(ctx)
 	})
 
