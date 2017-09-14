@@ -16,7 +16,7 @@ func main() {
 	// Define a custom header
 	cli.Use(headers.Set("Token", "s3cr3t"))
 
-	// Delcare first error phase middleware handler
+	// Declare first error phase middleware handler
 	cli.UseError(func(ctx *context.Context, h context.Handler) {
 		fmt.Printf("1) Handling error: %s\n", ctx.Error)
 		h.Next(ctx)
@@ -37,7 +37,15 @@ func main() {
 	})
 
 	// Perform the request
-	res, err := cli.Request().URL("http://httpbin.org/ip").Send()
+	req := cli.Request()
+
+	// Declare request-level error phase middleware handler
+	req.UseError(func(ctx *context.Context, h context.Handler) {
+		fmt.Printf("3) Handling request-level error: %s\n", ctx.Error)
+		h.Next(ctx)
+	})
+
+	res, err := req.URL("http://httpbin.org/ip").Send()
 	if err != nil {
 		fmt.Printf("Request error: %s\n", err)
 		return

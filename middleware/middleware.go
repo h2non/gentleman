@@ -124,7 +124,7 @@ func (s *Layer) Clone() Middleware {
 func (s *Layer) Run(phase string, ctx *c.Context) *c.Context {
 	if s.parent != nil {
 		ctx = s.parent.Run(phase, ctx)
-		if ctx.Error != nil || ctx.Stopped {
+		if phase != "error" && (ctx.Error != nil || ctx.Stopped) {
 			return ctx
 		}
 	}
