@@ -10,7 +10,7 @@ As an example, you can easily provide retry policy capabilities or dynamic serve
 
 Take a look to the [examples](#examples), list of [supported plugins](#plugins), [HTTP entities](#http-entities) or [middleware layer](#middleware) to get started.
 
-For testing purposes, see [baloo](https://github.com/h2non/baloo), an utility library for expressive end-to-end HTTP API testing, built on top of `gentleman` toolkit. For HTTP mocking, see [gentleman-mock](https://github.com/h2non/gentleman-mock), which uses under the hood [gock](https://github.com/h2non/gock).
+For testing purposes, see [baloo](https://github.com/h2non/baloo), an utility library for expressive end-to-end HTTP API testing, built on top of `gentleman` toolkit. For HTTP mocking, see [gentleman-mock](https://github.com/h2non/gentleman-mock), which uses [gock](https://github.com/h2non/gock) under the hood for easy and expressive HTTP client request mocking.
 
 ## Versions
 
