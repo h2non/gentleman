@@ -1,4 +1,20 @@
 
+v2.0.1 / 2017-09-14
+===================
+
+  * fix(#35): do not stop on parent middleware layer in error phase
+  * fix(travis): gentleman requires Go 1.7+
+  * fix(examples): formatting issue
+  * fix(examples): formatting issue
+  * Merge branch 'master' of https://github.com/h2non/gentleman
+  * feat(#33): add error handling example
+  * refactor(docs): split community based plugins
+  * Merge pull request #34 from izumin5210/logger
+  * Add link for gentleman-logger
+  * Merge pull request #31 from djui/patch-1
+  * Fix typo
+  * feat(docs): add gock reference
+
 v2.0.0 / 2017-07-26
 ===================
 
