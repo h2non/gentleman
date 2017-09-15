@@ -1,8 +1,10 @@
 # gentleman [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GitHub release](https://img.shields.io/badge/version-2.0.1-orange.svg?style=flat)](https://github.com/h2non/gentleman/releases) [![GoDoc](https://godoc.org/gopkg.in/h2non/gentleman.v2?status.svg)](https://godoc.org/gopkg.in/h2non/gentleman.v2) [![Coverage Status](https://coveralls.io/repos/github/h2non/gentleman/badge.svg?branch=master)](https://coveralls.io/github/h2non/gentleman?branch=master) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman)](https://goreportcard.com/report/github.com/h2non/gentleman) [![Go Version](https://img.shields.io/badge/go-v2.0+-green.svg?style=flat)](https://github.com/h2non/gentleman)
 
-<img src="http://s10.postimg.org/5e31ox1ft/gentleman.png" align="right" height="260" />
+<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/1MpD3pzt63uUeG43NP4tDHPY/h2non/gentleman'>  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/1MpD3pzt63uUeG43NP4tDHPY/h2non/gentleman.svg' /></a>
 
 Full-featured, plugin-driven, middleware-oriented toolkit to easily create rich, versatile and composable HTTP clients in [Go](http://golang.org).
+
+<img src="http://s10.postimg.org/5e31ox1ft/gentleman.png" align="right" height="260" />
 
 gentleman embraces extensibility and composition principles in order to provide a flexible way to easily create featured HTTP client layers based on built-in or third-party plugins that you can register and reuse across HTTP clients.
 
