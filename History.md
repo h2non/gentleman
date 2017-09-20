@@ -1,4 +1,10 @@
 
+v2.0.2 / 2017-09-20
+===================
+
+  * fix(#36): make middleware layer thread-safe
+  * feat(docs): add sponsor ad
+
 v2.0.1 / 2017-09-14
 ===================
 
