@@ -49,6 +49,9 @@ type Middleware interface {
 // Layer type represent an HTTP domain
 // specific middleware layer with inheritance support.
 type Layer struct {
+	// mtx protects data races for stack
+	mtx sync.RWMutex
+
 	// stack stores the plugins registered in the current middleware instance.
 	stack []plugin.Plugin
 
@@ -63,52 +66,70 @@ func New() *Layer {
 
 // Use registers a new plugin to the middleware stack.
 func (s *Layer) Use(plugin plugin.Plugin) Middleware {
+	s.mtx.Lock()
 	s.stack = append(s.stack, plugin)
+	s.mtx.Unlock()
 	return s
 }
 
 // UseHandler registers a phase specific plugin handler in the middleware stack.
 func (s *Layer) UseHandler(phase string, fn c.HandlerFunc) Middleware {
+	s.mtx.Lock()
 	s.stack = append(s.stack, plugin.NewPhasePlugin(phase, fn))
+	s.mtx.Unlock()
 	return s
 }
 
 // UseResponse registers a new response phase middleware handler.
 func (s *Layer) UseResponse(fn c.HandlerFunc) Middleware {
+	s.mtx.Lock()
 	s.stack = append(s.stack, plugin.NewResponsePlugin(fn))
+	s.mtx.Unlock()
 	return s
 }
 
 // UseRequest registers a new request phase middleware handler.
 func (s *Layer) UseRequest(fn c.HandlerFunc) Middleware {
+	s.mtx.Lock()
 	s.stack = append(s.stack, plugin.NewRequestPlugin(fn))
+	s.mtx.Unlock()
 	return s
 }
 
 // UseError registers a new error phase middleware handler.
 func (s *Layer) UseError(fn c.HandlerFunc) Middleware {
+	s.mtx.Lock()
 	s.stack = append(s.stack, plugin.NewErrorPlugin(fn))
+	s.mtx.Unlock()
 	return s
 }
 
 // UseParent attachs a parent middleware.
 func (s *Layer) UseParent(parent Middleware) Middleware {
+	s.mtx.Lock()
 	s.parent = parent
+	s.mtx.Unlock()
 	return s
 }
 
 // Flush flushes the plugins stack.
 func (s *Layer) Flush() {
+	s.mtx.Lock()
 	s.stack = s.stack[:0]
+	s.mtx.Unlock()
 }
 
 // SetStack sets the middleware plugin stack overriding the existent one.
 func (s *Layer) SetStack(stack []plugin.Plugin) {
+	s.mtx.Lock()
 	s.stack = stack
+	s.mtx.Unlock()
 }
 
 // GetStack gets the current middleware plugins stack.
 func (s *Layer) GetStack() []plugin.Plugin {
+	s.mtx.RLock()
+	defer s.mtx.RUnlock()
 	return s.stack
 }
 
@@ -116,7 +137,9 @@ func (s *Layer) GetStack() []plugin.Plugin {
 func (s *Layer) Clone() Middleware {
 	mw := New()
 	mw.parent = s.parent
+	s.mtx.Lock()
 	mw.stack = append([]plugin.Plugin(nil), s.stack...)
+	s.mtx.Unlock()
 	return mw
 }
 
@@ -129,7 +152,12 @@ func (s *Layer) Run(phase string, ctx *c.Context) *c.Context {
 		}
 	}
 
+	s.mtx.Lock()
 	s.stack = filter(s.stack)
+	s.mtx.Unlock()
+
+	s.mtx.RLock()
+	defer s.mtx.RUnlock()
 	return trigger(phase, s.stack, ctx)
 }
 
