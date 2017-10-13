@@ -2,10 +2,11 @@ package redirect
 
 import (
 	"errors"
-	c "gopkg.in/h2non/gentleman.v2/context"
-	p "gopkg.in/h2non/gentleman.v2/plugin"
 	"net/http"
 	"strings"
+
+	c "gopkg.in/h2non/gentleman.v2/context"
+	p "gopkg.in/h2non/gentleman.v2/plugin"
 )
 
 var (
@@ -92,7 +93,5 @@ func copyHeaders(k string, vv []string, opts Options, req *http.Request) {
 		}
 	}
 
-	for _, v := range vv {
-		req.Header.Add(k, v)
-	}
+	req.Header[k] = vv
 }
