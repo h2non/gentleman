@@ -12,8 +12,6 @@ Take a look to the [examples](#examples), list of [supported plugins](#plugins),
 
 For testing purposes, see [baloo](https://github.com/h2non/baloo), an utility library for expressive end-to-end HTTP API testing, built on top of `gentleman` toolkit. For HTTP mocking, see [gentleman-mock](https://github.com/h2non/gentleman-mock), which uses [gock](https://github.com/h2non/gock) under the hood for easy and expressive HTTP client request mocking.
 
-<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/1MpD3pzt63uUeG43NP4tDHPY/h2non/gentleman'>  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/1MpD3pzt63uUeG43NP4tDHPY/h2non/gentleman.svg' /></a>
-
 ## Versions
 
 - [v2](https://github.com/h2non/gentleman/) - Latest version. Stable. Recommended.
