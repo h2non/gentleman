@@ -70,6 +70,37 @@ func TestRequestAlreadyDispatched(t *testing.T) {
 	st.Reject(t, err, nil)
 }
 
+func TestRequestString(t *testing.T) {
+	body := `{"foo": "bar", "id": 123}`
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		b, err := ioutil.ReadAll(r.Body)
+		st.Expect(t, err, nil)
+		st.Expect(t, fmt.Sprintf("%s", b), body)
+
+		fmt.Fprintln(w, "Hello, world")
+	}))
+	defer ts.Close()
+
+	{
+		req := NewRequest().URL(ts.URL).JSON(body)
+		st.Expect(t, req.String(), body)
+		_, err := req.Send()
+		st.Expect(t, err, nil)
+	}
+	{
+		req := NewRequest().URL(ts.URL).BodyString(body).Type("json")
+		st.Expect(t, req.String(), body)
+		_, err := req.Send()
+		st.Expect(t, err, nil)
+	}
+	{
+		req := NewRequest().URL(ts.URL).Body(strings.NewReader(body)).Type("json")
+		st.Expect(t, req.String(), body)
+		_, err := req.Send()
+		st.Expect(t, err, nil)
+	}
+}
+
 func TestMiddlewareErrorInjectionAndInterception(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Hello, world")

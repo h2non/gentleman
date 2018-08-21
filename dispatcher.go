@@ -19,6 +19,18 @@ func NewDispatcher(req *Request) *Dispatcher {
 	return &Dispatcher{req}
 }
 
+// BuildFinalRequest creates a request equivalent to the one to be dispachted
+func (d *Dispatcher) BuildFinalRequest() *c.Context {
+	// Pipeline of tasks to execute in FIFO order
+	pipeline := []task{
+		func(ctx *c.Context) (*c.Context, bool) {
+			return d.runBefore("request", ctx)
+		},
+	}
+
+	return d.runDispatchTasks(pipeline)
+}
+
 // Dispatch triggers the middleware chains and performs the HTTP request.
 func (d *Dispatcher) Dispatch() *c.Context {
 	// Pipeline of tasks to execute in FIFO order
@@ -40,11 +52,15 @@ func (d *Dispatcher) Dispatch() *c.Context {
 		},
 	}
 
+	return d.runDispatchTasks(pipeline)
+}
+
+func (d *Dispatcher) runDispatchTasks(tasks []task) *c.Context {
 	// Reference to initial context
 	ctx := d.req.Context
 
 	// Execute tasks in order, stopping in case of error or explicit stop.
-	for _, task := range pipeline {
+	for _, task := range tasks {
 		var stop bool
 		if ctx, stop = task(ctx); stop {
 			break
