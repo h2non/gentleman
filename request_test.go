@@ -394,6 +394,15 @@ func TestRequestAddHeader(t *testing.T) {
 	st.Expect(t, req.Context.Request.Header.Get("foo"), "baz")
 }
 
+func TestRequestDelHeaders(t *testing.T) {
+	req := NewRequest()
+	req.SetHeaders(map[string]string{"foo": "baz", "baz": "foo"})
+	req.DelHeader("baz")
+	req.Middleware.Run("request", req.Context)
+	st.Expect(t, req.Context.Request.Header.Get("foo"), "baz")
+	st.Expect(t, req.Context.Request.Header.Get("baz"), "")
+}
+
 func TestRequestSetHeaders(t *testing.T) {
 	req := NewRequest()
 	req.SetHeaders(map[string]string{"foo": "baz", "baz": "foo"})

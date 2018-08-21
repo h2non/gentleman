@@ -179,6 +179,12 @@ func (r *Request) SetHeaders(fields map[string]string) *Request {
 	return r
 }
 
+// DelHeader deletes a header field by its name
+func (r *Request) DelHeader(name string) *Request {
+	r.Use(headers.Del(name))
+	return r
+}
+
 // AddCookie sets a new cookie field bsaed on the given http.Cookie struct
 // without overwriting any existent cookie.
 func (r *Request) AddCookie(cookie *http.Cookie) *Request {
