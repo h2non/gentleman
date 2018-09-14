@@ -21,7 +21,7 @@ import (
   "fmt"
   "crypto/tls"
   "gopkg.in/h2non/gentleman.v2"
-  "gopkg.in/h2non/gentleman.v2/plugins/tls"
+  gtls "gopkg.in/h2non/gentleman.v2/plugins/tls"
 )
 
 func main() {
@@ -29,7 +29,7 @@ func main() {
   cli := gentleman.New()
 
   // Define a custom header
-  cli.Use(tls.Config(&tls.Config{ServerName: "foo.com"}))
+  cli.Use(gtls.Config(&tls.Config{ServerName: "foo.com"}))
 
   // Perform the request
   res, err := cli.Request().URL("http://httpbin.org/headers").Send()
