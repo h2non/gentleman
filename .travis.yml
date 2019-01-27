@@ -10,7 +10,7 @@ before_install:
   - go get github.com/nbio/st
   - go get -u -v github.com/axw/gocov/gocov
   - go get -u -v github.com/mattn/goveralls
-  - go get -u -v github.com/golang/lint/golint
+  - go get -u -v golang.org/x/lint/golint
 
 script:
   - diff -u <(echo -n) <(gofmt -s -d ./)
