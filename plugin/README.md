@@ -1,8 +1,8 @@
 # gentleman/plugin [![Build Status](https://travis-ci.org/h2non/gentleman.png)](https://travis-ci.org/h2non/gentleman) [![GoDoc](https://godoc.org/github.com/h2non/gentleman/plugin?status.svg)](https://godoc.org/github.com/h2non/gentleman/plugin) [![API](https://img.shields.io/badge/status-stable-green.svg?style=flat)](https://godoc.org/github.com/h2non/gentleman/plugin) [![Go Report Card](https://goreportcard.com/badge/github.com/h2non/gentleman/plugin)](https://goreportcard.com/report/github.com/h2non/gentleman/plugin)
 
-`middleware` package implements a simple middleware layer especially designed for HTTP client domain and full HTTP request/response live cycle.
+`plugin` package implements a simple middleware-based plugin layer especially designed for HTTP clients and complete HTTP request/response live cycle control.
 
-Provides multiple factory functions to create plugins easily.
+The package exposes a simple API with multiple factory helper functions to create plugins more easily.
 
 ## Installation
 
