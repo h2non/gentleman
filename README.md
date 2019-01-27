@@ -43,7 +43,7 @@ go get -u gopkg.in/h2non/gentleman.v2
 
 ## Requirements
 
-- Go 1.7+
+- Go 1.9+
 
 ## Plugins
 
