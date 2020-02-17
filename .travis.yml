@@ -1,5 +1,7 @@
 language: go
 
+go_import_path: gopkg.in/h2non/gentleman.v2
+
 go:
   - "1.13"
   - "1.12"

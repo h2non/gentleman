@@ -157,7 +157,7 @@ func TestClientBaseURL(t *testing.T) {
 	cli := New()
 	cli.BaseURL(url)
 	cli.Middleware.Run("request", cli.Context)
-	st.Expect(t, cli.Context.Request.URL.String(), "http://foo.com")
+	st.Expect(t, cli.Context.Request.URL.String(), "http://foo.com/bar/baz")
 }
 
 func TestClientPath(t *testing.T) {

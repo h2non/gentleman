@@ -311,7 +311,7 @@ func TestRequestBaseURL(t *testing.T) {
 	req := NewRequest()
 	req.BaseURL(url)
 	req.Middleware.Run("request", req.Context)
-	st.Expect(t, req.Context.Request.URL.String(), "http://foo.com")
+	st.Expect(t, req.Context.Request.URL.String(), "http://foo.com/bar/baz")
 }
 
 func TestRequestPath(t *testing.T) {
