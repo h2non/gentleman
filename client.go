@@ -158,7 +158,7 @@ func (c *Client) SetHeaders(fields map[string]string) *Client {
 	return c
 }
 
-// AddCookie sets a new cookie field bsaed on the given http.Cookie struct
+// AddCookie sets a new cookie field based on the given http.Cookie struct
 // without overwriting any existent cookie.
 func (c *Client) AddCookie(cookie *http.Cookie) *Client {
 	c.Use(cookies.Add(cookie))
