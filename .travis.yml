@@ -6,7 +6,6 @@ go:
   - "1.11"
   - "1.10"
   - "1.9"
-  - tip
 
 before_install:
   - go get github.com/nbio/st
