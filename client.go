@@ -49,6 +49,13 @@ func (c *Client) Request() *Request {
 	return req
 }
 
+// Options creates a new OPTIONS request.
+func (c *Client) Options() *Request {
+	req := c.Request()
+	req.Method("OPTIONS")
+	return req
+}
+
 // Get creates a new GET request.
 func (c *Client) Get() *Request {
 	req := c.Request()

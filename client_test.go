@@ -291,4 +291,11 @@ func TestClientVerbMethods(t *testing.T) {
 	if req.Context.Request.Method != "HEAD" {
 		t.Errorf("Invalid request method: %s", req.Context.Request.Method)
 	}
+
+	cli = New()
+	req = cli.Options()
+	req.Middleware.Run("request", req.Context)
+	if req.Context.Request.Method != "OPTIONS" {
+		t.Errorf("Invalid request method: %s", req.Context.Request.Method)
+	}
 }
