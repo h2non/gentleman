@@ -1,4 +1,10 @@
 
+v2.0.4 / 2020-02-17
+===================
+
+  * feat(url): append base path in `url.BaseURL()`.
+	* feat(api): add method `AddPath()` to `Client`.
+
 v2.0.3 / 2017-10-13
 ===================
 
