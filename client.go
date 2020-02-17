@@ -120,6 +120,12 @@ func (c *Client) Path(path string) *Client {
 	return c
 }
 
+// AddPath concatenates a path slice to the existent path in at client level.
+func (c *Client) AddPath(path string) *Client {
+	c.Use(url.AddPath(path))
+	return c
+}
+
 // Param replaces a path param based on the given param name and value.
 func (c *Client) Param(name, value string) *Client {
 	c.Use(url.Param(name, value))

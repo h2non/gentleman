@@ -121,7 +121,7 @@ func (r *Request) Path(path string) *Request {
 	return r
 }
 
-// AddPath defines the request URL path to be used in the outgoing request.
+// AddPath concatenates a path slice to the existent path in at request level.
 func (r *Request) AddPath(path string) *Request {
 	r.Use(url.AddPath(path))
 	return r

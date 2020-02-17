@@ -1,11 +1,12 @@
 package url
 
 import (
-	c "gopkg.in/h2non/gentleman.v2/context"
-	p "gopkg.in/h2non/gentleman.v2/plugin"
 	"net/url"
 	"regexp"
 	"strings"
+
+	c "gopkg.in/h2non/gentleman.v2/context"
+	p "gopkg.in/h2non/gentleman.v2/plugin"
 )
 
 // URL parses and defines a new URL in the outgoing request
@@ -33,6 +34,11 @@ func BaseURL(uri string) p.Plugin {
 
 		ctx.Request.URL.Scheme = u.Scheme
 		ctx.Request.URL.Host = u.Host
+
+		if u.Path != "" && u.Path != "/" {
+			ctx.Request.URL.Path = normalizePath(u.Path)
+		}
+
 		h.Next(ctx)
 	})
 }

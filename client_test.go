@@ -170,6 +170,16 @@ func TestClientPath(t *testing.T) {
 	st.Expect(t, cli.Context.Request.URL.String(), "http://foo.com/foo/baz")
 }
 
+func TestClientAddPath(t *testing.T) {
+	url := "http://foo.com/bar"
+	path := "/foo/baz"
+	cli := New()
+	cli.URL(url)
+	cli.AddPath(path)
+	cli.Middleware.Run("request", cli.Context)
+	st.Expect(t, cli.Context.Request.URL.String(), "http://foo.com/bar/foo/baz")
+}
+
 func TestClientPathParam(t *testing.T) {
 	url := "http://foo.com/bar/baz"
 	path := "/:foo/bar/:baz"

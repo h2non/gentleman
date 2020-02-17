@@ -32,11 +32,11 @@ func TestURL(t *testing.T) {
 
 func TestBaseURL(t *testing.T) {
 	cases := []test{
-		{"http://foo", &url.URL{Host: "foo", Scheme: "http"}},
-		{"http://foo:123", &url.URL{Host: "foo:123", Scheme: "http"}},
-		{"https://127.0.0.1", &url.URL{Host: "127.0.0.1", Scheme: "https"}},
-		{"https://foo/bar", &url.URL{Host: "foo", Scheme: "https"}},
-		{"foo/bar", &url.URL{Host: "foo", Scheme: "http"}},
+		{"http://foo", &url.URL{Host: "foo", Scheme: "http", Path: ""}},
+		{"http://foo:123", &url.URL{Host: "foo:123", Scheme: "http", Path: ""}},
+		{"https://127.0.0.1", &url.URL{Host: "127.0.0.1", Scheme: "https", Path: ""}},
+		{"https://foo/bar", &url.URL{Host: "foo", Scheme: "https", Path: "/bar"}},
+		{"foo/bar", &url.URL{Host: "foo", Scheme: "http", Path: "/bar"}},
 	}
 
 	ctx := context.New()
