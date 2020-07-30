@@ -2,6 +2,8 @@ package proxy
 
 import (
 	"github.com/nbio/st"
+	"github.com/stretchr/testify/assert"
+
 	"gopkg.in/h2non/gentleman.v2/context"
 	"net/http"
 	"testing"
@@ -37,8 +39,8 @@ func TestProxyParseError(t *testing.T) {
 
 	transport := ctx.Client.Transport.(*http.Transport)
 	_, err := transport.Proxy(ctx.Request)
-
-	st.Expect(t, err.Error(), "parse ://: missing protocol scheme")
+	assert.Error(t, err)
+	st.Expect(t, err.Error(), "parse \"://\": missing protocol scheme")
 }
 
 type handler struct {

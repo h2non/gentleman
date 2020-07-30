@@ -1,6 +1,7 @@
 package gentleman
 
 import (
+	gocontext "context"
 	"errors"
 	"fmt"
 	"net/http"
@@ -8,6 +9,8 @@ import (
 	"testing"
 
 	"github.com/nbio/st"
+	"github.com/stretchr/testify/assert"
+
 	"gopkg.in/h2non/gentleman.v2/context"
 )
 
@@ -53,7 +56,7 @@ func TestClientRequestMiddleware(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Server", r.Header.Get("Client"))
 		w.Header().Set("Agent", r.Header.Get("Agent"))
-		fmt.Fprintln(w, "Hello, world")
+		_, _ = fmt.Fprintln(w, "Hello, world")
 	}))
 	defer ts.Close()
 
@@ -79,7 +82,7 @@ func TestClientRequestMiddleware(t *testing.T) {
 
 func TestClientRequestResponseMiddleware(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "Hello, world")
+		_, _ = fmt.Fprintln(w, "Hello, world")
 	}))
 	defer ts.Close()
 
@@ -114,6 +117,8 @@ func TestClientErrorMiddleware(t *testing.T) {
 
 	req := client.Request()
 	res, err := req.Do()
+	assert.Error(t, err)
+	assert.NotNil(t, res)
 	st.Expect(t, err.Error(), "error: foo error")
 	st.Expect(t, res.Ok, false)
 	st.Expect(t, res.StatusCode, 0)
@@ -132,6 +137,9 @@ func TestClientCustomPhaseMiddleware(t *testing.T) {
 
 	req := client.Request()
 	res, err := req.Do()
+
+	assert.Error(t, err)
+	assert.NotNil(t, res)
 	st.Expect(t, err.Error(), "error: foo error")
 	st.Expect(t, res.Ok, false)
 	st.Expect(t, res.StatusCode, 0)
@@ -298,4 +306,18 @@ func TestClientVerbMethods(t *testing.T) {
 	if req.Context.Request.Method != "OPTIONS" {
 		t.Errorf("Invalid request method: %s", req.Context.Request.Method)
 	}
+}
+
+func TestClientWithCanceledContext(t *testing.T) {
+
+	ctx, cancel := gocontext.WithCancel(gocontext.Background())
+	cancel()
+	_, err := New().
+		URL("http://localhost:8999").
+		UseContext(ctx).
+		Post().
+		Path("/test").
+		Send()
+	assert.EqualError(t, err, "Post \"http://localhost:8999/test\": context canceled")
+
 }
