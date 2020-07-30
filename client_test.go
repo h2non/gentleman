@@ -318,6 +318,6 @@ func TestClientWithCanceledContext(t *testing.T) {
 		Post().
 		Path("/test").
 		Send()
-	assert.EqualError(t, err, "Post \"http://localhost:8999/test\": context canceled")
+	assert.EqualError(t, err, "Post http://localhost:8999/test: context canceled")
 
 }
