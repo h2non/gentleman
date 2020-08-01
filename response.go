@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"os"
 
@@ -86,6 +87,7 @@ func (r *Response) Read(p []byte) (n int, err error) {
 // Close is part of our ability to support io.ReadCloser if
 // someone wants to make use of the raw body.
 func (r *Response) Close() error {
+	io.Copy(ioutil.Discard, r.RawResponse.Body)
 	if r.Error != nil {
 		return r.Error
 	}
