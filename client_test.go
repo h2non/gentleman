@@ -117,8 +117,6 @@ func TestClientErrorMiddleware(t *testing.T) {
 
 	req := client.Request()
 	res, err := req.Do()
-	assert.Error(t, err)
-	assert.NotNil(t, res)
 	st.Expect(t, err.Error(), "error: foo error")
 	st.Expect(t, res.Ok, false)
 	st.Expect(t, res.StatusCode, 0)
@@ -137,9 +135,6 @@ func TestClientCustomPhaseMiddleware(t *testing.T) {
 
 	req := client.Request()
 	res, err := req.Do()
-
-	assert.Error(t, err)
-	assert.NotNil(t, res)
 	st.Expect(t, err.Error(), "error: foo error")
 	st.Expect(t, res.Ok, false)
 	st.Expect(t, res.StatusCode, 0)
