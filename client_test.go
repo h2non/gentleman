@@ -9,8 +9,6 @@ import (
 	"testing"
 
 	"github.com/nbio/st"
-	"github.com/stretchr/testify/assert"
-
 	"gopkg.in/h2non/gentleman.v2/context"
 )
 
@@ -313,6 +311,5 @@ func TestClientWithCanceledContext(t *testing.T) {
 		Post().
 		Path("/test").
 		Send()
-	assert.EqualError(t, err, "Post http://localhost:8999/test: context canceled")
-
+	st.Expect(t, err.Error(), "Post http://localhost:8999/test: context canceled")
 }
