@@ -1,10 +1,12 @@
 package proxy
 
 import (
-	"github.com/nbio/st"
-	"gopkg.in/h2non/gentleman.v2/context"
 	"net/http"
 	"testing"
+
+	"github.com/nbio/st"
+
+	"gopkg.in/h2non/gentleman.v2/context"
 )
 
 func TestProxy(t *testing.T) {

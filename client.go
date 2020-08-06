@@ -1,6 +1,7 @@
 package gentleman
 
 import (
+	gocontext "context"
 	"net/http"
 
 	"gopkg.in/h2non/gentleman.v2/context"
@@ -182,6 +183,17 @@ func (c *Client) AddCookies(data []*http.Cookie) *Client {
 // CookieJar creates a cookie jar to store HTTP cookies when they are sent down.
 func (c *Client) CookieJar() *Client {
 	c.Use(cookies.Jar())
+	return c
+}
+
+// UseContext adds a cancelation context to the client to enable the use of early cancelation. This is useful for
+// server outgoing calls where we can attach the context from the incoming client. This will allow the downstream
+// calls to be canceled early on the case of a tcp close or http2 cancellation.
+// e.g.   client.Get().URL("someUrl").UseContext( incomingServerRequest.Context() ).Send()
+func (c *Client) UseContext(cancelContext gocontext.Context) *Client {
+	c.UseRequest(func(c *context.Context, handler context.Handler) {
+		handler.Next(c.SetCancelContext(cancelContext))
+	})
 	return c
 }
 

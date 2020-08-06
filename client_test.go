@@ -1,6 +1,7 @@
 package gentleman
 
 import (
+	gocontext "context"
 	"errors"
 	"fmt"
 	"net/http"
@@ -53,7 +54,7 @@ func TestClientRequestMiddleware(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Server", r.Header.Get("Client"))
 		w.Header().Set("Agent", r.Header.Get("Agent"))
-		fmt.Fprintln(w, "Hello, world")
+		_, _ = fmt.Fprintln(w, "Hello, world")
 	}))
 	defer ts.Close()
 
@@ -79,7 +80,7 @@ func TestClientRequestMiddleware(t *testing.T) {
 
 func TestClientRequestResponseMiddleware(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "Hello, world")
+		_, _ = fmt.Fprintln(w, "Hello, world")
 	}))
 	defer ts.Close()
 
@@ -298,4 +299,17 @@ func TestClientVerbMethods(t *testing.T) {
 	if req.Context.Request.Method != "OPTIONS" {
 		t.Errorf("Invalid request method: %s", req.Context.Request.Method)
 	}
+}
+
+func TestClientWithCanceledContext(t *testing.T) {
+
+	ctx, cancel := gocontext.WithCancel(gocontext.Background())
+	cancel()
+	_, err := New().
+		URL("http://localhost:8999").
+		UseContext(ctx).
+		Post().
+		Path("/test").
+		Send()
+	st.Expect(t, err.Error(), "Post http://localhost:8999/test: context canceled")
 }

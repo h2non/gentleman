@@ -304,6 +304,14 @@ func (c *Context) Value(key interface{}) interface{} {
 	return c.Request.Context().Value(key)
 }
 
+// SetCancelContext This will set an external context.Context as a parent to this context so cancellations can be
+// propagated quickly and reduce resource usage.
+func (c *Context) SetCancelContext(ctx context.Context) *Context {
+	golRequestContext := context.WithValue(ctx, Key, c.Value(Key))
+	c.Request = c.Request.WithContext(golRequestContext)
+	return c
+}
+
 // emptyContext creates a new empty context.Context
 func emptyContext() context.Context {
 	return context.WithValue(context.Background(), Key, Store{})
