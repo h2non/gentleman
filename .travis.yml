@@ -3,11 +3,9 @@ language: go
 go_import_path: gopkg.in/h2non/gentleman.v2
 
 go:
+  - "1.14"
   - "1.13"
   - "1.12"
-  - "1.11"
-  - "1.10"
-  - "1.9"
 
 before_install:
   - go get github.com/nbio/st
