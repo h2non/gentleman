@@ -1,4 +1,10 @@
 
+
+v2.0.5 / 2021-02-02
+===================
+
+  * feat(version): bump patch version to avoid go mod cache issue.
+	
 v2.0.4 / 2020-02-17
 ===================
 
