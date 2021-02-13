@@ -3,6 +3,7 @@ package proxy
 import (
 	"net/http"
 	"testing"
+	"strings"
 
 	"github.com/nbio/st"
 
@@ -40,7 +41,7 @@ func TestProxyParseError(t *testing.T) {
 	transport := ctx.Client.Transport.(*http.Transport)
 	_, err := transport.Proxy(ctx.Request)
 
-	st.Expect(t, err.Error(), "parse ://: missing protocol scheme")
+	st.Expect(t, strings.Contains(err.Error(), "missing protocol scheme"), true)
 }
 
 type handler struct {
