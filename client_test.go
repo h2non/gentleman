@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"strings"
 
 	"github.com/nbio/st"
 	"gopkg.in/h2non/gentleman.v2/context"
@@ -302,7 +303,6 @@ func TestClientVerbMethods(t *testing.T) {
 }
 
 func TestClientWithCanceledContext(t *testing.T) {
-
 	ctx, cancel := gocontext.WithCancel(gocontext.Background())
 	cancel()
 	_, err := New().
@@ -311,5 +311,6 @@ func TestClientWithCanceledContext(t *testing.T) {
 		Post().
 		Path("/test").
 		Send()
-	st.Expect(t, err.Error(), "Post http://localhost:8999/test: context canceled")
+
+	st.Expect(t, strings.Contains(err.Error(), "context canceled"), true)
 }
