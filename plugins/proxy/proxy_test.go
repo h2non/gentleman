@@ -2,8 +2,8 @@ package proxy
 
 import (
 	"net/http"
-	"testing"
 	"strings"
+	"testing"
 
 	"github.com/nbio/st"
 
