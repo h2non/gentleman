@@ -20,9 +20,12 @@ type Values []string
 type DataFields map[string]Values
 
 // FormFile represents the file form field data.
+// Name is the filename in Content-Disposition. FieldName is the form field
+// name (name="..."); if empty, Name is used for both, matching prior behavior.
 type FormFile struct {
-	Name   string
-	Reader io.Reader
+	Name      string
+	Reader    io.Reader
+	FieldName string
 }
 
 // FormData represents the supported form fields by file and string data.
@@ -35,7 +38,7 @@ type FormData struct {
 // from the given io.ReadCloser stream.
 func File(name string, reader io.Reader) p.Plugin {
 	return p.NewRequestPlugin(func(ctx *c.Context, h c.Handler) {
-		file := FormFile{name, reader}
+		file := FormFile{Name: name, Reader: reader}
 		data := FormData{Files: []FormFile{file}}
 		handle(ctx, h, data)
 	})
@@ -117,8 +120,12 @@ func writeFile(multipartWriter *multipart.Writer, data FormData, file FormFile, 
 	if file.Name != "" {
 		fileName = file.Name
 	}
+	fieldName := fileName
+	if file.FieldName != "" {
+		fieldName = file.FieldName
+	}
 
-	writer, err := multipartWriter.CreateFormFile(fileName, file.Name)
+	writer, err := multipartWriter.CreateFormFile(fieldName, fileName)
 	if err != nil {
 		return err
 	}
