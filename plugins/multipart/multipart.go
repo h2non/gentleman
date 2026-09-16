@@ -93,9 +93,14 @@ func createForm(data FormData, ctx *c.Context) error {
 		return err
 	}
 
+	payload := body.Bytes()
 	ctx.Request.Method = setMethod(ctx)
-	ctx.Request.Body = ioutil.NopCloser(body)
-	ctx.Request.Header.Add("Content-Type", multipartWriter.FormDataContentType())
+	ctx.Request.ContentLength = int64(len(payload))
+	ctx.Request.Body = ioutil.NopCloser(bytes.NewReader(payload))
+	ctx.Request.GetBody = func() (io.ReadCloser, error) {
+		return ioutil.NopCloser(bytes.NewReader(payload)), nil
+	}
+	ctx.Request.Header.Set("Content-Type", multipartWriter.FormDataContentType())
 
 	return nil
 }

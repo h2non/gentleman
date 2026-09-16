@@ -55,6 +55,19 @@ func TestFields(t *testing.T) {
 	st.Expect(t, match(body, `Content-Disposition: form-data; name="bar"`), true)
 	st.Expect(t, match(body, "data=bar"), true)
 	st.Expect(t, match(body, "data=baz"), true)
+	st.Expect(t, ctx.Request.ContentLength, int64(len(body)))
+	st.Expect(t, ctx.Request.ContentLength > 0, true)
+	st.Expect(t, strings.HasPrefix(ctx.Request.Header.Get("Content-Type"), "multipart/form-data"), true)
+
+	if ctx.Request.GetBody == nil {
+		t.Fatal("GetBody is nil; form body cannot be resent")
+	}
+	rc, err := ctx.Request.GetBody()
+	if err != nil {
+		t.Fatal(err)
+	}
+	replay, _ := ioutil.ReadAll(rc)
+	st.Expect(t, replay, body)
 }
 
 func TestData(t *testing.T) {
