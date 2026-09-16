@@ -28,8 +28,8 @@ func TestFiles(t *testing.T) {
 	fn := newHandler()
 	reader1 := bytes.NewReader([]byte("content1"))
 	reader2 := bytes.NewReader([]byte("content2"))
-	file1 := FormFile{"file1", reader1}
-	file2 := FormFile{"file2", reader2}
+	file1 := FormFile{Name: "file1", Reader: reader1}
+	file2 := FormFile{Name: "file2", Reader: reader2}
 
 	Files([]FormFile{file1, file2}).Exec("request", ctx, fn.fn)
 	st.Expect(t, fn.called, true)
@@ -55,6 +55,22 @@ func TestFields(t *testing.T) {
 	st.Expect(t, match(body, `Content-Disposition: form-data; name="bar"`), true)
 	st.Expect(t, match(body, "data=bar"), true)
 	st.Expect(t, match(body, "data=baz"), true)
+}
+
+func TestFileFieldName(t *testing.T) {
+	ctx := context.New()
+	fn := newHandler()
+	reader := bytes.NewReader([]byte("hello world"))
+	data := FormData{
+		Files: []FormFile{{Name: "a.txt", Reader: reader, FieldName: "file"}},
+	}
+
+	Data(data).Exec("request", ctx, fn.fn)
+	st.Expect(t, fn.called, true)
+	body, _ := ioutil.ReadAll(ctx.Request.Body)
+	st.Expect(t, ctx.Request.Method, "POST")
+	st.Expect(t, match(body, `Content-Disposition: form-data; name="file"; filename="a.txt"`), true)
+	st.Expect(t, match(body, "hello world"), true)
 }
 
 func TestData(t *testing.T) {
