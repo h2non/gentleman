@@ -6,6 +6,7 @@ import (
 	"encoding/xml"
 	"io"
 	"io/ioutil"
+	"net/http"
 	"strings"
 
 	c "gopkg.in/h2non/gentleman.v2/context"
@@ -17,8 +18,9 @@ import (
 func String(data string) p.Plugin {
 	return p.NewRequestPlugin(func(ctx *c.Context, h c.Handler) {
 		ctx.Request.Method = getMethod(ctx)
-		ctx.Request.Body = utils.StringReader(data)
-		ctx.Request.ContentLength = int64(bytes.NewBufferString(data).Len())
+		setReplayableBody(ctx.Request, []byte(data), func() io.ReadCloser {
+			return utils.StringReader(data)
+		})
 		h.Next(ctx)
 	})
 }
@@ -42,8 +44,7 @@ func JSON(data interface{}) p.Plugin {
 		}
 
 		ctx.Request.Method = getMethod(ctx)
-		ctx.Request.Body = ioutil.NopCloser(buf)
-		ctx.Request.ContentLength = int64(buf.Len())
+		setReplayableBody(ctx.Request, buf.Bytes(), nil)
 		ctx.Request.Header.Set("Content-Type", "application/json")
 
 		h.Next(ctx)
@@ -69,8 +70,7 @@ func XML(data interface{}) p.Plugin {
 		}
 
 		ctx.Request.Method = getMethod(ctx)
-		ctx.Request.Body = ioutil.NopCloser(buf)
-		ctx.Request.ContentLength = int64(buf.Len())
+		setReplayableBody(ctx.Request, buf.Bytes(), nil)
 		ctx.Request.Header.Set("Content-Type", "application/xml")
 
 		h.Next(ctx)
@@ -81,28 +81,54 @@ func XML(data interface{}) p.Plugin {
 // Content-Type header won't be defined automatically, you have to declare it manually.
 func Reader(body io.Reader) p.Plugin {
 	return p.NewRequestPlugin(func(ctx *c.Context, h c.Handler) {
-		rc, ok := body.(io.ReadCloser)
-		if !ok && body != nil {
-			rc = ioutil.NopCloser(body)
-		}
-
 		req := ctx.Request
 		if body != nil {
 			switch v := body.(type) {
 			case *bytes.Buffer:
-				req.ContentLength = int64(v.Len())
+				setReplayableBody(req, v.Bytes(), nil)
 			case *bytes.Reader:
+				snapshot := *v
 				req.ContentLength = int64(v.Len())
+				req.GetBody = func() (io.ReadCloser, error) {
+					r := snapshot
+					return ioutil.NopCloser(&r), nil
+				}
+				req.Body = ioutil.NopCloser(v)
 			case *strings.Reader:
+				snapshot := *v
 				req.ContentLength = int64(v.Len())
+				req.GetBody = func() (io.ReadCloser, error) {
+					r := snapshot
+					return ioutil.NopCloser(&r), nil
+				}
+				req.Body = ioutil.NopCloser(v)
+			default:
+				rc, ok := body.(io.ReadCloser)
+				if !ok {
+					rc = ioutil.NopCloser(body)
+				}
+				req.Body = rc
 			}
 		}
 
-		req.Body = rc
 		ctx.Request.Method = getMethod(ctx)
 
 		h.Next(ctx)
 	})
+}
+
+// setReplayableBody attaches a body that net/http can resend on 307/308 redirects.
+func setReplayableBody(req *http.Request, data []byte, open func() io.ReadCloser) {
+	if open == nil {
+		open = func() io.ReadCloser {
+			return ioutil.NopCloser(bytes.NewReader(data))
+		}
+	}
+	req.Body = open()
+	req.ContentLength = int64(len(data))
+	req.GetBody = func() (io.ReadCloser, error) {
+		return open(), nil
+	}
 }
 
 func getMethod(ctx *c.Context) string {

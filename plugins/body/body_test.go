@@ -123,6 +123,81 @@ func TestBodyReader(t *testing.T) {
 	st.Expect(t, string(buf), "foo bar")
 }
 
+func TestBodyStringGetBody(t *testing.T) {
+	ctx := context.New()
+	fn := newHandler()
+
+	String("foo bar").Exec("request", ctx, fn.fn)
+	st.Expect(t, fn.called, true)
+	st.Expect(t, ctx.Request.GetBody != nil, true)
+
+	buf, err := ioutil.ReadAll(ctx.Request.Body)
+	st.Expect(t, err, nil)
+	st.Expect(t, string(buf), "foo bar")
+	st.Expect(t, int(ctx.Request.ContentLength), 7)
+
+	rc, err := ctx.Request.GetBody()
+	st.Expect(t, err, nil)
+	buf, err = ioutil.ReadAll(rc)
+	st.Expect(t, err, nil)
+	st.Expect(t, string(buf), "foo bar")
+}
+
+func TestBodyJSONGetBodyAfterRead(t *testing.T) {
+	ctx := context.New()
+	fn := newHandler()
+
+	JSON(`{"foo":"bar"}`).Exec("request", ctx, fn.fn)
+	st.Expect(t, fn.called, true)
+	st.Expect(t, ctx.Request.GetBody != nil, true)
+
+	_, err := ioutil.ReadAll(ctx.Request.Body)
+	st.Expect(t, err, nil)
+
+	rc, err := ctx.Request.GetBody()
+	st.Expect(t, err, nil)
+	buf, err := ioutil.ReadAll(rc)
+	st.Expect(t, err, nil)
+	st.Expect(t, string(buf), `{"foo":"bar"}`)
+}
+
+func TestBodyXMLGetBodyAfterRead(t *testing.T) {
+	ctx := context.New()
+	fn := newHandler()
+
+	XML("<test>foo</test>").Exec("request", ctx, fn.fn)
+	st.Expect(t, fn.called, true)
+	st.Expect(t, ctx.Request.GetBody != nil, true)
+
+	_, err := ioutil.ReadAll(ctx.Request.Body)
+	st.Expect(t, err, nil)
+
+	rc, err := ctx.Request.GetBody()
+	st.Expect(t, err, nil)
+	buf, err := ioutil.ReadAll(rc)
+	st.Expect(t, err, nil)
+	st.Expect(t, string(buf), "<test>foo</test>")
+}
+
+func TestBodyReaderGetBodyAfterRead(t *testing.T) {
+	ctx := context.New()
+	ctx.Request.Method = "POST"
+	fn := newHandler()
+
+	Reader(bytes.NewReader([]byte("foo bar"))).Exec("request", ctx, fn.fn)
+	st.Expect(t, fn.called, true)
+	st.Expect(t, ctx.Request.GetBody != nil, true)
+
+	_, err := ioutil.ReadAll(ctx.Request.Body)
+	st.Expect(t, err, nil)
+
+	rc, err := ctx.Request.GetBody()
+	st.Expect(t, err, nil)
+	buf, err := ioutil.ReadAll(rc)
+	st.Expect(t, err, nil)
+	st.Expect(t, string(buf), "foo bar")
+}
+
 func TestBodyReaderContextDataSharing(t *testing.T) {
 	ctx := context.New()
 	ctx.Request.Method = "POST"
