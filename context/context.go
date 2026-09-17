@@ -179,18 +179,28 @@ func (c *Context) SetRequest(req *http.Request) {
 }
 
 // Clone returns a clone of the current context.
+// The clone has its own http.Request and Header/URL so concurrent
+// clones can mutate request fields without racing the original.
 func (c *Context) Clone() *Context {
 	ctx := new(Context)
 	*ctx = *c
 
-	req := new(http.Request)
-	*req = *c.Request
-	ctx.Request = req
+	if c.Request != nil {
+		ctx.Request = c.Request.Clone(c.Request.Context())
+	}
 	c.CopyTo(ctx)
 
-	res := new(http.Response)
-	*res = *c.Response
-	ctx.Response = res
+	if c.Response != nil {
+		res := new(http.Response)
+		*res = *c.Response
+		if c.Response.Header != nil {
+			res.Header = c.Response.Header.Clone()
+		} else {
+			res.Header = make(http.Header)
+		}
+		res.Request = ctx.Request
+		ctx.Response = res
+	}
 
 	return ctx
 }

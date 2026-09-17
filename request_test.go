@@ -543,6 +543,45 @@ func TestRequestClone(t *testing.T) {
 	st.Expect(t, len(req2.Middleware.GetStack()), 1)
 }
 
+func TestRequestCloneConcurrentSend(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "ok")
+	}))
+	defer ts.Close()
+
+	base := NewRequest()
+	base.URL(ts.URL)
+	base.Method("POST")
+	base.Context.Request.Header.Set("X-Direct", "keep")
+
+	var wg sync.WaitGroup
+	errCh := make(chan error, 32)
+	for i := 0; i < 32; i++ {
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			req := base.Clone()
+			req.BodyString(fmt.Sprintf("body-%d", i))
+			req.SetHeader("X-N", fmt.Sprintf("%d", i))
+			res, err := req.Send()
+			if err != nil {
+				errCh <- err
+				return
+			}
+			if res.StatusCode != 200 {
+				errCh <- fmt.Errorf("status %d", res.StatusCode)
+			}
+		}(i)
+	}
+	wg.Wait()
+	close(errCh)
+	for err := range errCh {
+		t.Fatal(err)
+	}
+	st.Expect(t, base.Context.Request.Header.Get("X-Direct"), "keep")
+	st.Expect(t, base.Context.Request.Header.Get("X-N"), "")
+}
+
 func BenchmarkSimpleRequestGet(b *testing.B) {
 	ts := createEchoServer()
 	defer ts.Close()
