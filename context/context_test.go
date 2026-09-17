@@ -154,6 +154,27 @@ func TestContextClone(t *testing.T) {
 	st.Expect(t, newCtx.Get("bar"), "bar")
 }
 
+func TestContextCloneIndependentRequest(t *testing.T) {
+	ctx := New()
+	ctx.Request.Header.Set("X-Orig", "1")
+	ctx.Request.URL.Path = "/orig"
+	ctx.Request.Method = "GET"
+
+	newCtx := ctx.Clone()
+	newCtx.Request.Header.Set("X-Orig", "2")
+	newCtx.Request.Header.Set("X-Clone", "yes")
+	newCtx.Request.URL.Path = "/clone"
+	newCtx.Request.Method = "POST"
+
+	st.Expect(t, ctx.Request.Header.Get("X-Orig"), "1")
+	st.Expect(t, ctx.Request.Header.Get("X-Clone"), "")
+	st.Expect(t, ctx.Request.URL.Path, "/orig")
+	st.Expect(t, ctx.Request.Method, "GET")
+	st.Expect(t, newCtx.Request.Header.Get("X-Orig"), "2")
+	st.Expect(t, newCtx.Request.URL.Path, "/clone")
+	st.Expect(t, newCtx.Request.Method, "POST")
+}
+
 func TestContextCopy(t *testing.T) {
 	ctx := New()
 	ctx.Set("bar", "foo")
