@@ -203,7 +203,7 @@ func (c *Context) CopyTo(newCtx *Context) {
 		store[key] = value
 	}
 
-	ctx := context.WithValue(context.Background(), Key, store)
+	ctx := context.WithValue(newCtx.Request.Context(), Key, store)
 	newCtx.Request = newCtx.Request.WithContext(ctx)
 }
 

@@ -4,7 +4,9 @@
 package context
 
 import (
+	gocontext "context"
 	"testing"
+	"time"
 
 	"github.com/nbio/st"
 )
@@ -152,6 +154,75 @@ func TestContextClone(t *testing.T) {
 	newCtx.Set("bar", "bar")
 	st.Expect(t, ctx.Get("bar"), "foo")
 	st.Expect(t, newCtx.Get("bar"), "bar")
+}
+
+func TestContextCopyRequestContext(t *testing.T) {
+	tests := []struct {
+		name    string
+		prepare func() (gocontext.Context, gocontext.CancelFunc)
+	}{
+		{"active", func() (gocontext.Context, gocontext.CancelFunc) {
+			return gocontext.WithCancel(gocontext.Background())
+		}},
+		{"canceled", func() (gocontext.Context, gocontext.CancelFunc) {
+			ctx, cancel := gocontext.WithCancel(gocontext.Background())
+			cancel()
+			return ctx, cancel
+		}},
+		{"deadline", func() (gocontext.Context, gocontext.CancelFunc) {
+			return gocontext.WithDeadline(gocontext.Background(), time.Now().Add(time.Hour))
+		}},
+		{"expired", func() (gocontext.Context, gocontext.CancelFunc) {
+			return gocontext.WithDeadline(gocontext.Background(), time.Now().Add(-time.Hour))
+		}},
+	}
+
+	for _, operation := range []string{"clone", "copy"} {
+		for _, test := range tests {
+			t.Run(operation+"/"+test.name, func(t *testing.T) {
+				parent, cancel := test.prepare()
+				defer cancel()
+				parent = gocontext.WithValue(parent, key1, "caller")
+				source := New()
+				source.Set(key2, "source")
+
+				var destination *Context
+				if operation == "clone" {
+					source.SetCancelContext(parent)
+					destination = source.Clone()
+				} else {
+					other, stop := gocontext.WithCancel(gocontext.Background())
+					stop()
+					source.SetCancelContext(gocontext.WithValue(other, key1, "other"))
+					destination = New().SetCancelContext(parent)
+					source.CopyTo(destination)
+				}
+
+				if destination.Value(key1) != "caller" {
+					t.Errorf("caller value = %v", destination.Value(key1))
+				}
+				if destination.Done() != parent.Done() {
+					t.Error("cancellation channel was replaced")
+				}
+				if destination.Err() != parent.Err() {
+					t.Errorf("context error = %v, want %v", destination.Err(), parent.Err())
+				}
+				deadline, ok := destination.Deadline()
+				wantDeadline, wantOK := parent.Deadline()
+				if ok != wantOK || !deadline.Equal(wantDeadline) {
+					t.Errorf("deadline = %v, %v, want %v, %v", deadline, ok, wantDeadline, wantOK)
+				}
+				st.Expect(t, destination.Get(key2), "source")
+				destination.Set(key2, "destination")
+				st.Expect(t, source.Get(key2), "source")
+
+				cancel()
+				if destination.Err() != parent.Err() {
+					t.Errorf("error after cancellation = %v, want %v", destination.Err(), parent.Err())
+				}
+			})
+		}
+	}
 }
 
 func TestContextCopy(t *testing.T) {

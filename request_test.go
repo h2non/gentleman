@@ -2,6 +2,7 @@ package gentleman
 
 import (
 	"bytes"
+	gocontext "context"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -20,6 +21,41 @@ import (
 	"gopkg.in/h2non/gentleman.v2/plugins/multipart"
 	"gopkg.in/h2non/gentleman.v2/utils"
 )
+
+func TestRequestCloneCanceledContext(t *testing.T) {
+	for _, timing := range []string{"before", "after"} {
+		t.Run(timing, func(t *testing.T) {
+			var mu sync.Mutex
+			requests := 0
+			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				mu.Lock()
+				requests++
+				mu.Unlock()
+			}))
+			defer server.Close()
+
+			parent, cancel := gocontext.WithCancel(gocontext.Background())
+			defer cancel()
+			request := NewRequest().URL(server.URL)
+			request.Context.SetCancelContext(parent)
+			if timing == "before" {
+				cancel()
+			}
+			clone := request.Clone()
+			cancel()
+
+			_, err := clone.Send()
+			if requestError, ok := err.(*url.Error); !ok || requestError.Err != gocontext.Canceled {
+				t.Errorf("request error = %v, want context cancellation", err)
+			}
+			mu.Lock()
+			defer mu.Unlock()
+			if requests != 0 {
+				t.Errorf("server received %d canceled requests", requests)
+			}
+		})
+	}
+}
 
 func TestRequest(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
